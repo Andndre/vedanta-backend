@@ -5,8 +5,8 @@
     "version": "1.0.0",
 		"description": "Bhagavad Gita API Documentation"
   },
-  "host": "https://680a-103-190-47-62.ngrok-free.app/", 
-  "schemes": ["https"],
+  "host": "http://localhost:3000", 
+  "schemes": ["http"],
   "paths": {
     "/api/gita/": {
       "get": {
@@ -130,8 +130,53 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
-          }
+            "description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"message": {
+									"type": "string",
+									"example": "User registered successfully"
+								},
+								"error": {
+									"type": "boolean",
+									"example": false
+								}
+							}
+						}
+          },
+					"400": {
+						"description": "Bad request",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"message": {
+									"type": "string",
+									"example": "User already exists"
+								},
+								"error": {
+									"type": "boolean",
+									"example": true
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Server Error",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"message": {
+									"type": "string",
+									"example": "Something went wrong"
+								},
+								"error": {
+									"type": "boolean",
+									"example": true
+								}
+							}
+						}
+					}
         }
       }
     },
@@ -143,7 +188,16 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/User"
+              "type": "object",
+							"properties": {
+								"email": {
+									"type": "string",
+									"example": "example@email.com"
+								},
+								"password": {
+									"type": "string"
+								}
+							}
             }
           }
         ],
@@ -153,24 +207,31 @@
             "schema": {
               "type": "object",
               "properties": {
-								"data": {
+								"message": {
+									"type": "string",
+									"example": "Success"
+								},
+								"error": {
+									"type": "boolean",
+									"example": false
+								},
+								"loginResult": {
 									"type": "object",
 									"properties": {
-										"id": {
-											"type": "integer"
-										},
-										"email": {
+										"token": {
 											"type": "string",
-											"example": "example@email.com"
+											"example": "<JWT TOKEN>"
+										},
+										"userId": {
+											"type": "integer",
+											"example": "2"
 										},
 										"name": {
-											"type": "string"
+											"type": "string",
+											"example": "<Nama Pengguna>"
 										}
 									}
-								},
-                "token": {
-                  "type": "string"
-                }
+								}
               }
             }
           }

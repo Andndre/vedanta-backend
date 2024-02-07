@@ -16,6 +16,7 @@ export const register: Handler = async (req, res) => {
 			if (user) {
 				res.status(400).json({
 					message: "User already exists",
+					error: true,
 				});
 				return;
 			}
@@ -28,16 +29,12 @@ export const register: Handler = async (req, res) => {
 			// success
 			res.json({
 				message: "User registered successfully",
-				data: {
-					email: body.email,
-					name: body.name,
-				},
+				error: false,
 			});
 		} catch (e: any) {
-			console.log(e);
 			res.status(500).json({
 				message: "Something went wrong",
-				error: e.message,
+				error: true,
 			});
 			return;
 		}
@@ -53,16 +50,16 @@ export const login: Handler = async (req, res) => {
 	const user = await UserModel.selectUserByEmail(body.email);
 	if (!user) {
 		res.status(400).json({
-			message: "Bad Request",
-			error: "User not found",
+			message: "User not found",
+			error: true,
 		});
 		return;
 	}
 	const valid = await Bun.password.verify(body.password, user.password);
 	if (!valid) {
 		res.status(400).json({
-			message: "Bad Request",
-			error: "Incorrect password",
+			message: "Incorrect password",
+			error: true,
 		});
 		return;
 	}
@@ -74,7 +71,12 @@ export const login: Handler = async (req, res) => {
 	};
 	const token = UserService.generateAccessToken(payload);
 	res.json({
-		data: payload,
-		token,
+		loginResult: {
+			userId: user.id,
+			name: user.name,
+			token
+		},
+		message: "Success",
+		error: false,
 	});
 }
