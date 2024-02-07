@@ -1,5 +1,5 @@
 import { db } from "@database";
-import { refresh_token, user } from "@database/Schema";
+import { user } from "@database/Schema";
 import {
   sql,
   type InferInsertModel,
@@ -48,21 +48,3 @@ export const insertUserBool = async (value: InserUserModel) => {
 export const insertUserThrows = async (value: InserUserModel) => {
 	return await iU.execute(value);
 };
-
-export const insertRefreshToken = db
-  .insert(refresh_token)
-  .values({
-    token: sql.placeholder("token"),
-  })
-  .prepare();
-
-export const selectRefreshToken = db
-  .select()
-  .from(refresh_token)
-  .where(eq(refresh_token.token, sql.placeholder("token")))
-  .prepare();
-
-export const deleteRefreshToken = db
-  .delete(refresh_token)
-  .where(eq(refresh_token.token, sql.placeholder("token")))
-  .prepare();

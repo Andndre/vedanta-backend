@@ -8,10 +8,6 @@ export const user = mysqlTable("user", {
 	password: varchar("password", {length: 255}).notNull(),
 });
 
-export const refresh_token = mysqlTable("refresh_token", {
-	token: varchar("token", {length: 255}).notNull().unique(),
-})
-
 export const gita_bab = mysqlTable("gita_bab", {
 	number: int("number").primaryKey(),
 	title: varchar("title", {length: 255}).notNull(),

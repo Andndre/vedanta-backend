@@ -7,7 +7,7 @@ const router = Router({
 	caseSensitive: true,
 })
 
-// router.use(TokenMiddleware)
+router.use(TokenMiddleware)
 
 router.get('/', BhagavadGitaController.chapters)
 router.get('/bab/:bab', BhagavadGitaController.chapter)
