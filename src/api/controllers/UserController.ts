@@ -1,5 +1,6 @@
 import { UserModel } from "@models";
 import { UserService } from "@services";
+import type { UserTokenPayload } from "@services/UserService";
 import type { Handler } from "express";
 
 interface RegisterParams {
@@ -64,7 +65,7 @@ export const login: Handler = async (req, res) => {
 		return;
 	}
 	// genrate access token
-	const payload = {
+	const payload: UserTokenPayload = {
 		id: user.id,
 		email: user.email,
 		name: user.name,

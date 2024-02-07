@@ -92,7 +92,9 @@
             "name": "bab",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "integer",
+						"description": "Nomor BAB",
+						"example": "2"
           },
           {
             "name": "sloka",

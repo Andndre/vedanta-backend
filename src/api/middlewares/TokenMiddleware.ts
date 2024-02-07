@@ -1,10 +1,16 @@
+import type { UserTokenPayload } from "@services/UserService";
 import type { Handler } from "express";
 import jwt from "jsonwebtoken";
 
 const handler: Handler = (req, res, next) => {
 	// get Bearer token from header
-	const token = req.headers.authorization?.split(" ")[1];
-	console.log(token);
+	const [tokenType, token] = req.headers.authorization!.split(" ")!;
+	if (tokenType !== 'Bearer') {
+		return res.status(401).json({
+			message: "Unauthorized",
+			error: "Invalid authorization type"
+		})
+	}
 	if (!token) {
 		return res.status(401).json({
 			message: "Unauthorized",
@@ -20,8 +26,7 @@ const handler: Handler = (req, res, next) => {
 			})
 			return;
 		}
-
-		req.user = user as { id: number };
+		req.user = user as UserTokenPayload;
 		next()
 	});
 };
