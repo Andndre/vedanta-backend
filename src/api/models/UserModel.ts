@@ -45,6 +45,10 @@ export const insertUserBool = async (value: InserUserModel) => {
   return true;
 };
 
+export const insertUserThrows = async (value: InserUserModel) => {
+	return await iU.execute(value);
+};
+
 export const insertRefreshToken = db
   .insert(refresh_token)
   .values({

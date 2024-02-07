@@ -8,7 +8,7 @@ export const chapters: Handler = async (_req, res) => {
 
 export const chapter: Handler = async (req, res) => {
 	const chapter = await BhagavadGitaService.getChapter(+req.params.bab);
-	if (!chapter) return res.status(404).json({ error: "Chapter not found" });
+	if (!chapter) return res.status(404).json({ error: "BAB not found" });
 	res.json(chapter);
 }
 

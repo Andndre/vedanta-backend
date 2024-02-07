@@ -15,11 +15,10 @@ export const register: Handler = async (req, res) => {
 	const body = req.body as RegisterParams;
 	await db.transaction(async (tx) => {
 		try {
-			const queryResult = await UserModel.insertUser.execute({
+			const queryResult = await UserModel.insertUserThrows({
 				email: body.email,
 				name: body.name,
 				password: await Bun.password.hash(body.password),
-				refresh_token: v4(),
 			})
 			res.status(201).json(queryResult);
 		} catch (e: any) {

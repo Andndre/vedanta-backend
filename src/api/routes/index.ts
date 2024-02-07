@@ -1,7 +1,7 @@
-import { Router } from "express";
-import { ApiController } from '@controllers'
+import { Router, type NextFunction, type Handler } from "express";
 import BhagavadGitaRoutes from "@routes/BhagavadGitaRoutes";
 import UserRoutes from "@routes/UserRoutes";
+import { ApiController } from "@controllers";
 
 const router = Router({
 	strict: true,

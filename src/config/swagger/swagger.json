@@ -1,0 +1,139 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Bhagavad Gita API",
+    "version": "1.0.0",
+		"description": "Bhagavad Gita API Documentation"
+  },
+  "host": "localhost:3000", 
+  "schemes": ["http"],
+  "paths": {
+    "/api/gita/": {
+      "get": {
+        "summary": "Get all BABs",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BAB"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gita/bab/{bab}": {
+      "get": {
+        "summary": "Get BAB by id",
+        "parameters": [
+          {
+            "name": "bab",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BAB"
+            }
+          }
+        }
+      }
+    },
+    "/api/gita/bab/{bab}/slokas": {
+      "get": {
+        "summary": "Get slokas for BAB",
+        "parameters": [
+          {
+            "name": "bab",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Sloka"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gita/bab/{bab}/sloka/{sloka}": {
+      "get": {
+        "summary": "Get sloka by id",
+        "parameters": [
+          {
+            "name": "bab",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "sloka",
+            "in": "path",
+            "required": true,
+            "type": "integer" 
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Sloka"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "BAB": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "title_hindi": {
+          "type": "string" 
+        },
+        "summary": {
+          "type": "string"
+        },
+        "translation_indo": {
+          "type": "string"
+        }
+      }
+    },
+    "Sloka": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "number": {
+          "type": "integer"
+        },
+        "content": {
+          "type": "string"
+        },
+        "translation_indo": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
