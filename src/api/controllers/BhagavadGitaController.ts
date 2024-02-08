@@ -22,3 +22,18 @@ export const sloka: Handler = async (req, res) => {
 	if (!sloka) return res.status(404).json({ error: "Sloka not found" });
 	res.json(sloka);
 }
+
+export const maknaSloka: Handler = async (req, res) => {
+	const numberBab = +req.params.bab;
+	const numberSloka = +req.params.sloka;
+	const sloka = await BhagavadGitaService.getSloka(numberBab, numberSloka);
+	if (!sloka) return res.status(404).json({ message: "Sloka not found", error: true });
+	const makna = await BhagavadGitaService.getMakna(numberBab, numberSloka, sloka.content, sloka.translation_indo)
+	if (makna === 'Terjadi kesalahan. silahakan coba lagi.') {
+		res.status(500).json({
+			message: makna,
+			error: true
+		})
+	}
+	res.json({ makna, error: false })
+}

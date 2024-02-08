@@ -118,6 +118,82 @@
 				]
       }
     },
+    "/api/gita/bab/{bab}/sloka/{sloka}/makna": {
+      "get": {
+        "summary": "Dapatkan makna dari sloka dan terjemahannya",
+        "parameters": [
+          {
+            "name": "bab",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+						"description": "Nomor BAB",
+						"example": "2"
+          },
+          {
+            "name": "sloka",
+            "in": "path",
+            "required": true,
+            "type": "integer" 
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+							"properties": {
+								"makna": {
+									"type": "string",
+									"example": "<Makna dari Sloka>"
+								},
+								"error": {
+									"type": "boolean",
+									"example": false
+								}
+							}
+            }
+          },
+					"500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+							"properties": {
+								"message": {
+									"type": "string",
+									"example": "Terjadi kesalahan. silahakan coba lagi."
+								},
+								"error": {
+									"type": "boolean",
+									"example": true
+								}
+							}
+            }
+          },
+					"404": {
+            "description": "Sloka not Found",
+            "schema": {
+              "type": "object",
+							"properties": {
+								"message": {
+									"type": "string",
+									"example": "Sloka not Found"
+								},
+								"error": {
+									"type": "boolean",
+									"example": true
+								}
+							}
+            }
+          }
+        },
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+      }
+    },
 		"/api/user/register": {
       "post": {
         "summary": "Register a new user",
@@ -238,6 +314,65 @@
             }
           }
         }
+      }
+    },
+    "/api/chat": {
+      "post": {
+        "summary": "Chat dengan Ganesh Bot",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+							"properties": {
+								"message": {
+									"type": "string",
+									"example": "Berikan saya doa sebelum makan"
+								}
+							}
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+								"text": {
+									"type": "string",
+									"example": "<Respon Ganesh Bot>"
+								},
+								"error": {
+									"type": "boolean",
+									"example": false
+								}
+              }
+            }
+          },
+					"500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+								"text": {
+									"type": "string",
+									"example": "Terjadi kesalahan. silahakan coba lagi."
+								},
+								"error": {
+									"type": "boolean",
+									"example": true
+								}
+              }
+            }
+          }
+        },
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
       }
     }
   },

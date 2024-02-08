@@ -1,11 +1,113 @@
-import { ChatGPTUnofficialProxyAPI } from 'chatgpt';
-import "dotenv/config"
+import "dotenv/config";
 
-const chatAPI = new ChatGPTUnofficialProxyAPI({
-	accessToken: 'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..jrCAFIfnUbnVapS9.Mmjza-EsVmEMLbolSAlB-M3DmSUN_gaDFuBCnro4FM86v3Dv4rWvTNA4Dakui8tZMFqaTSAR1QqK12M_oI9xbrt6CCxpc7gqHSFZ-fEHFRfWzew3v-6lw6KuguRGLhGzVEh2KsmKyrEZuUaA0Tf86fkhRgQxfvtsUr2qkZSBS5P8Gg38fAr0xVWBQ6vDORsjSz43PoSSg3RjA0k6Ao7fBbDUFhhQeobxMQHmEOaQFsxTZD1bnDvz1RgkpkJQAHu7fTh9qvnLvoBFbqlEzEhmlbU0jAqGlubUGZpVENk76r3pVOAhDEAPDgbJo0NhPV6-s4N6PkNmYChb2DY5PF4v_XfIHHIvkPvQQegAr4DypzMuSC6SBTojKm6ao4hF1joY1hQCBQjZGsLkXxpFbROGvbz9a44kYSrf33NjNU4smC6MCB9cAeI-3g0QEB88iojZkjCjBRGifXPHcHfd0rzfFA_KVtVgwfk4yAVbSY2JorfBmkd4uRBFu3ns5ulMq61YWbJsvgall9o-3up6wrISA1Zd3BSiQxoY5M93rgp_5YRDz6VslnpKLoK52zZHqQrslzcbmvwz7QBTPmDxFk2sBTSEdMbjTz4fnXozqeNDVjZpCKkloEZX4yFYzoMBOh-xkNDQEF1hdekjKvchOoAiO11erQKROA02tnA--NiIhGTN5jgJEOWiVK8tdpJuWDNPOI5DsFrVn5Z54WWkOpxNMCWSc3c5AZNUZiz-v5twUkrFz4sL5zWB0LgFtWUNXsaW-L6aKHx2-B8oqebfD2AekWbfrTsvkiU4Ty_xAKPuS1fUO7GNJCSRg919JMCAH6K3cDe6A0tEp_gbe22b1XUhFfshbkQq1yJRX13rtXb3pdHDE-bknibF6Lk7r-P3u1fUWacKTcfOObfC__6F-Wisdl6CC9Fe3_NorNfX8mOSCd9gdWD4XgbwR_cBPqEdKD5lCvK37V0yXYrr3Q94UTKGMCZq1nYZf7EYyBNWjjveCuiilx_c3Ddc6QUYNzR5QU7EFX08Yxsx8EA62BoF7qSu-rhcR_MmPYCSPNn9UL3ZYjH2pF-l4XFfgWT1rRPusrbpoVnJPXhH1yUgja-OQv925IxNHFKtTl2UpVknaXQR6zc86gABoygrwRFOEPlw_BdhZVltBpIL8j9djUfgh8LYnSOdd3GAGnbbyaDVPAKMtmoY9sM8OCcu0DaQNH-EQl_867YUAVy4T_YGxuVUMSQZ-XbUTTlljyoGMRzYMRnWsLs_-VvxIQJDv1JMGnqxjhCo9DPfzXvlA2WrKGsbPkUsF_QvGyheL1UBXLBtap_T-g3Cw7amcKUSaeciLYpWVrkGSvgi_YRlqJFk79w6rj3qkEPqbvk0a1mR5fAwPvY0zQBMPN0-kzKUqooqNYQH2BQ-ctzzuVvDtl5LiRge1gSlOrfby9CUUPyJSYTDFSWUwKlBEC8xXj6JzlBJRWGAlK8LndPtiVVROCBEQpptoaL_FUdlSRpAI_T_EmeLlZVBrFnAd1hBSzeigBjEhj5hVDx36zOySrZVURqeS0tpTMkqr1ARD_lU-zj7fRf0hCsnU6iDlnD89ot3H1RkntZG2RVECD1Y7o1bSoxJ0pSy0Z8JS69T9FciK-xLzL2RJkSZUVZEnnc2f0f8mPqq255ZZhaVmSR3BZcGMmY55ObLDU5iYeG_mmk3SRMHJn3T1uZBveDMBFuG0FrQTppsycutvTk27Pyc51ZK0n86L0dc2rY_p8pqexC7ridhZKN4Pw0emftMnr2WMsvRMyLOJPWmUaarH3GMYH3eaLUXLEOn1y438IF-xkzKcRQDz_80hyA-rwEDIoyC3A7YFuAGrhnIpEHkilC2LBvAZstoMj53QD5r2MSpzQIy3Xvhx7huOHR8Tlg0_LhECylUfyPJdYbjBoYMpke2lv2bbJSn6Xu9o6JvN-qZAqaFu2oB19k4TBurzEGE0Smqr7e3gbXrnpA7hP9285AzssvV3I5BUFXh17L6-vDK8vkkj266rzJ8O1Im9RIbS0ziEbkw6wZaWqf-rwZrSpDSwQzYc6Ks7eKEkj2eqPQHMvp9aQqY0aV43OXAJTThb2CQro9ue038d7p4Azh-XcFAdTEXsFBXQOs0bGBwuJ8b28zasjD43h_wRGzngzL-rJc9JFhSBK4V6-f5ZdQ7hEeIWxiKoPfWNuLOUvr-9eEusJ3Ln0w0ptCvFtViYduMHorzY8lDoS2oYO7PJxn2nw8T0IGYBXGbemhv1oMcZmPTggSdHPP58i6DLW3MUypUa6HN5xR4xvh_uDmtpdKmFN9KSb1lMBUfQEoDXaxVQvQN-EL0ijUl0ehbRI1-n6pxVyF9OkqKEbTFbLem8UaggQz0WD-vIVL_TPWaM4pmwJM05l-YpbDYADMkLcqeu-SRJTiIROHT1tEsHq0PpByq2AFA8f4jj2NCxWJGmkdkQ509CuIdOuV_mpGdzbv_CZtem946cTWzne5c3b3ITsUxl4goHzUOTKtju8bNedu_FscFKp8_-V6KqGjD6VoAnNm78XYgsDwDDfkaYrYobm3kyLssEzF3PVMM8cxC7A4Mu6q4S3abEaDvSO9eI4PNiFNkFws131viMziRLgyrSriUsaCohwM790dI6_zGRqaX8zgJVS-yMGnQrJhqNk3Z4XermWI6lXyWByUxsw03gvjbVN8kCNQaXKlah2PtuBXjQ3YoIdFOdDcfPBF8Hqx__DwxtEXSzwCJJkYbaroI03fS3dihgg41zBTe4ErHfk3dUl7QS44ktMLtwv4YcrYBI0pWALfO3wIJ8D_svQur2DlZhQ.dAwy6TeVcwWJ30xdXQQI5Q',
-});
+const assistantId = "65c4216b44b93cf9525c43f0";
+
+async function loginChatAnonymous() {
+  const response = await fetch("https://huggingface.co/chat/conversation", {
+    headers: {
+      accept: "*/*",
+      "accept-language": "id, en-US;q=0.9,en;q=0.8",
+      "content-type": "application/json",
+      "sec-ch-ua": '"Not A(Brand";v="99", "Brave";v="121", "Chromium";v="121"',
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": '"Linux"',
+      "sec-fetch-dest": "empty",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-site": "same-origin",
+      "sec-gpc": "1",
+      Referer: "https://huggingface.co/chat",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
+    },
+    body: `{"model":"mistralai/Mixtral-8x7B-Instruct-v0.1","assistantId":"${assistantId}"}`,
+    method: "POST",
+  });
+
+  const conversationId = ((await response.json()) as { conversationId: string })
+    .conversationId;
+  const cookie = response.headers
+    .get("Set-Cookie")
+    ?.split(" ")[0]
+    .slice(0, -1) as string;
+
+  return { conversationId, cookie };
+}
+
+function generateUUID() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+async function chat(conversationId: string, cookie: string, message: string) {
+  const id = generateUUID();
+  const response = await fetch(
+    `https://huggingface.co/chat/conversation/${conversationId}`,
+    {
+      headers: {
+        accept: "*/*",
+        "accept-language": "id, en-US;q=0.9,en;q=0.8",
+        "content-type": "application/json",
+        "sec-ch-ua":
+          '"Not A(Brand";v="99", "Brave";v="121", "Chromium";v="121"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Linux"',
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "sec-gpc": "1",
+        cookie: cookie,
+        Referer: `https://huggingface.co/chat/conversation/${conversationId}`,
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+      },
+      body: JSON.stringify({
+				inputs: message,
+				id,
+				is_entry: false,
+				is_continue: false,
+				web_search: false,
+				files: []
+			}),
+      method: "POST",
+    }
+  );
+
+  return response;
+}
+
+export async function query(message: string, conversationId?: string, cookie?: string) {
+	if (!conversationId || !cookie) {
+		const result = await loginChatAnonymous();
+		conversationId = result.conversationId;
+		cookie = result.cookie;
+	}
+
+  const chatResponse = await chat(conversationId!, cookie!, message);
+	console.log(chatResponse);
+  const stream = chatResponse.body;
+  const reader = stream?.getReader()!;
+	const pump = async (): Promise<string> => {
+		const { done, value } = await reader.read();
+		if (done) return 'Terjadi kesalahan. silahakan coba lagi.';
+		const chunk = new TextDecoder().decode(value);
+		if (chunk && chunk.trim()) {
+			if (chunk.startsWith("{\"type\":\"finalAnswer\"")) {
+				const obj = JSON.parse(chunk);
+				return obj.text.trim();
+			} else {
+				// abaikan streams lainnya
+			}
+		}
+		return pump();
+	}
+	
+	return { text: await pump(), conversationId, cookie };
+}
 
 export async function sendMessage(message: string) {
-	const response = await chatAPI.sendMessage(message)
-	return response.text;
+  const { text } = await query(message);
+  return {
+		text
+	};
 }

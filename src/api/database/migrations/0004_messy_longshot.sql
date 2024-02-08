@@ -1,0 +1,1 @@
+ALTER TABLE `gita_sloka` ADD `makna` text;

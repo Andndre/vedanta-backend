@@ -3,6 +3,12 @@ import type { Handler } from "express";
 import jwt from "jsonwebtoken";
 
 const handler: Handler = (req, res, next) => {
+	if (!req.headers.authorization) {
+		return res.status(401).json({
+			message: "Unauthorized",
+			error: "No token provided",
+		});
+	}
 	// get Bearer token from header
 	const [tokenType, token] = req.headers.authorization!.split(" ")!;
 	if (tokenType !== 'Bearer') {

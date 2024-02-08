@@ -25,16 +25,16 @@ export type SlokaModel = InferSelectModel<typeof gita_sloka>;
 export type InsertSloka = InferInsertModel<typeof gita_sloka>;
 
 export const insertGitaBabBool = async (value: InsertGitaBab) => {
-	try {
-		await iB.execute(value);
-		return true;
-	} catch (error) {
-		return false;
-	}
+  try {
+    await iB.execute(value);
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 export const insertGitaBabThrows = async (value: InsertGitaBab) => {
-	return await iB.execute(value);
+  return await iB.execute(value);
 };
 
 export const sB = db
@@ -54,20 +54,22 @@ export const selectAllGitaBab = async () => {
 };
 
 export const babExists = async (number: number) => {
-	const chapter = await selectGitaBabByBabNumberOrUndefined(number);
-	return chapter !== undefined;
+  const chapter = await selectGitaBabByBabNumberOrUndefined(number);
+  return chapter !== undefined;
 };
 
-export const sASbyB = db.query.gita_sloka.findMany({
-	where: () => eq(gita_sloka.number_bab, sql.placeholder("number_bab")),
-	orderBy: [gita_sloka.number],
-	columns: {
-		number: true,
-	}
-}).prepare()
+export const sASbyB = db.query.gita_sloka
+  .findMany({
+    where: () => eq(gita_sloka.number_bab, sql.placeholder("number_bab")),
+    orderBy: [gita_sloka.number],
+    columns: {
+      number: true,
+    },
+  })
+  .prepare();
 
 export const selectAllSlokasByBabNumber = async (num: number) => {
-	return await sASbyB.execute({ number_bab: num }) as SlokaModel[];
+  return (await sASbyB.execute({ number_bab: num })) as SlokaModel[];
 };
 
 export const sS = db
@@ -85,7 +87,9 @@ export const selectSlokaByNumberOrUndefined = async (
   number_bab: number,
   number: number
 ) => {
-  return (await sS.execute({ number_bab, number }))[0] as SlokaModel | undefined;
+  return (await sS.execute({ number_bab, number }))[0] as
+    | SlokaModel
+    | undefined;
 };
 
 export const iS = db
@@ -103,15 +107,68 @@ export const insertSlokaThrows = async (value: InsertSloka) => {
 };
 
 export const insertSlokaBool = async (value: InsertSloka) => {
-	try {
-		await iS.execute(value);
-		return true;
-	} catch (error) {
-		return false;
-	}
+  try {
+    await iS.execute(value);
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 export const slokaExists = async (number_bab: number, number: number) => {
-	const sloka = await selectSlokaByNumberOrUndefined(number_bab, number);
-	return sloka !== undefined;
-}
+  const sloka = await selectSlokaByNumberOrUndefined(number_bab, number);
+  return sloka !== undefined;
+};
+
+const smS = db.query.gita_sloka
+  .findFirst({
+    where: and(
+      eq(gita_sloka.number_bab, sql.placeholder("number_bab")),
+      eq(gita_sloka.number, sql.placeholder("number_sloka"))
+    ),
+    columns: {
+      makna: true,
+    },
+  })
+  .prepare();
+
+export const getMaknaSloka = async (
+  number_bab: number,
+  number_sloka: number
+) => {
+  const makna = await smS.execute({
+    number_bab,
+    number_sloka,
+  });
+  return makna;
+};
+
+const imS = db
+  .update(gita_sloka)
+  .set({
+    makna: "",
+  })
+  .where(
+    and(
+      eq(gita_sloka.number_bab, sql.placeholder("number_bab")),
+      eq(gita_sloka.number, sql.placeholder("number_sloka"))
+    )
+  );
+
+export const updateMakna = async (
+  number_bab: number,
+  number_sloka: number,
+  makna: string
+) => {
+  await db
+    .update(gita_sloka)
+    .set({
+      makna,
+    })
+    .where(
+      and(
+        eq(gita_sloka.number_bab, number_bab),
+        eq(gita_sloka.number, number_sloka)
+      )
+    );
+};

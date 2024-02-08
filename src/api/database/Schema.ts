@@ -24,6 +24,7 @@ export const gita_sloka = mysqlTable("gita_sloka", {
 	}),
 	content: text("content").notNull(),
 	translation_indo: text("translation_indo").notNull(),
+	makna: text('makna')
 }, (self) => ({
 	unique: unique("sloka_unique").on(self.number, self.number_bab),
 }));
