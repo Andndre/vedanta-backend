@@ -84,7 +84,6 @@ export async function query(message: string, conversationId?: string, cookie?: s
 	}
 
   const chatResponse = await chat(conversationId!, cookie!, message);
-	console.log(chatResponse);
   const stream = chatResponse.body;
   const reader = stream?.getReader()!;
 	const pump = async (): Promise<string> => {
