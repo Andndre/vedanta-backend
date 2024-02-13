@@ -13,25 +13,25 @@ const isDev = Bun.env.NODE_ENV === "development";
 
 // Middlewares
 {
-  app.use(cors);
-  if (isDev) app.use(PrintResponseTimeMiddleware);
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
-  console.log("✅ Middlewares are loaded");
+	app.use(cors);
+	if (isDev) app.use(PrintResponseTimeMiddleware);
+	app.use(express.json());
+	app.use(express.urlencoded({ extended: false }));
+	console.log("✅ Middlewares are loaded");
 }
 
 // Routes
 {
-  app.use("/api", ApiRoutes);
-  app.use('/api-docs', serveFiles(swaggerDocument), setup(swaggerDocument))
-  console.log("✅ Routes are loaded");
+	app.use("/api", ApiRoutes);
+	app.use('/api-docs', serveFiles(swaggerDocument), setup(swaggerDocument))
+	console.log("✅ Routes are loaded");
 }
 
 const PORT = Bun.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log("Server is running on http://localhost:3000");
-  if (isDev) console.log(`\n\nMETHOD\tSTATUS\tURL`);
+	console.log("Server is running on http://localhost:3000");
+	if (isDev) console.log(`\n\nMETHOD\tSTATUS\tURL`);
 });
 
 export default app;

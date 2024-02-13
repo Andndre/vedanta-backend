@@ -33,7 +33,7 @@ async function loginChatAnonymous() {
 }
 
 function generateUUID() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
     var r = (Math.random() * 16) | 0,
       v = c == "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
@@ -62,13 +62,13 @@ async function chat(conversationId: string, cookie: string, message: string) {
         "Referrer-Policy": "strict-origin-when-cross-origin",
       },
       body: JSON.stringify({
-				inputs: message,
-				id,
-				is_entry: false,
-				is_continue: false,
-				web_search: false,
-				files: []
-			}),
+        inputs: message,
+        id,
+        is_entry: false,
+        is_continue: false,
+        web_search: false,
+        files: [],
+      }),
       method: "POST",
     }
   );
@@ -76,37 +76,48 @@ async function chat(conversationId: string, cookie: string, message: string) {
   return response;
 }
 
-export async function query(message: string, conversationId?: string, cookie?: string) {
-	if (!conversationId || !cookie) {
-		const result = await loginChatAnonymous();
-		conversationId = result.conversationId;
-		cookie = result.cookie;
-	}
+export async function query(
+  message: string,
+  conversationId?: string,
+  cookie?: string
+) {
+  if (!conversationId || !cookie) {
+    const result = await loginChatAnonymous();
+    conversationId = result.conversationId;
+    cookie = result.cookie;
+  }
 
   const chatResponse = await chat(conversationId!, cookie!, message);
   const stream = chatResponse.body;
   const reader = stream?.getReader()!;
-	const pump = async (): Promise<string> => {
-		const { done, value } = await reader.read();
-		if (done) return 'Terjadi kesalahan. silahakan coba lagi.';
-		const chunk = new TextDecoder().decode(value);
-		if (chunk && chunk.trim()) {
-			if (chunk.startsWith("{\"type\":\"finalAnswer\"")) {
-				const obj = JSON.parse(chunk);
-				return obj.text.trim();
-			} else {
-				// abaikan streams lainnya
-			}
-		}
-		return pump();
-	}
-	
-	return { text: await pump(), conversationId, cookie };
+  const pump = async (): Promise<string> => {
+    const { done, value } = await reader.read();
+    if (done) return "Terjadi kesalahan. silahakan coba lagi.";
+    const chunk = new TextDecoder().decode(value);
+    if (chunk && chunk.trim()) {
+      if (chunk.startsWith('{"type":"finalAnswer"')) {
+        const obj = JSON.parse(chunk);
+        return obj.text.trim();
+      } else {
+        // abaikan streams lainnya
+      }
+    }
+    return pump();
+  };
+
+  return { text: await pump(), conversationId, cookie };
 }
 
 export async function sendMessage(message: string) {
   const { text } = await query(message);
   return {
-		text
-	};
+    text,
+  };
+}
+
+export function somethingCool(message: string) {
+  const every = 1;
+  for (let i = 0; i < 100; i += every) {
+    console.log(message + " for " + i);
+  }
 }
