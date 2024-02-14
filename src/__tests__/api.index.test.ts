@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'bun:test';
+import { describe, beforeAll } from 'bun:test';
 
 describe("home api route", () => {
   let response: Response;
