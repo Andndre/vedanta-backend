@@ -3,11 +3,11 @@ import { BhagavadGitaController } from '@controllers'
 import { TokenMiddleware } from "@middlewares";
 
 const router = Router({
-	strict: true,
-	caseSensitive: true,
+  strict: true,
+  caseSensitive: true,
 })
 
-router.use(TokenMiddleware)
+// router.use(TokenMiddleware)
 
 router.get('/', BhagavadGitaController.chapters)
 router.get('/bab/:bab', BhagavadGitaController.chapter)

@@ -15,9 +15,14 @@
           "200": {
             "description": "Success",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/BAB"
+              "type": "object",
+              "properties": {
+                "babs": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/BAB"
+                  }
+                }
               }
             }
           }
