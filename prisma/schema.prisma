@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String        @id @default(uuid())
+  name     String
+  email    String        @unique
+  password String        @db.VarChar(255)
+  sessions ChatSession[]
+}
+
+model GitaBab {
+  number          Int         @id @default(autoincrement())
+  title           String
+  titleHindi      String
+  summary         String      @db.Text
+  translationIndo String
+  GitaSloka       GitaSloka[]
+
+  @@index([number])
+}
+
+model GitaSloka {
+  id              Int     @id @default(autoincrement())
+  number          Int
+  numberBab       Int
+  bab             GitaBab @relation(fields: [numberBab], references: [number], onDelete: Cascade)
+  content         String  @db.Text
+  translationIndo String  @db.Text
+  makna           String? @db.Text
+
+  @@unique([number, numberBab])
+}
+
+model ChatSession {
+  id        String           @id @default(uuid())
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  title     String
+  history   MessageHistory[]
+  createdAt DateTime         @default(now())
+
+  @@index([userId])
+}
+
+model MessageHistory {
+  id        Int      @id @default(autoincrement())
+  role      String
+  parts     String      @db.Text
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sessionId String
+
+  @@index([sessionId])
+}

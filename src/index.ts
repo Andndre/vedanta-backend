@@ -1,38 +1,28 @@
-import express from "express";
-import { PrintResponseTimeMiddleware } from "@middlewares";
-import ApiRoutes from "@routes";
-import cors from "./config/corsConfig";
-import { serveFiles, setup } from "swagger-ui-express";
-import swaggerDocument from './config/swagger/swagger.json';
+import { PrismaClient } from "@prisma/client";
+import { Elysia } from "elysia";
+import { cors } from "@elysiajs/cors";
 
-// Express
-const app = express();
+import SwaggerConfig from "@/configs/SwaggerConfig";
+import gitaRoute from "@/routes/GitaRoute";
+import chatRoute from "@/routes/ChatRoute";
+import userRoute from "@/routes/UserRoute";
 
-// Is on development mode
-const isDev = Bun.env.NODE_ENV === "development";
-
-// Middlewares
-{
-  app.use(cors);
-  if (isDev) app.use(PrintResponseTimeMiddleware);
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
-  console.log("✅ Middlewares are loaded");
-}
-
-// Routes
-{
-  app.use("/api", ApiRoutes);
-  app.use('/api-docs', serveFiles(swaggerDocument), setup(swaggerDocument))
-  console.log("✅ Routes are loaded");
-}
+export const prismaClient = new PrismaClient();
 
 const PORT = Bun.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log("Server is running on http://localhost:3000");
-  if (isDev) console.log(`\n\nMETHOD\tSTATUS\tURL`);
-});
+const app = new Elysia()
+  .use(cors())
+  .use(SwaggerConfig)
+  .use(userRoute)
+  .use(gitaRoute)
+  .use(chatRoute)
+  .get("/", ({ set }) => {
+    set.redirect = "/docs";
+  })
+  .get("/api", ({ set }) => {
+    set.redirect = "/docs";
+  })
+  .listen(PORT);
 
-export default app;
-
+console.log(`⚡ App is running at ${app.server?.url}`);
