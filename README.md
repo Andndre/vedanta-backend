@@ -37,4 +37,4 @@ Dapatkan Gemini API Key di https://aistudio.google.com/app/apikey
 bun run dev
 ```
 
-Buka http://localhost:3000/ untuk dokumentasi API.
+Buka http://localhost:3000/docs untuk dokumentasi API.
