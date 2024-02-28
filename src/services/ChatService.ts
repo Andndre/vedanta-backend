@@ -56,10 +56,10 @@ export class GaneshChatSession {
 	}
 
 	static async getSession(sessionId: string) {
-		if (this.sessions.has(sessionId)) {
-			return this.sessions.get(sessionId);
+		if (GaneshChatSession.sessions.has(sessionId)) {
+			return GaneshChatSession.sessions.get(sessionId);
 		}
-		return await this.restoreSession(sessionId);
+		return await GaneshChatSession.restoreSession(sessionId);
 	}
 
 	static getSessionList(userId: string) {
@@ -70,13 +70,16 @@ export class GaneshChatSession {
 		return Date.now() - GaneshChatSession.lastTime;
 	}
 
-	private static delayRpm(rpm = 59) {
+	private static delayRpm(rpm = 59) { // Actually it's 60, but 59 to avoid being exactly on the limit
 		const duration = GaneshChatSession.getDurationSinceLastRequest();
 		const rpmInMs = 60 * 1000 / rpm; // 1 minute
+		console.log(duration);
 		if (duration < rpmInMs) {
 			const delay = rpmInMs - duration;
+			GaneshChatSession.lastTime = Date.now() + delay;
 			return new Promise(resolve => setTimeout(resolve, delay));
 		}
+		GaneshChatSession.lastTime = Date.now();
 		return Promise.resolve();
 	}
 
@@ -86,10 +89,9 @@ export class GaneshChatSession {
 	}
 
 	static async sendMessage(sessionId: string, message: string) {
-		const session = await this.getSession(sessionId);
+		const session = await GaneshChatSession.getSession(sessionId);
 		if (!session) return null;
 		const response = await session.sendMessage(message);
-		GaneshChatSession.lastTime = Date.now();
 		const responseText = response.response.text();
 		const history: MessageHistory[] = [
 			{
@@ -112,7 +114,6 @@ export class GaneshChatSession {
 				history: defaultHistory,
 			})
 			const result = await chat.sendMessage(message);
-			GaneshChatSession.lastTime = Date.now();
 			return {
 				error: false,
 				text: result.response.text()

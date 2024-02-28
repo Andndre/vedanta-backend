@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
-import JwtConfig from "../configs/JwtConfig";
+import JwtConfig from "@/configs/JwtConfig";
 import bearer from "@elysiajs/bearer";
-import loginUserState from "../states/LoginUserState";
+import loginUserState from "@/states/LoginUserState";
 
 const loginUserOnly = new Elysia()
 	.use(loginUserState)

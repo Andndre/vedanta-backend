@@ -9,8 +9,3 @@ export type MessageHistory = {
 	role: 'user' | 'model',
 	parts: string
 }
-
-export type Chat = {
-	id: number;
-	history: MessageHistory[]
-}
