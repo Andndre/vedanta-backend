@@ -21,11 +21,13 @@ export class GaneshChatSession {
 	private chatSession: ChatSession;
 	private static sessions: Map<string, GaneshChatSession> = new Map();
 	id: string;
+	// Free tier Gemini AI memiliki reate limit 60 request per menit. Untuk mencegah terlalu banyak message,
+	// gunakan limiter manual.
+	private static lastTime = Date.now();
 
-	private constructor(chatSession: ChatSession, userId: string, sessionId: string) {
+	private constructor(chatSession: ChatSession, sessionId: string) {
 		this.chatSession = chatSession;
 		this.id = sessionId;
-		GaneshChatSession.sessions.set(userId, this);
 	}
 	
 	static async newSession(userId: string) {
@@ -33,13 +35,13 @@ export class GaneshChatSession {
 			history: defaultHistory
 		});
 		const session = await SessionModel.create(userId);
-		const ganeshChatSession = new GaneshChatSession(chatSession, userId, session.id);
+		const ganeshChatSession = new GaneshChatSession(chatSession, session.id);
 		await SessionModel.saveHistory(session.id, defaultHistory)
-		this.sessions.set(session.id, ganeshChatSession);
+		GaneshChatSession.sessions.set(session.id, ganeshChatSession);
 		return ganeshChatSession;
 	}
 
-	static async restoreSession(userId: string, sessionId: string) {
+	static async restoreSession(sessionId: string) {
 		const session = await SessionModel.findById(sessionId);
 		if (!session) {
 			return null;
@@ -48,30 +50,46 @@ export class GaneshChatSession {
 		const chatSession = model.startChat({
 			history: history
 		});
-		const ganeshChatSession = new GaneshChatSession(chatSession, userId, session.id);
-		this.sessions.set(sessionId, ganeshChatSession);
+		const ganeshChatSession = new GaneshChatSession(chatSession, session.id);
+		GaneshChatSession.sessions.set(sessionId, ganeshChatSession);
 		return ganeshChatSession;
 	}
 
-	static async getSession(userId: string, sessionId: string) {
+	static async getSession(sessionId: string) {
 		if (this.sessions.has(sessionId)) {
 			return this.sessions.get(sessionId);
 		}
-		return await this.restoreSession(userId, sessionId);
+		return await this.restoreSession(sessionId);
 	}
 
 	static getSessionList(userId: string) {
 		return SessionModel.listFromUser(userId);
 	}
 
+	private static getDurationSinceLastRequest() {
+		return Date.now() - GaneshChatSession.lastTime;
+	}
+
+	private static delayRpm(rpm = 59) {
+		const duration = GaneshChatSession.getDurationSinceLastRequest();
+		const rpmInMs = 60 * 1000 / rpm; // 1 minute
+		if (duration < rpmInMs) {
+			const delay = rpmInMs - duration;
+			return new Promise(resolve => setTimeout(resolve, delay));
+		}
+		return Promise.resolve();
+	}
+
 	async sendMessage(message: string) {
+		await GaneshChatSession.delayRpm();
 		return this.chatSession.sendMessage(message);
 	}
 
-	static async sendMessage(userId: string, sessionId: string, message: string) {
-		const session = await this.getSession(userId, sessionId);
+	static async sendMessage(sessionId: string, message: string) {
+		const session = await this.getSession(sessionId);
 		if (!session) return null;
 		const response = await session.sendMessage(message);
+		GaneshChatSession.lastTime = Date.now();
 		const responseText = response.response.text();
 		const history: MessageHistory[] = [
 			{
@@ -86,26 +104,28 @@ export class GaneshChatSession {
 		await SessionModel.saveHistory(sessionId, history);
 		return responseText;
 	}
+
+	public static async singleChat(message: string) {
+		await GaneshChatSession.delayRpm();
+		try {
+			const chat = model.startChat({
+				history: defaultHistory,
+			})
+			const result = await chat.sendMessage(message);
+			GaneshChatSession.lastTime = Date.now();
+			return {
+				error: false,
+				text: result.response.text()
+			};
+		} catch (e: any) {
+			return {
+				error: true,
+				text: e.message as string
+			};
+		}
+	};
 }
 
-export const singleChat = async (message: string) => {
-	try {
-		const chat = model.startChat({
-			history: defaultHistory,
-		})
-		const result = await chat.sendMessage(message);
-		return {
-			error: false,
-			text: result.response.text()
-		};
-	} catch (e: any) {
-		return {
-			error: true,
-			text: e.message as string
-		};
-	}
-};
-
 export default {
-	singleChat
+	GaneshChatSession
 }

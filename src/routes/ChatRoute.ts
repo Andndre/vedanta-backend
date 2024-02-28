@@ -2,14 +2,14 @@ import { Elysia, t } from "elysia";
 
 import loginUserOnly from "@/guards/LoginUserOnly";
 import SessionModel from "@/models/SessionModel";
-import ChatService, { GaneshChatSession } from "@/services/ChatService";
+import { GaneshChatSession } from "@/services/ChatService";
 
 const chatRoute = new Elysia({ prefix: "/api/chat" })
   .use(loginUserOnly)
   .post(
     "/",
     async ({ body }) => {
-      const response = await ChatService.singleChat(body.message);
+      const response = await GaneshChatSession.singleChat(body.message);
       return response;
     },
     {
@@ -123,9 +123,8 @@ const chatRoute = new Elysia({ prefix: "/api/chat" })
   )
   .post(
     "/session/:id/chat",
-    async ({ store, params, body, set }) => {
+    async ({ params, body, set }) => {
       const response = await GaneshChatSession.sendMessage(
-        store.user!.id,
         params.id,
         body.message
       );
