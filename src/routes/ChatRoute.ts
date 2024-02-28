@@ -124,21 +124,28 @@ const chatRoute = new Elysia({ prefix: "/api/chat" })
   .post(
     "/session/:id/chat",
     async ({ params, body, set }) => {
-      const response = await GaneshChatSession.sendMessage(
-        params.id,
-        body.message
-      );
-      if (!response) {
-        set.status = 500;
+      try {
+        const response = await GaneshChatSession.sendMessage(
+          params.id,
+          body.message
+        );
+        if (!response) {
+          set.status = 500;
+          return {
+            error: true,
+            response: "Something went wrong",
+          };
+        }
+        return {
+          error: false,
+          response,
+        };
+      } catch (e: any) {
         return {
           error: true,
-          response: "Something went wrong",
+          response: e.message as string,
         };
       }
-      return {
-        error: false,
-        response,
-      };
     },
     {
       body: t.Object({

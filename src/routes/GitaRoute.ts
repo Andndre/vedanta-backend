@@ -3,7 +3,7 @@ import { Elysia, t } from "elysia";
 import LoginUserOnly from "@/guards/LoginUserOnly";
 import BabModel from "@/models/BabModel";
 import SlokaModel from "@/models/SlokaModel";
-import ChatService from "@/services/ChatService";
+import { GaneshChatSession } from "@/services/ChatService";
 
 const gitaRoute = new Elysia({ prefix: "/api/gita" })
   .use(LoginUserOnly)
@@ -133,7 +133,7 @@ const gitaRoute = new Elysia({ prefix: "/api/gita" })
               }
               let makna = sloka.makna;
               if (!makna) {
-                const { text, error } = await ChatService.singleChat(
+                const { text, error } = await GaneshChatSession.singleChat(
                   `Dalam Bab ${sloka.numberBab} Sloka ${sloka.number} Bhagavad Gita, disebutkan: "${sloka.content}" jika diterjemahan: "${sloka.translationIndo}". Apa makna dari isi sloka tersebut?`
                 );
                 if (error) {
