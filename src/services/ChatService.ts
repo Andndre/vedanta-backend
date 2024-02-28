@@ -73,7 +73,6 @@ export class GaneshChatSession {
 	private static delayRpm(rpm = 59) { // Actually it's 60, but 59 to avoid being exactly on the limit
 		const duration = GaneshChatSession.getDurationSinceLastRequest();
 		const rpmInMs = 60 * 1000 / rpm; // 1 minute
-		console.log(duration);
 		if (duration < rpmInMs) {
 			const delay = rpmInMs - duration;
 			GaneshChatSession.lastTime = Date.now() + delay;
