@@ -8,6 +8,7 @@ import { cors } from "@elysiajs/cors";
 import { staticPlugin } from "@elysiajs/static";
 import { PrismaClient } from "@prisma/client";
 import { Elysia } from "elysia";
+import { rateLimit } from 'elysia-rate-limit';
 import { readdir } from "node:fs/promises";
 
 export const prismaClient = new PrismaClient();
@@ -39,6 +40,9 @@ const app = new Elysia()
   .use(cors())
   .use(staticPlugin())
   .use(SwaggerConfig)
+  .use(rateLimit({
+    max: 300
+  }))
   .use(userRoute)
   .use(gitaRoute)
   .use(chatRoute)
