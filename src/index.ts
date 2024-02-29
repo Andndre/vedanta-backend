@@ -23,7 +23,7 @@ export const prismaClient = new PrismaClient();
   ) {
     console.log("[!] Downloading audio files...");
     await AudioAssetDownloader.downloadAllPelafalan();
-    if (AUDIO_FILES_COUNT === filesCount) {
+    if (AUDIO_FILES_COUNT === (await readdir("./public/audio")).length) {
       console.log('[✅] All audio has been downloaded..')
     } else {
       console.log('[❌] Failed to download some audios.. Please restart the server to retry')
