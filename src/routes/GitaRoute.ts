@@ -176,7 +176,14 @@ const gitaRoute = new Elysia({ prefix: "/api/gita" })
                 description: "Dapatkan makna dari satu sloka yang diberikan",
               },
             }
-          );
+          )
+          .get('/:sloka_number/pelafalan', ({ params }) => SlokaModel.searchPelafalanFile(+params.bab_number, +params.sloka_number), {
+            detail: {
+              tags: ["Gita"],
+              summary: "Sloka Pronounciation",
+              description: "Dapatkan file Mp3 pelafalan dari sloka",
+            },
+          })
       });
   });
 
