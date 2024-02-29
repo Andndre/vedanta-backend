@@ -40,18 +40,18 @@ const app = new Elysia()
   .use(cors())
   .use(staticPlugin())
   .use(SwaggerConfig)
-  .use(rateLimit({
-    max: 300
-  }))
-  .use(userRoute)
-  .use(gitaRoute)
-  .use(chatRoute)
   .get("/", ({ set }) => {
     set.redirect = "/docs";
   })
   .get("/api", ({ set }) => {
     set.redirect = "/docs";
   })
+  .use(rateLimit({
+    max: 300
+  }))
+  .use(userRoute)
+  .use(gitaRoute)
+  .use(chatRoute)
   .listen(PORT);
 
 console.log(`⚡ App is running at ${app.server?.url}`);
