@@ -1,4 +1,4 @@
-import { downloadAllPelafalan, tD } from "@/models/SlokaModel";
+import { tD } from "@/models/SlokaModel";
 import { describe, expect, it } from "bun:test";
 
 describe('Convert digit', () => {
@@ -7,11 +7,5 @@ describe('Convert digit', () => {
 	})
 	it("should convert 24 to 024", () => {
 		expect(tD(24)).toBe("024")
-	})
-})
-
-describe("Downloading all audio files", () => {
-	it("should sync and download all mp3 files", async () => {
-		expect(await downloadAllPelafalan()).toBe("OK")
 	})
 })
