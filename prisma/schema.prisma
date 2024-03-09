@@ -13,14 +13,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// User (pengguna aplikasi kecuali admin)
 model User {
-  id       String        @id @default(uuid())
-  name     String
-  email    String        @unique
-  password String        @db.VarChar(255)
-  sessions ChatSession[]
+  id                      String                     @id @default(uuid())
+  name                    String
+  email                   String                     @unique
+  password                String                     @db.VarChar(255)
+  sessions                ChatSession[]
+  slokasLiked             UserLikedGitaSloka[]
+  likedDiscussions        UserLikedDiscussion[]
+  likedDiscussionsReplies UserLikedDiscussionReply[]
+  likedDoas               UserLikedDoa[]
+  alarmDoas               AlarmDoa[]
+  discussionsCreated      Discussion[]
+  points                  Int                        @default(0)
 }
 
+// Kumpulan Gita bab
 model GitaBab {
   number          Int         @id @default(autoincrement())
   title           String
@@ -32,31 +41,35 @@ model GitaBab {
   @@index([number])
 }
 
+// Kumpulan Gita sloka
 model GitaSloka {
-  id              Int     @id @default(autoincrement())
+  id              Int                  @id @default(autoincrement())
   number          Int
   numberBab       Int
-  bab             GitaBab @relation(fields: [numberBab], references: [number], onDelete: Cascade)
-  content         String  @db.Text
-  translationIndo String  @db.Text
-  makna           String? @db.Text
+  bab             GitaBab              @relation(fields: [numberBab], references: [number], onDelete: Cascade)
+  content         String               @db.Text
+  translationIndo String               @db.Text
+  makna           String?              @db.Text
+  usersLiked      UserLikedGitaSloka[]
 
   @@unique([number, numberBab])
 }
 
+// Chat session yang dimiliki oleh user
 model ChatSession {
   id        String           @id @default(uuid())
   user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
-  title     String
+  title     String           @db.VarChar(50)
   history   MessageHistory[]
   createdAt DateTime         @default(now())
 
   @@index([userId])
 }
 
+// Message history pada suatu chat session
 model MessageHistory {
-  id        Int      @id @default(autoincrement())
+  id        Int         @id @default(autoincrement())
   role      String
   parts     String      @db.Text
   session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
@@ -64,3 +77,118 @@ model MessageHistory {
 
   @@index([sessionId])
 }
+
+// Many to many relationship antara user dan gita sloka (like)
+model UserLikedGitaSloka {
+  id      Int       @id @default(autoincrement())
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+  sloka   GitaSloka @relation(fields: [slokaId], references: [id], onDelete: Cascade)
+  slokaId Int
+}
+
+// Discussion yang dibuat oleh user
+model Discussion {
+  id           Int      @id @default(autoincrement())
+  title        String   @db.VarChar(300)
+  body         String   @db.Text
+  createdAt    DateTime @default(now())
+  repliesCount Int      @default(0)
+  likesCount   Int      @default(0)
+  creator      User     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId    String
+
+  replies   DiscussionReply[]
+  userLikes UserLikedDiscussion[]
+
+  @@index([creatorId])
+}
+
+// Many to many relationship antara user dan discussion (like)
+model UserLikedDiscussion {
+  id           Int        @id @default(autoincrement())
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  discussion   Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  discussionId Int
+
+  @@index([userId, discussionId])
+}
+
+// Reply pada suatu discussion
+model DiscussionReply {
+  id           Int      @id @default(autoincrement())
+  discussionId Int
+  reply        String   @db.Text
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  likesCount   Int      @default(0)
+
+  discussion               Discussion                 @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  UserLikedDiscussionReply UserLikedDiscussionReply[]
+
+  @@index([discussionId])
+}
+
+// Many to many relationship antara user dan reply (like)
+model UserLikedDiscussionReply {
+  id                Int             @id @default(autoincrement())
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String
+  reply             DiscussionReply @relation(fields: [discussionReplyId], references: [id], onDelete: Cascade)
+  discussionReplyId Int
+
+  @@index([userId, discussionReplyId])
+}
+
+// Doa yang bisa dilihat oleh user (ditambahkan oleh admin)
+model Doa {
+  id            Int            @id @default(autoincrement())
+  title         String
+  body          String
+  usersLiked    UserLikedDoa[]
+  pelafalanFile String?
+  alarmDoas     AlarmDoa[]
+
+  @@index([title])
+}
+
+// Many to many relationship antara user dan doa (like)
+model UserLikedDoa {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  doa    Doa    @relation(fields: [doaId], references: [id], onDelete: Cascade)
+  doaId  Int
+
+  @@index([userId, doaId])
+}
+
+// Alarm doa yang dimiliki oleh user
+model AlarmDoa {
+  id        Int      @id @default(autoincrement())
+  ulangiDoa Int
+  doa       Doa      @relation(fields: [doaId], references: [id], onDelete: Cascade)
+  doaId     Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  active    Boolean  @default(false)
+  jam       DateTime @default(now())
+
+  @@index([userId])
+}
+
+model MapGame {
+  id       Int     @id @default(autoincrement())
+  title    String
+  isSystem Boolean @default(false)
+}
+
+model Quiz {
+  id       Int    @id @default(autoincrement())
+  question String
+}
+
+// model Material {
+
+// }

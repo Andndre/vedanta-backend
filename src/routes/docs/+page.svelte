@@ -1,0 +1,31 @@
+<script lang="ts">
+	import { PUBLIC_APP_URL } from '$env/static/public'
+</script>
+
+<svelte:head>
+	<title>API Reference</title>
+	<meta charset="utf-8" />
+	<meta
+		name="viewport"
+		content="width=device-width, initial-scale=1" />
+	<style>
+		body {
+			margin: 0;
+		}
+	</style>
+</svelte:head>
+
+<body>
+	<script
+		id="api-reference"
+		data-url="{PUBLIC_APP_URL}/api-json/"></script>
+	<script>
+		var configuration = {
+			theme: 'purple',
+		}
+
+		var apiReference = document.getElementById('api-reference')
+		apiReference.dataset.configuration = JSON.stringify(configuration)
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+</body>
