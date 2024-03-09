@@ -18,15 +18,15 @@
 	export let value: string | null = null;
 
 	let isPassword = type === 'password';
-	let showPassword = false;
+	let showPassword = type !== 'password';
 </script>
 
 <Form.Field {form} {name}>
 	<Form.Control let:attrs>
 		<div class="relative">
+			<Input {...attrs} {value} {placeholder} type={showPassword ? 'text' : 'password'} class="pl-10" />
+			<svelte:component this={icon} size={16} class="absolute left-3 top-1/2 -translate-y-1/2" />
 			{#if isPassword}
-				<Input {...attrs} {value} {placeholder} type={showPassword ? 'text' : 'password'} class="pl-10" />
-				<svelte:component this={icon} size={16} class="absolute left-3 top-1/2 -translate-y-1/2" />
 				<button type="button" class="absolute right-3 top-1/2 -translate-y-1/2" on:click={() => (showPassword = !showPassword)}>
 					{#if showPassword}
 						<EyeOffIcon size={16}/>
@@ -34,9 +34,6 @@
 						 <EyeIcon size={16}/>
 					{/if}
 				</button>
-			{:else}
-				<Input {...attrs} {value} {placeholder} {type} class="pl-10" />
-				<svelte:component this={icon} size={16} class="absolute left-3 top-1/2 -translate-y-1/2" />
 			{/if}
 		</div>
 	</Form.Control>
