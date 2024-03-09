@@ -12,9 +12,8 @@
 
 	export let form: SuperForm<T>;
 	export let name: U;
-	export let placeholder: string;
 	export let icon: ComponentType<Icon>;
-	export let type: 'text' | 'password' = 'text';
+	export let type: 'text' | 'password' | 'email' = 'text';
 	export let value: string | null = null;
 
 	let isPassword = type === 'password';
@@ -24,14 +23,24 @@
 <Form.Field {form} {name}>
 	<Form.Control let:attrs>
 		<div class="relative">
-			<Input {...attrs} {value} {placeholder} type={showPassword ? 'text' : 'password'} class="pl-10" />
+			<Input
+				{...attrs}
+				bind:value
+				type={showPassword ? (isPassword ? 'text' : type) : 'password'}
+				class="pl-10"
+				{...$$restProps}
+			/>
 			<svelte:component this={icon} size={16} class="absolute left-3 top-1/2 -translate-y-1/2" />
 			{#if isPassword}
-				<button type="button" class="absolute right-3 top-1/2 -translate-y-1/2" on:click={() => (showPassword = !showPassword)}>
+				<button
+					type="button"
+					class="absolute right-3 top-1/2 -translate-y-1/2"
+					on:click={() => (showPassword = !showPassword)}
+				>
 					{#if showPassword}
-						<EyeOffIcon size={16}/>
+						<EyeOffIcon size={16} />
 					{:else}
-						 <EyeIcon size={16}/>
+						<EyeIcon size={16} />
 					{/if}
 				</button>
 			{/if}

@@ -1,8 +1,11 @@
 import { z } from 'zod';
 
 export const formSchema = z.object({
-	username: z.string().min(2).max(50),
-	password: z.string().min(6).max(50)
+	email: z.string().email({ message: '❌ Harap masukkan email yang valid' }),
+	password: z
+		.string()
+		.min(6, { message: '❌ Harap masukkan password minimal 6 karakter' })
+		.max(50, { message: '❌ Password maksimal 50 karakter' })
 });
 
 export type FormSchema = typeof formSchema;

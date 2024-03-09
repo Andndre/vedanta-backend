@@ -1,6 +1,5 @@
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form';
-	import { Input } from '$lib/components/ui/input';
 	import { LockIcon, UserIcon } from 'lucide-svelte';
 	import { formSchema, type FormSchema } from './loginSchema';
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
@@ -19,10 +18,12 @@
 <form method="POST" class="space-y-6" use:enhance>
 	<FormFieldIcons
 		{form}
-		name="username"
-		placeholder="Username"
+		name="email"
+		placeholder="Email"
 		icon={UserIcon}
-		bind:value={$formData.username}
+		bind:value={$formData.email}
+    autocomplete="email"
+    type="email"
 	/>
 	<FormFieldIcons
 		{form}
@@ -31,6 +32,7 @@
 		icon={LockIcon}
 		type="password"
 		bind:value={$formData.password}
+    autocomplete="current-password"
 	/>
 	<Form.Button class="w-full">Sign In</Form.Button>
 </form>
