@@ -330,6 +330,7 @@ model Mission {
   name        String
   maxProgress Int
   users       UserMission[]
+  rewardStars Int
 }
 
 model UserMission {
