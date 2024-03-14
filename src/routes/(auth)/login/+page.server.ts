@@ -8,3 +8,10 @@ export const load: PageServerLoad = async () => {
 		form: await superValidate(zod(formSchema))
 	};
 };
+
+export const actions = {
+	default: async ({ request }) => {
+		const form = await superValidate(request, zod(formSchema));
+		if (!form.valid) return { form };
+	}
+}

@@ -27,6 +27,19 @@ model User {
   alarmDoas               AlarmDoa[]
   discussionsCreated      Discussion[]
   points                  Int                        @default(0)
+  kelasDiikuti            UserKelas[]
+  kelasDibuat             Kelas[]
+  quizzesCreated          Quiz[]
+  quizTemplates           QuizTemplate[]
+  activeStreak            Int                        @default(0)
+  lastActiveAt            DateTime                   @default(now())
+  badges                  UserBadge[]
+  questionsAnswered       UserAnswersQuestion[]
+  doaHomewoks             UserHomeworkDoa[]
+  isAdmin                 Boolean                    @default(false)
+  missions                UserMission[]
+  quizzesAnswered         UserAnswersQuiz[]
+  UserNotification        UserNotification[]
 }
 
 // Kumpulan Gita bab
@@ -36,7 +49,7 @@ model GitaBab {
   titleHindi      String
   summary         String      @db.Text
   translationIndo String
-  GitaSloka       GitaSloka[]
+  gitaSlokas      GitaSloka[]
 
   @@index([number])
 }
@@ -60,7 +73,7 @@ model ChatSession {
   id        String           @id @default(uuid())
   user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
-  title     String           @db.VarChar(50)
+  title     String
   history   MessageHistory[]
   createdAt DateTime         @default(now())
 
@@ -89,17 +102,18 @@ model UserLikedGitaSloka {
 
 // Discussion yang dibuat oleh user
 model Discussion {
-  id           Int      @id @default(autoincrement())
-  title        String   @db.VarChar(300)
-  body         String   @db.Text
-  createdAt    DateTime @default(now())
-  repliesCount Int      @default(0)
-  likesCount   Int      @default(0)
-  creator      User     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  id           Int                   @id @default(autoincrement())
+  title        String                @db.VarChar(300)
+  body         String                @db.Text
+  createdAt    DateTime              @default(now())
+  repliesCount Int                   @default(0)
+  likesCount   Int                   @default(0)
+  creator      User                  @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   creatorId    String
-
-  replies   DiscussionReply[]
-  userLikes UserLikedDiscussion[]
+  class        Kelas?                @relation(fields: [kelasId], references: [id])
+  replies      DiscussionReply[]
+  userLikes    UserLikedDiscussion[]
+  kelasId      Int?
 
   @@index([creatorId])
 }
@@ -111,6 +125,7 @@ model UserLikedDiscussion {
   userId       String
   discussion   Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
   discussionId Int
+  grade        Int?
 
   @@index([userId, discussionId])
 }
@@ -143,12 +158,14 @@ model UserLikedDiscussionReply {
 
 // Doa yang bisa dilihat oleh user (ditambahkan oleh admin)
 model Doa {
-  id            Int            @id @default(autoincrement())
-  title         String
-  body          String
-  usersLiked    UserLikedDoa[]
-  pelafalanFile String?
-  alarmDoas     AlarmDoa[]
+  id              Int               @id @default(autoincrement())
+  title           String
+  body            String
+  usersLiked      UserLikedDoa[]
+  pelafalanFile   String?
+  alarmDoas       AlarmDoa[]
+  HomeWorkDoa     HomeWorkDoa[]
+  UserHomeworkDoa UserHomeworkDoa[]
 
   @@index([title])
 }
@@ -178,17 +195,158 @@ model AlarmDoa {
   @@index([userId])
 }
 
-model MapGame {
+model Kelas {
+  id             Int           @id @default(autoincrement())
+  name           String
+  classCode      String        @unique
+  siswa          UserKelas[]
+  pengajar       User          @relation(fields: [pengajarId], references: [id])
+  pengajarId     String
+  allMateri      Materi[]
+  allHomeworkDoa HomeWorkDoa[]
+  Discussion     Discussion[]
+}
+
+model UserKelas {
+  id      Int    @id @default(autoincrement())
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+  kelas   Kelas  @relation(fields: [kelasId], references: [id], onDelete: Cascade)
+  kelasId Int
+}
+
+model Materi {
+  id            Int            @id @default(autoincrement())
+  videoLink     String
+  kelas         Kelas          @relation(fields: [kelasId], references: [id])
+  kelasId       Int
+  description   String
+  title         String
+  quizzes       Quiz[]
+  quizTemplates QuizTemplate[]
+}
+
+model QuizTemplate {
   id       Int     @id @default(autoincrement())
-  title    String
-  isSystem Boolean @default(false)
+  question String
+  creator  User    @relation(fields: [userId], references: [id])
+  userId   String
+  materi   Materi? @relation(fields: [materiId], references: [id])
+  materiId Int?
 }
 
 model Quiz {
-  id       Int    @id @default(autoincrement())
-  question String
+  id            Int               @id @default(autoincrement())
+  question      String
+  creator       User              @relation(fields: [creatorId], references: [id])
+  creatorId     String
+  materi        Materi?           @relation(fields: [materiId], references: [id])
+  materiId      Int?
+  questions     Question[]
+  startedAt     DateTime?
+  timeLimit     Int
+  usersAnswered UserAnswersQuiz[]
 }
 
-// model Material {
+model UserAnswersQuiz {
+  id     Int    @id @default(autoincrement())
+  quiz   Quiz   @relation(fields: [quizId], references: [id])
+  quizId Int
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  score  Int
+}
 
-// }
+model Question {
+  id            Int                   @id @default(autoincrement())
+  quiz          Quiz                  @relation(fields: [quizId], references: [id])
+  quizId        Int
+  answer        String
+  question      Json
+  point         Int
+  usersAnswered UserAnswersQuestion[]
+}
+
+model UserAnswersQuestion {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId Int
+  answer     String
+}
+
+model HomeWorkDoa {
+  id            Int               @id @default(autoincrement())
+  class         Kelas             @relation(fields: [kelasId], references: [id])
+  kelasId       Int
+  doa           Doa               @relation(fields: [doaId], references: [id])
+  doaId         Int
+  deadline      DateTime
+  usersHomework UserHomeworkDoa[]
+}
+
+model UserHomeworkDoa {
+  id                 Int         @id @default(autoincrement())
+  user               User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId             String
+  homework           HomeWorkDoa @relation(fields: [homeWorkDoaId], references: [id])
+  timeSetAt          DateTime    @default(now())
+  fileRecorded       String?
+  documentationImage String?
+  Doa                Doa?        @relation(fields: [doaId], references: [id])
+  doaId              Int?
+  homeWorkDoaId      Int
+  grade              Int?
+}
+
+model Gift {
+  id        Int    @id @default(autoincrement())
+  name      String
+  thumbnail String
+  prize     Int    @default(0)
+}
+
+// Lencana
+model Badge {
+  id        Int         @id @default(autoincrement())
+  name      String
+  thumbnail String
+  rule      String
+  users     UserBadge[]
+}
+
+model UserBadge {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  badge     Badge    @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+  badgeId   Int
+  createdAt DateTime @default(now())
+}
+
+model Mission {
+  id          Int           @id @default(autoincrement())
+  name        String
+  maxProgress Int
+  users       UserMission[]
+}
+
+model UserMission {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  mission   Mission  @relation(fields: [missionId], references: [id])
+  missionId Int
+  progress  Int
+  createdAt DateTime @default(now())
+}
+
+model UserNotification {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  title     String
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+}
