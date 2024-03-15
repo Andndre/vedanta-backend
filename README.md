@@ -7,11 +7,11 @@ CREATE DATABASE db_vedanta;
 ```
 2. Install package
 ```bash
-bun run install
+pnpm install
 ```
 3. Run migration
 ```bash
-bun run prisma:deploy
+pnpm run prisma:deploy
 ```
 4. Lakukan seeding.
 	- copy semua teks di `/prisma/seeder.txt`
@@ -27,6 +27,7 @@ JWT_SECRET="oiadsuHJ874*&2$&(*)(*)#7#^$*&*&poipuIUOIUJKJ)(968757856)"
 # Gemini API Key
 GEMINI_API_KEY=YOUR_API_KEY_HERE
 DATABASE_URL="mysql://root:@localhost:3306/db_vedanta" # Sesuaikan dengan nama database dan username MySQL anda
+PUBLIC_APP_URL="https://localhost:3000"
 ``` 
 
 ## Gemini API Key
@@ -34,7 +35,7 @@ Dapatkan Gemini API Key di https://aistudio.google.com/app/apikey
 
 ## Development Server
 ```bash
-bun run dev
+pnpm run dev
 ```
 
 Buka http://localhost:3000/docs untuk dokumentasi API.
