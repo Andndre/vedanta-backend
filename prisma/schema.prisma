@@ -23,6 +23,7 @@ model User {
   activeStreak Int      @default(0)
   lastActiveAt DateTime @default(now())
   isAdmin      Boolean  @default(false)
+  isTeacher    Boolean  @default(false)
 
   sessions                ChatSession[]
   slokasLiked             UserLikedGitaSloka[]
@@ -158,6 +159,7 @@ model UserLikedDiscussionReply {
   id                Int    @id @default(autoincrement())
   userId            String
   discussionReplyId Int
+  grade             Int?
 
   reply DiscussionReply @relation(fields: [discussionReplyId], references: [id], onDelete: Cascade)
   user  User            @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -217,7 +219,8 @@ model Kelas {
   pengajar       User          @relation(fields: [pengajarId], references: [id])
   allMateri      Materi[]
   allHomeworkDoa HomeWorkDoa[]
-  Discussion     Discussion[]
+  discussions    Discussion[]
+  quizzes        Quiz[]
 
   @@index([classCode, pengajarId])
 }
@@ -251,6 +254,9 @@ model Quiz {
   userId         String
   materiId       Int?
   fromTemplateId Int?
+  kelasId        Int?
+  title          String
+  timeLimit      Int
 
   creator              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   materi               Materi?          @relation(fields: [materiId], references: [id], onDelete: SetNull)
@@ -258,6 +264,7 @@ model Quiz {
   entries              QuizEntry[]
   quizesUsesAsTemplate Quiz[]           @relation(name: "fromTemplate")
   userQuizResult       UserQuizResult[]
+  kelas                Kelas?           @relation(fields: [kelasId], references: [id])
 }
 
 model QuizEntry {
