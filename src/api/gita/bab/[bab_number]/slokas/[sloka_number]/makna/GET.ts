@@ -1,4 +1,4 @@
-import SlokaModel from '@/models/SlokaModel';
+import { one, saveMakna } from '@/models/SlokaModel';
 import { GaneshChatSession } from '@/services/ChatService';
 import { Endpoint, z, type RouteModifier, error } from 'sveltekit-api';
 
@@ -21,12 +21,12 @@ export const Modifier: RouteModifier = (r) => {
 
 export const Error = {
 	404: error(404, 'Sloka tidak ditemukan'),
-	500: error(500, 'Terjadi kesalahan pada server'),
+	500: error(500, 'Terjadi kesalahan pada server')
 };
 
 export default new Endpoint({ Output, Modifier, Param, Error }).handle(
 	async ({ bab_number, sloka_number }) => {
-		const sloka = await SlokaModel.one(+bab_number, +sloka_number);
+		const sloka = await one(+bab_number, +sloka_number);
 		if (!sloka) {
 			throw Error[404];
 		}
@@ -39,7 +39,7 @@ export default new Endpoint({ Output, Modifier, Param, Error }).handle(
 				throw Error[500];
 			}
 			makna = text;
-			await SlokaModel.saveMakna(+bab_number, +sloka_number, text);
+			await saveMakna(+bab_number, +sloka_number, text);
 		}
 		return {
 			makna,

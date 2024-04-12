@@ -1,4 +1,4 @@
-import SessionModel from '@/models/SessionModel';
+import { updateTitle, findByIdWithHistory } from '@/models/SessionModel';
 import { error } from '@/response';
 import { GaneshChatSession } from '@/services/ChatService';
 import { json } from '@sveltejs/kit';
@@ -9,7 +9,7 @@ type Output = z.infer<typeof Output>;
 
 export const GET = async (evt) => {
 	try {
-		const session = await SessionModel.findByIdWithHistory(evt.params.id);
+		const session = await findByIdWithHistory(evt.params.id);
 		if (!session) {
 			return error(404, 'Session not found');
 		}
@@ -30,7 +30,7 @@ export const GET = async (evt) => {
 		if (judul.length > 30) {
 			judul = judul.substring(0, 20) + '...';
 		}
-		await SessionModel.updateTitle(session.id, judul);
+		await updateTitle(session.id, judul);
 		return json({
 			error: false,
 			response: judul

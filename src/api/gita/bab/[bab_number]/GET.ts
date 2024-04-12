@@ -1,4 +1,4 @@
-import BabModel from '@/models/BabModel';
+import { one } from '@/models/BabModel';
 import { Endpoint, error, z, type RouteModifier } from 'sveltekit-api';
 
 export const Param = z.object({
@@ -25,7 +25,7 @@ export const Error = {
 };
 
 export default new Endpoint({ Output, Error, Modifier, Param }).handle(async ({ bab_number }) => {
-	const bab = await BabModel.one(+bab_number);
+	const bab = await one(+bab_number);
 	if (!bab) {
 		throw Error[404];
 	}

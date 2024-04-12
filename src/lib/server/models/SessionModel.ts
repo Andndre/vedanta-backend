@@ -71,13 +71,3 @@ export const updateTitle = (sessionId: string, newTitle: string) => {
 		}
 	});
 };
-
-export default {
-	listFromUser,
-	saveHistory,
-	create,
-	findById,
-	getHistory,
-	findByIdWithHistory,
-	updateTitle
-};

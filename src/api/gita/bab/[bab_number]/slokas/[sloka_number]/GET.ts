@@ -1,4 +1,4 @@
-import SlokaModel from '@/models/SlokaModel';
+import { one } from '@/models/SlokaModel';
 import { Endpoint, z, type RouteModifier, error } from 'sveltekit-api';
 
 export const Param = z.object({
@@ -28,7 +28,7 @@ export const Error = {
 
 export default new Endpoint({ Output, Modifier, Param, Error }).handle(
 	async ({ bab_number, sloka_number }) => {
-		const sloka = await SlokaModel.one(+bab_number, +sloka_number);
+		const sloka = await one(+bab_number, +sloka_number);
 		if (!sloka) {
 			throw Error[404];
 		}

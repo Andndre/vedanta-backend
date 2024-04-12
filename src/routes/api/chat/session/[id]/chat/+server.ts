@@ -3,14 +3,14 @@ import type { z } from 'sveltekit-api';
 import { Input, Output } from '$api/chat/session/[id]/chat/POST';
 import { json } from '@sveltejs/kit';
 import { error } from '@/response';
-import SessionModel from '@/models/SessionModel';
+import { findById } from '@/models/SessionModel';
 
 type Output = z.infer<typeof Output>;
 type Body = z.infer<typeof Input>;
 
 export const POST = async (evt) => {
 	try {
-		const session = await SessionModel.findById(evt.params.id);
+		const session = await findById(evt.params.id);
 		if (!session) {
 			return error(404, 'Session not found');
 		}

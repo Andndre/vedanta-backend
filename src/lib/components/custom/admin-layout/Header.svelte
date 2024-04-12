@@ -21,7 +21,7 @@
 					<AvatarFallback>AN</AvatarFallback>
 				</Avatar>
 			</PopoverTrigger>
-			<PopoverContent class="z-[10000] p-0">
+			<PopoverContent class="p-0">
 				<ul class="flex flex-col">
 					<li>
 						<a

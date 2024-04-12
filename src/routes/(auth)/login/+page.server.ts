@@ -2,10 +2,10 @@ import type { PageServerLoad } from './$types.js';
 import { superValidate } from 'sveltekit-superforms';
 import { formSchema } from '$lib/components/custom/auth-layout/loginSchema';
 import { zod } from 'sveltekit-superforms/adapters';
-import { prismaClient } from '@/db.js';
 import { securePath } from '$lib/utils';
 import bcrypt from 'bcryptjs';
 import { fail, redirect } from '@sveltejs/kit';
+import { findOne } from '@/models/UserModel.js';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.webUser) {
@@ -23,11 +23,7 @@ export const actions = {
 		if (!form.valid) return { form };
 
 		const { email, password } = form.data;
-		const user = await prismaClient.user.findUnique({
-			where: {
-				email
-			}
-		});
+		const user = await findOne(email);
 
 		if (!user) {
 			form.errors.email = ['User not found'];

@@ -1,5 +1,5 @@
 import { GEMINI_API_KEY } from '$env/static/private';
-import SessionModel from '@/models/SessionModel';
+import { create, saveHistory, findById, getHistory, listFromUser } from '@/models/SessionModel';
 
 import type { MessageHistory } from '@/types';
 import {
@@ -61,9 +61,9 @@ export class GaneshChatSession {
 		const chatSession = model.startChat({
 			history: defaultHistory
 		});
-		const session = await SessionModel.create(userId);
+		const session = await create(userId);
 		const ganeshChatSession = new GaneshChatSession(chatSession, session.id);
-		await SessionModel.saveHistory(session.id, defaultHistory);
+		await saveHistory(session.id, defaultHistory);
 		GaneshChatSession.sessions.set(session.id, ganeshChatSession);
 		return ganeshChatSession;
 	}
@@ -76,11 +76,11 @@ export class GaneshChatSession {
 	 * @returns The restored GaneshChatSession or null if the session does not exist
 	 */
 	static async restoreSession(sessionId: string): Promise<GaneshChatSession | null> {
-		const session = await SessionModel.findById(sessionId);
+		const session = await findById(sessionId);
 		if (!session) {
 			return null;
 		}
-		const history = await SessionModel.getHistory(session.id);
+		const history = await getHistory(session.id);
 		const chatSession = model.startChat({
 			history: history
 		});
@@ -109,7 +109,7 @@ export class GaneshChatSession {
 	 * @returns the list of chat sessions for the user
 	 */
 	static getSessionList(userId: string): Promise<{ id: string; title: string }[]> {
-		return SessionModel.listFromUser(userId);
+		return listFromUser(userId);
 	}
 
 	private static getDurationSinceLastRequest() {
@@ -173,7 +173,7 @@ export class GaneshChatSession {
 				parts: responseText
 			}
 		];
-		await SessionModel.saveHistory(sessionId, history);
+		await saveHistory(sessionId, history);
 		return responseText;
 	}
 
@@ -198,7 +198,7 @@ export class GaneshChatSession {
 				parts: responseText
 			}
 		];
-		await SessionModel.saveHistory(sessionId, history);
+		await saveHistory(sessionId, history);
 		return responseText;
 	}
 
@@ -230,7 +230,3 @@ export class GaneshChatSession {
 		}
 	}
 }
-
-export default {
-	GaneshChatSession
-};

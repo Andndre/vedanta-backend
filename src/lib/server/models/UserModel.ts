@@ -136,9 +136,3 @@ export async function refreshToken(cookie: Cookies) {
 export function isLoggedIn(cookie: Cookies) {
 	return cookie.get('session') !== undefined;
 }
-
-export default {
-	create,
-	isExists,
-	findOne
-}

@@ -1,5 +1,5 @@
-import BabModel from '@/models/BabModel';
-import { Endpoint, error, z, type RouteModifier } from 'sveltekit-api';
+import { allBab } from '@/models/BabModel';
+import { Endpoint, z, type RouteModifier } from 'sveltekit-api';
 
 export const Output = z.object({
 	babs: z.array(
@@ -21,6 +21,6 @@ export const Modifier: RouteModifier = (r) => {
 };
 
 export default new Endpoint({ Output, Modifier }).handle(async () => {
-	const allBab = await BabModel.allBab();
-	return { babs: allBab };
+	const babs = await allBab();
+	return { babs };
 });
