@@ -3,6 +3,23 @@ import { twMerge } from "tailwind-merge";
 import { cubicOut } from "svelte/easing";
 import type { TransitionConfig } from "svelte/transition";
 
+/**
+ * Jika hacker mengubah url redirectTo di path dengan url mereka,
+ * maka path tersebut akan menjadi tidak valid (Error 404).
+ * Karena huruf pertama diganti dengan '/'
+ *
+ * Contoh:
+ * - /home -> /home (Valid)
+ * - https://somesite.com/home -> /ttps://somesite.com/home (Error 404)
+ *
+ * @param path
+ * @returns
+ */
+export function securePath(path: string) {
+	return `/${path.substring(1)}`;
+}
+
+
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }

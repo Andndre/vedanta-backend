@@ -15,15 +15,15 @@ datasource db {
 
 // User (pengguna aplikasi kecuali admin)
 model User {
-  id           String   @id @default(uuid())
-  name         String
-  email        String   @unique
-  password     String   @db.VarChar(255)
-  points       Int      @default(0)
-  activeStreak Int      @default(0)
-  lastActiveAt DateTime @default(now())
-  isAdmin      Boolean  @default(false)
-  isTeacher    Boolean  @default(false)
+  id             String   @id @default(uuid())
+  name           String
+  email          String   @unique
+  password       String   @db.VarChar(255)
+  points         Int      @default(0)
+  activeStreak   Int      @default(0)
+  lastActiveAt   DateTime @default(now())
+  isAdmin        Boolean  @default(false)
+  refreshSession String   @unique @db.VarChar(36)
 
   sessions                ChatSession[]
   slokasLiked             UserLikedGitaSloka[]

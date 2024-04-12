@@ -6,6 +6,6 @@
 	export let data: PageData;
 </script>
 
-<AuthPage title="Selamat datang!">
+<AuthPage title="Masuk ke Akun">
 	<LoginForm data={data.form}/>
 </AuthPage>

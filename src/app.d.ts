@@ -8,10 +8,13 @@ declare global {
 				email: string;
 				id: string;
 			};
-			adminUser?: {
-				email: string;
+			webUser?: {
 				id: string;
-			};
+				name: string;
+				email: string;
+				isAdmin: boolean;
+				refreshSession: string;
+			} | null;
 		}
 		// interface PageData {}
 		// interface PageState {}

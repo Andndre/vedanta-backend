@@ -15,7 +15,7 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<form method="POST" class="space-y-6" use:enhance>
+<form method="POST" class="space-y-6" action="?/login">
 	<FormFieldIcons
 		{form}
 		name="email"

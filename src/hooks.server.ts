@@ -1,4 +1,5 @@
 import { JWT_SECRET } from '$env/static/private';
+import { getAuthUser } from '@/models/UserModel';
 import { error } from '@/response';
 import type { Handle } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
@@ -28,8 +29,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		event.locals.apiUser = {
 			...payload
 		};
-	} else if (pathname.startsWith('/admin')) {
-		// TODO: do something (middleware)
+	} else {
+		// Set the authenticated user in the event's locals
+		event.locals.webUser = (await getAuthUser(event.cookies)) || null;
 	}
 	const response = await resolve(event);
 	return response;
