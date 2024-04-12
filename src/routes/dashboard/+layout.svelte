@@ -14,7 +14,7 @@
 		<!-- Header component -->
 		<AdminHeader />
 
-		<div class="flex-1 px-4 py-8 md:px-8">
+		<div class="flex-1 px-4 py-8 sm:px-8 md:px-16 lg:px-36">
 			<!-- Slot for page content -->
 			<slot />
 		</div>

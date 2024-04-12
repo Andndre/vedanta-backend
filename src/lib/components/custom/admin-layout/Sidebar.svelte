@@ -52,8 +52,8 @@
 				width={128}
 				height={128}
 				class={cn(
-					"transition-all",
-					navbarOpen ? "w-16 h-16" : "w-7 h-7"
+					"transition-all object-contain",
+					navbarOpen ? "w-24 h-24" : "w-7 h-7"
 				)}
 			/>
 			<p class={cn(navbarOpen ? "dark:text-muted-foreground mt-3 font-black" : "hidden")}>
@@ -70,7 +70,7 @@
 					pathname == e.href
 						? "dark:bg-accent text-primary dark:text-accent-foreground"
 						: "text-muted-foreground",
-					navbarOpen ? "px-4 py-2" : "p-2")}>
+					navbarOpen ? "px-6 py-2" : "p-2")}>
 						<LucideIcons icon={e.icon}/>
 						{#if navbarOpen}
 							 <span>{e.title}</span>

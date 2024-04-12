@@ -1,0 +1,1 @@
+menampilkan semua penugasan doa

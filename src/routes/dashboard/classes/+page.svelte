@@ -1,1 +1,1 @@
-<h1>Classess Here</h1>
+<h1 class="text-2xl">Classess Here</h1>
