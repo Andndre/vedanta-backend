@@ -2,9 +2,10 @@
 	import { page } from "$app/stores";
 	import Separator from "$lib/components/ui/separator/separator.svelte";
 	import { cn } from "$lib/utils";
-	import { Table2, type Icon, ArrowLeft, ArrowRight } from "lucide-svelte";
+	import { type Icon, ArrowLeft, ArrowRight, HomeIcon, BookIcon } from "lucide-svelte";
 	import type { ComponentType } from "svelte";
 	import LucideIcons from "../LucideIcons.svelte";
+	import logo from "$lib/images/logo.png";
 
 	const pathname = $page.url.pathname
 
@@ -16,9 +17,14 @@
 
 	const sidebarNavItems: NavItem[] = [
 		{
-			title: "Dashboard",
-			href: "/",
-			icon: Table2,
+			title: "Home",
+			href: "/dashboard",
+			icon: HomeIcon,
+		},
+		{
+			title: "Perpustakaan",
+			href: "/dashboard/library",
+			icon: BookIcon,
 		}
 	];
 
@@ -30,13 +36,13 @@
 </script>
 <aside
 		class={cn(
-			"bg-card-foreground dark:bg-black dark:text-white text-card border-r shadow-xl min-h-screen max-w-[250px] p-4 z-[100] flex flex-col",
+			"bg-card border-r shadow-xl min-h-screen max-w-[250px] p-4 z-[100] flex flex-col",
 			navbarOpen ? "fixed md:static" : "static"
 		)}
 	>
 		<div class="flex flex-col items-center mt-8">
 			<img
-				src={"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png"}
+				src={logo}
 				alt="logo hmj"
 				width={128}
 				height={128}
@@ -45,8 +51,8 @@
 					navbarOpen ? "w-16 h-16" : "w-7 h-7"
 				)}
 			/>
-			<p class={cn(navbarOpen ? "font-medium text-muted dark:text-muted-foreground mt-3" : "hidden")}>
-				VEDANTA ADMIN
+			<p class={cn(navbarOpen ? "dark:text-muted-foreground mt-3 font-black" : "hidden")}>
+				VEDANTA
 			</p>
 		</div>
 		<Separator class="my-4" />
@@ -54,15 +60,12 @@
 			{#each sidebarNavItems as e}
 				<li
 					title={e.title}
-					class={cn(
-						"hover:bg-accent-foreground dark:hover:bg-accent text-accent transition-all rounded-md",
-						pathname == e.href
-							? "dark:bg-accent text-accent dark:text-accent-foreground"
-							: "text-muted-foreground",
-						navbarOpen ? "px-4 py-2" : "p-2"
-					)}
 				>
-					<a href={e.href} class="flex items-center gap-3">
+					<a href={e.href} class={cn("flex items-center gap-3", "hover:bg-gray-200 dark:hover:bg-accent text-accent transition-all rounded-md",
+					pathname == e.href
+						? "dark:bg-accent text-primary dark:text-accent-foreground"
+						: "text-muted-foreground",
+					navbarOpen ? "px-4 py-2" : "p-2")}>
 						<LucideIcons icon={e.icon}/>
 						{#if navbarOpen}
 							 <span>{e.title}</span>
