@@ -2,12 +2,12 @@
 	import { page } from "$app/stores";
 	import Separator from "$lib/components/ui/separator/separator.svelte";
 	import { cn } from "$lib/utils";
-	import { type Icon, ArrowLeft, ArrowRight, HomeIcon, BookIcon } from "lucide-svelte";
+	import { type Icon, ArrowLeft, ArrowRight, HomeIcon, BookIcon, UsersIcon } from "lucide-svelte";
 	import type { ComponentType } from "svelte";
 	import LucideIcons from "../LucideIcons.svelte";
 	import logo from "$lib/images/logo.png";
 
-	const pathname = $page.url.pathname
+	$: pathname = $page.url.pathname
 
 	type NavItem = {
 		title: string,
@@ -25,10 +25,15 @@
 			title: "Perpustakaan",
 			href: "/dashboard/library",
 			icon: BookIcon,
+		},
+		{
+			title: "Kelas",
+			href: "/dashboard/classes",
+			icon: UsersIcon,
 		}
 	];
 
-	let navbarOpen = false;
+	let navbarOpen = true;
 
 	function toggleNavbarOpen() {
 		navbarOpen = !navbarOpen;
