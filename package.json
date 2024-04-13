@@ -57,6 +57,7 @@
 		"combinations": "^1.0.0",
 		"elysia": "^0.8.17",
 		"formsnap": "^0.5.1",
+		"javascript-time-ago": "^2.5.9",
 		"jsonwebtoken": "^9.0.2",
 		"lucide-svelte": "^0.344.0",
 		"mode-watcher": "^0.2.2",

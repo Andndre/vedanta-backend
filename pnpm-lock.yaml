@@ -29,6 +29,9 @@ dependencies:
   formsnap:
     specifier: ^0.5.1
     version: 0.5.1(svelte@4.2.7)(sveltekit-superforms@2.8.1)
+  javascript-time-ago:
+    specifier: ^2.5.9
+    version: 2.5.9
   jsonwebtoken:
     specifier: ^9.0.2
     version: 9.0.2
@@ -1604,6 +1607,12 @@ packages:
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
 
+  /javascript-time-ago@2.5.9:
+    resolution: {integrity: sha512-pQ8mNco/9g9TqWXWWjP0EWl6i/lAQScOyEeXy5AB+f7MfLSdgyV9BJhiOD1zrIac/lrxPYOWNbyl/IW8CW5n0A==}
+    dependencies:
+      relative-time-format: 1.1.6
+    dev: false
+
   /jiti@1.21.0:
     resolution: {integrity: sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==}
     hasBin: true
@@ -2193,6 +2202,10 @@ packages:
 
   /regenerator-runtime@0.14.1:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
+    dev: false
+
+  /relative-time-format@1.1.6:
+    resolution: {integrity: sha512-aCv3juQw4hT1/P/OrVltKWLlp15eW1GRcwP1XdxHrPdZE9MtgqFpegjnTjLhi2m2WI9MT/hQQtE+tjEWG1hgkQ==}
     dev: false
 
   /resolve-from@4.0.0:

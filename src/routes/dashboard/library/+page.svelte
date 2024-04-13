@@ -11,8 +11,9 @@
 			type: 'QUIZ' | 'DOA',
 			profileAuthor?: string
 	}
-	let quizes: Quiz[] = [{
-		name: "Pertemuan 1 | Kelas X SMP 4 HINDU LAKSANA",
+	let quizes: Quiz[] = [
+	{
+		name: "QUIZ 2 | Kelas X SMP NEGERI HINDU 3 BELAHBATUH",
 		author: "Admin",
 		time: "3 hari lalu",
 		id: "1",
@@ -20,9 +21,9 @@
 		profileAuthor: "https://avatars.githubusercontent.com/u/81848639?v=4"
 	},
 	{
-		name: "Pertemuan 1 | Kelas X SMP 4 HINDU LAKSANA",
+		name: "QUIZ 1 | Kelas X SMP NEGERI HINDU 3 BELAHBATUH",
 		author: "Admin",
-		time: "3 hari lalu",
+		time: "19 hari lalu",
 		id: "1",
 		type: "QUIZ",
 		profileAuthor: "https://avatars.githubusercontent.com/u/81848639?v=4"
