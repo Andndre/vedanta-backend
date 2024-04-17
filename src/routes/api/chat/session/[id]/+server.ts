@@ -1,4 +1,4 @@
-import SessionModel from '@/models/SessionModel.js';
+import { findByIdWithHistory } from '@/models/SessionModel.js';
 import { error } from '@/response';
 import { json } from '@sveltejs/kit';
 
@@ -8,7 +8,7 @@ import type { z } from 'sveltekit-api';
 type Output = z.infer<typeof Output>;
 
 export const GET = async (evt) => {
-	const session = await SessionModel.findByIdWithHistory(evt.params.id);
+	const session = await findByIdWithHistory(evt.params.id);
 	if (!session) {
 		return error(404, 'Session not found');
 	}
