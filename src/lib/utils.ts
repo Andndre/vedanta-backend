@@ -19,6 +19,15 @@ export function securePath(path: string) {
 	return `/${path.substring(1)}`;
 }
 
+// Generates 1 or 2 letter initials from name
+export function getInitialName(name: string) {
+    const firstLetters = name.split(" ").map((n) => n[0]);
+    if (firstLetters.length === 1) {
+        return firstLetters[0].toUpperCase();
+    }
+    return firstLetters[0].toUpperCase() + firstLetters[1].toUpperCase();
+}
+
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));

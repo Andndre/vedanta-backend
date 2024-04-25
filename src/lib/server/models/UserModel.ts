@@ -136,3 +136,16 @@ export async function refreshToken(cookie: Cookies) {
 export function isLoggedIn(cookie: Cookies) {
 	return cookie.get('session') !== undefined;
 }
+
+export async function getCreatedQuizzes(email: string) {
+	const user = await prismaClient.user.findUnique({
+		where: {
+			email
+		},
+		select: {
+			quizzesCreated: true
+		}
+	});
+	if (!user) return [];
+	return user.quizzesCreated;
+}

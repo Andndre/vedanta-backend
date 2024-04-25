@@ -250,13 +250,14 @@ model Materi {
 }
 
 model Quiz {
-  id             Int    @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   userId         String
   materiId       Int?
   fromTemplateId Int?
   kelasId        Int?
   title          String
   timeLimit      Int
+  createdAt      DateTime @default(now())
 
   creator              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   materi               Materi?          @relation(fields: [materiId], references: [id], onDelete: SetNull)
@@ -318,16 +319,16 @@ model HomeWorkDoa {
 model UserHomeworkDoa {
   id                 Int      @id @default(autoincrement())
   userId             String
-  homeWorkDoaId      Int
   timeSetAt          DateTime @default(now())
   fileRecorded       String?
   documentationImage String?
-  doaId              Int?
   grade              Int?
+  homeWorkDoaId      Int
 
-  doa      Doa?        @relation(fields: [doaId], references: [id], onDelete: Cascade)
   homework HomeWorkDoa @relation(fields: [homeWorkDoaId], references: [id], onDelete: Cascade)
   user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Doa      Doa?        @relation(fields: [doaId], references: [id])
+  doaId    Int?
 }
 
 model Gift {

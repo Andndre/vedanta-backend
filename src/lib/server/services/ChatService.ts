@@ -184,7 +184,6 @@ export class GaneshChatSession {
 		let responseText = '';
 		for await (const item of response.stream) {
 			responseText += item.text();
-			console.log(responseText);
 			yield item.text();
 		}
 
