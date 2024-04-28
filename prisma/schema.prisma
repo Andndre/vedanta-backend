@@ -202,6 +202,7 @@ model AlarmDoa {
   userId    String
   active    Boolean  @default(false)
   jam       DateTime @default(now())
+  label     String   @default("Alarm Doa")
 
   doa  Doa  @relation(fields: [doaId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

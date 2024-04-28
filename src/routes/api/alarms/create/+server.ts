@@ -1,4 +1,5 @@
 import { prismaClient } from '@/db.js';
+import { json } from '@sveltejs/kit';
 
 export const POST = async (evt) => {
 	const body = await evt.request.json();
@@ -8,8 +9,12 @@ export const POST = async (evt) => {
 			userId: evt.locals.apiUser!.id,
 			doaId: body.doaId,
 			ulangiDoa: body.ulangiDoa,
-			jam: body.jam
+			jam: body.jam,
+			label: body.label
 		}
 	});
-	return new Response();
+	return json({
+		alarmCreated: alarm,
+		error: false
+	});
 };

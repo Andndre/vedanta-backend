@@ -16,6 +16,8 @@ export const Error = {
 
 export const Modifier: RouteModifier = (r) => {
 	r.tags = ['User'];
+	r.summary = 'Login';
+	r.description = 'Login User';
 	return r;
 };
 

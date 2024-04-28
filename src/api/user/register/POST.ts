@@ -22,6 +22,8 @@ export const Error = {
 
 export const Modifier: RouteModifier = (r) => {
 	r.tags = ['User'];
+	r.summary = 'Register User';
+	r.description = 'Mendaftarkan user baru';
 	return r;
 };
 

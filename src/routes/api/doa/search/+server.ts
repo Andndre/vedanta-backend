@@ -19,8 +19,23 @@ export const GET = async (evt) => {
 		take: 10
 	});
 
+	const doasWithLiked = await Promise.all(
+		doas.map(async (doa) => {
+			const liked = await prismaClient.userLikedDoa.findFirst({
+				where: {
+					userId: evt.locals.apiUser!.id,
+					doaId: doa.id
+				}
+			});
+			return {
+				...doa,
+				liked: !!liked
+			};
+		})
+	);
+
 	return json({
-		doas,
+		doas: doasWithLiked,
 		error: false
 	});
 };
