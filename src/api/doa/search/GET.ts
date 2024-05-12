@@ -72,8 +72,11 @@ export const Modifier: RouteModifier = (r) => {
 		{
 			name: 'q',
 			in: 'query',
+			description: 'Kata kunci pencarian',
 			required: true,
-			description: 'Kata kunci pencarian'
+			schema: {
+				type: 'string'
+			}
 		}
 	];
 	return r;
