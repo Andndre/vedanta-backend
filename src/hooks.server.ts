@@ -17,22 +17,34 @@ const verifyJWT = (bearer: string) => {
 export const handle: Handle = async ({ event, resolve }) => {
 	const pathname = event.url.pathname;
 	if (pathname.startsWith('/api') && !isAPIException(pathname)) {
-		// const authorization = event.request.headers.get('Authorization');
-		// const bearer = authorization?.replace('Bearer ', '');
-		// if (!bearer) {
-		// 	return error(401, 'No Bearer token provided');
-		// }
-		// const payload = verifyJWT(bearer) as { email: string; id: string } | undefined;
-		// if (!payload) {
-		// 	return error(401, 'Invalid token');
-		// }
-		// event.locals.apiUser = {
-		// 	...payload
-		// };
+		if (event.request.method === 'OPTIONS') {
+			return new Response(null, {
+				headers: {
+					'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': '*'
+				}
+			});
+		}
+		const authorization = event.request.headers.get('Authorization');
+		const bearer = authorization?.replace('Bearer ', '');
+		if (!bearer) {
+			return error(401, 'No Bearer token provided');
+		}
+		const payload = verifyJWT(bearer) as { email: string; id: string } | undefined;
+		if (!payload) {
+			return error(401, 'Invalid token');
+		}
+		event.locals.apiUser = {
+			...payload
+		};
 	} else {
 		// Set the authenticated user in the event's locals
 		event.locals.webUser = (await getAuthUser(event.cookies)) || null;
 	}
 	const response = await resolve(event);
+	if (event.url.pathname.startsWith('/api')) {
+		response.headers.append('Access-Control-Allow-Origin', `*`);
+	}
 	return response;
 };
