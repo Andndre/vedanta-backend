@@ -4,19 +4,13 @@ import { error } from '@/response';
 import type { Handle } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 
-const API_EXCEPTIONS = ['/api/docs', '/api/user', '/api-json'];
-
-function isAPIException(pathname: string) {
-	return API_EXCEPTIONS.some((exception) => pathname.startsWith(exception));
-}
-
 const verifyJWT = (bearer: string) => {
 	return jwt.verify(bearer, JWT_SECRET);
 };
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const pathname = event.url.pathname;
-	if (pathname.startsWith('/api') && !isAPIException(pathname)) {
+	if (pathname.startsWith('/api') && !pathname.startsWith('/api/user')) {
 		if (event.request.method === 'OPTIONS') {
 			return new Response(null, {
 				headers: {
