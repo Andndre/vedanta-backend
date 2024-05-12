@@ -10,7 +10,7 @@ const verifyJWT = (bearer: string) => {
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const pathname = event.url.pathname;
-	if (pathname.startsWith('/api') && !pathname.startsWith('/api/user')) {
+	if (pathname.startsWith('/api') && !pathname.startsWith('/api/user') && pathname !== '/api-json') {
 		const authorization = event.request.headers.get('Authorization');
 		const bearer = authorization?.replace('Bearer ', '');
 		if (!bearer) {
