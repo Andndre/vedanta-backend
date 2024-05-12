@@ -16,6 +16,9 @@ const config = {
       "$api": "./src/api",
 			"@/*": "./src/lib/server/*",
     },
+		csrf: {
+			checkOrigin: false
+		}
 	},
 };
 
