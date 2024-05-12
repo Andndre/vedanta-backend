@@ -1,31 +1,35 @@
-<script lang="ts">
-	import { PUBLIC_APP_URL } from '$env/static/public'
-</script>
-
 <svelte:head>
-	<title>API Reference</title>
-	<meta charset="utf-8" />
-	<meta
-		name="viewport"
-		content="width=device-width, initial-scale=1" />
-	<style>
-		body {
-			margin: 0;
+	<title>Docs</title>
+	<link
+		rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css"
+	/>
+	<script src="https://unpkg.com/swagger-ui-dist@latest/swagger-ui-bundle.js" defer></script>
+	<script defer>
+		async function loadSwagger() {
+			const response = await fetch(`/api-json`);
+			const spec = await response.json();
+			await new Promise((resolve) => setTimeout(resolve, 3000));
+			console.log(spec);
+			var swaggerUIOptions = {
+				url: 'https://petstore.swagger.io/v2/swagger.json',
+				dom_id: '#ui-wrapper-new', // Determine what element to load swagger ui
+				docExpansion: 'list',
+				deepLinking: true, // Enables dynamic deep linking for tags and operations
+				filter: true,
+				spec: spec,
+				presets: [SwaggerUIBundle.presets.apis, SwaggerUIBundle.SwaggerUIStandalonePreset],
+				plugins: [SwaggerUIBundle.plugins.DownloadUrl]
+			};
+
+			var ui = SwaggerUIBundle(swaggerUIOptions);
+
+			/** Export to window for use in custom js */
+			window.ui = ui;
 		}
-	</style>
+
+		loadSwagger();
+	</script>
 </svelte:head>
 
-<body>
-	<script
-		id="api-reference"
-		data-url="{PUBLIC_APP_URL}/api-json/"></script>
-	<script>
-		var configuration = {
-			theme: 'purple',
-		}
-
-		var apiReference = document.getElementById('api-reference')
-		apiReference.dataset.configuration = JSON.stringify(configuration)
-	</script>
-	<script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
-</body>
+<div id="ui-wrapper-new">Loading....</div>
