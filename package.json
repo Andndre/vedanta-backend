@@ -53,6 +53,7 @@
 		"@google/generative-ai": "^0.2.1",
 		"@prisma/client": "^5.12.1",
 		"@sveltejs/adapter-vercel": "^5.3.0",
+		"@vercel/blob": "^0.23.2",
 		"bcryptjs": "^2.4.3",
 		"bits-ui": "^0.19.4",
 		"clsx": "^2.1.0",
