@@ -35,7 +35,7 @@
 		<h1 class="text-3xl font-bold">Perpustakaan</h1>
 		<p class="mt-3 text-gray-600">Semua quiz yang pernah anda buat</p>
 	</div>
-	<Button>Buat Baru</Button>
+	<Button href="/dashboard/library/new">Buat Baru</Button>
 </div>
 
 <div class="pt-12"></div>
