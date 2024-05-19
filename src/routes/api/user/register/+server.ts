@@ -16,6 +16,6 @@ export const POST = async (evt) => {
 	return json({
 		message: 'Successfully created user',
 		error: false,
-		user
+		user	
 	} satisfies Output);
 };
