@@ -2,7 +2,7 @@ import { prismaClient } from '@/db.js';
 import { json } from '@sveltejs/kit';
 
 export const POST = async (evt) => {
-	const body = await evt.request.json();
+	const body = Object.fromEntries(await evt.request.formData()) as { doaId: number, ulangiDoa: number, jam: Date, label: string };
 
 	const alarm = await prismaClient.alarmDoa.create({
 		data: {
