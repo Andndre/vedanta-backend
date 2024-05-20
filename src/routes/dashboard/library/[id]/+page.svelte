@@ -5,6 +5,7 @@
 
 	import QuizIcon from '$lib/images/icons/quiz.png';
 	import type { IsianSingkat, PilihanGanda } from '$lib/types/quiz';
+	import { PencilLine, PlusIcon } from 'lucide-svelte';
 
 	export let data: PageServerData;
 
@@ -41,14 +42,17 @@
 </script>
 
 <div class="flex flex-1 flex-col justify-center">
-	<h1 class="text-2xl">{data.quiz?.title}</h1>
+	<a href={`/dashboard/library/${data.quiz.id}/edit`} class="flex items-center gap-3">
+		<h1 class="text-2xl">{data.quiz?.title}</h1>
+		<PencilLine size={15} />
+	</a>
 	<div class="pt-8"></div>
 	<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
 		<div class="flex items-center justify-between">
 			<h2 class="text-xl font-semibold">{data.quiz?.entries.length} Pertanyaan</h2>
 			<Dialog.Root>
 				<Dialog.Trigger class={buttonVariants({ variant: 'default' })}
-					>Tambahkan Item</Dialog.Trigger
+					><PlusIcon size={15} class="mr-3" /> Tambahkan Item</Dialog.Trigger
 				>
 				<Dialog.Content class="sm:max-w-[425px]">
 					<Dialog.Header>
