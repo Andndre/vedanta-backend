@@ -7,7 +7,6 @@
 	let opsi2 = 'Ketikkan Pilihan 2';
 	let opsi3 = 'Ketikkan Pilihan 3';
 	let opsi4 = 'Ketikkan Pilihan 4';
-	let correct: string | undefined = undefined;
 </script>
 
 <form action="?/save" method="POST">
