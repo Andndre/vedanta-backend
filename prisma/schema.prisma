@@ -272,7 +272,6 @@ model Quiz {
 model QuizEntry {
   id             Int  @id @default(autoincrement())
   quizId         Int
-  correct        Int
   questionModel  Json
   scoreCorrect   Int
   scoreIncorrect Int  @default(0)
