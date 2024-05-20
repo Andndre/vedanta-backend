@@ -4,6 +4,7 @@
 	import type { PageServerData } from './$types';
 
 	import QuizIcon from '$lib/images/icons/quiz.png';
+	import type { PilihanGanda } from '$lib/types/quiz';
 
 	export let data: PageServerData;
 
@@ -29,16 +30,22 @@
 			href: `/dashboard/library/${data.quiz.id}/quiz/add?type=cocokgambar`
 		}
 	];
+
+	function isPilgan(obj: any): obj is PilihanGanda {
+		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'pilgan';
+	}
 </script>
 
 <div class="flex flex-1 flex-col justify-center">
 	<h1 class="text-2xl">{data.quiz?.title}</h1>
 	<div class="pt-8"></div>
 	<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-		<div class="flex justify-between">
-			<h2>{data.quiz?.entries.length} Quiz</h2>
+		<div class="flex items-center justify-between">
+			<h2 class="text-xl font-semibold">{data.quiz?.entries.length} Pertanyaan</h2>
 			<Dialog.Root>
-				<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Edit Profile</Dialog.Trigger>
+				<Dialog.Trigger class={buttonVariants({ variant: 'default' })}
+					>Tambahkan Item</Dialog.Trigger
+				>
 				<Dialog.Content class="sm:max-w-[425px]">
 					<Dialog.Header>
 						<Dialog.Title>Tambahkan Item Quiz</Dialog.Title>
@@ -65,6 +72,35 @@
 				</Dialog.Content>
 			</Dialog.Root>
 		</div>
-		<div></div>
 	</div>
 </div>
+<div class="pt-3"></div>
+{#each data.quiz.entries as item, i}
+	{#if item.questionModel && typeof item.questionModel == 'object'}
+		{#if isPilgan(item.questionModel)}
+			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
+				{i + 1}. {item.questionModel.title}
+				<div class="grid grid-cols-12">
+					<div class="col-span-6">
+						<p>a. {item.questionModel.optionOne}</p>
+					</div>
+					<div class="col-span-6">
+						<p>b. {item.questionModel.optionTwo}</p>
+					</div>
+					<div class="col-span-6">
+						<p>c. {item.questionModel.optionThree}</p>
+					</div>
+					<div class="col-span-6">
+						<p>d. {item.questionModel.optionFour}</p>
+					</div>
+				</div>
+				<p>Jawaban: {item.questionModel.correct}</p>
+			</div>
+			<div class="pt-3"></div>
+		{:else}
+			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
+				{item.questionModel}
+			</div>
+		{/if}
+	{/if}
+{/each}

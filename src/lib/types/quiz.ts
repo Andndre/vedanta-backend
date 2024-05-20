@@ -14,11 +14,17 @@ export class Quiz {
 
 export class PilihanGanda extends Quiz {
     correct: string
-    options: string[]
-    constructor(title: string, correct: string, options: string[]) {
+    optionOne: string
+    optionTwo: string
+    optionThree: string
+    optionFour: string
+    constructor(title: string, correct: string, optionsOne: string, optionsTwo: string, optionsThree: string, optionsFour: string) {
         super(title, QuizType.PilihanGanda);
         this.correct = correct;
-        this.options = options;
+        this.optionOne = optionsOne;
+        this.optionTwo = optionsTwo;
+        this.optionThree = optionsThree;
+        this.optionFour = optionsFour;
     }
 }
 

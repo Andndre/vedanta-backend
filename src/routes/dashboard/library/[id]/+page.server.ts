@@ -22,6 +22,7 @@ export const load: PageServerLoad = async (evt) => {
         }
     })
 
+
     if (!quiz) {
         throw error(404, 'Quiz not found');
     }
