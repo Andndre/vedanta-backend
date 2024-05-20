@@ -4,7 +4,7 @@
 	import type { PageServerData } from './$types';
 
 	import QuizIcon from '$lib/images/icons/quiz.png';
-	import type { PilihanGanda } from '$lib/types/quiz';
+	import type { IsianSingkat, PilihanGanda } from '$lib/types/quiz';
 
 	export let data: PageServerData;
 
@@ -33,6 +33,10 @@
 
 	function isPilgan(obj: any): obj is PilihanGanda {
 		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'pilgan';
+	}
+
+	function isIsian(obj: any): obj is IsianSingkat {
+		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'isian';
 	}
 </script>
 
@@ -79,7 +83,7 @@
 	{#if item.questionModel && typeof item.questionModel == 'object'}
 		{#if isPilgan(item.questionModel)}
 			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-				{i + 1}. {item.questionModel.title}
+				<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
 				<div class="grid grid-cols-12">
 					<div class="col-span-6">
 						<p>a. {item.questionModel.optionOne}</p>
@@ -94,6 +98,12 @@
 						<p>d. {item.questionModel.optionFour}</p>
 					</div>
 				</div>
+				<p>Jawaban: {item.questionModel.correct}</p>
+			</div>
+			<div class="pt-3"></div>
+		{:else if isIsian(item.questionModel)}
+			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
+				<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
 				<p>Jawaban: {item.questionModel.correct}</p>
 			</div>
 			<div class="pt-3"></div>
