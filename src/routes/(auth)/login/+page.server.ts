@@ -9,7 +9,6 @@ import { findOne } from '@/models/UserModel.js';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.webUser) {
-		console.log(locals.webUser);
 		throw redirect(302, securePath('/dashboard'));
 	}
 	return {

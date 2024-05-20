@@ -258,7 +258,6 @@ model Quiz {
   fromTemplateId Int?
   kelasId        Int?
   title          String
-  timeLimit      Int
   createdAt      DateTime @default(now())
 
   creator              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
