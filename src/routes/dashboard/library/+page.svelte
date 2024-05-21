@@ -8,7 +8,6 @@
 	import { Edit2Icon } from 'lucide-svelte';
 
 	export let data: PageServerData;
-
 </script>
 
 <div class="flex items-center justify-between">
@@ -47,7 +46,9 @@
 				</div>
 			</div>
 			<div class="flex justify-center gap-3">
-				<Button variant="secondary" href={`/dashboard/library/${quiz.id}`}><Edit2Icon size={15}/></Button>
+				<Button variant="secondary" href={`/dashboard/library/${quiz.id}`}
+					><Edit2Icon size={15} /></Button
+				>
 				<Button variant="secondary">Sebarkan</Button>
 			</div>
 		</div>
