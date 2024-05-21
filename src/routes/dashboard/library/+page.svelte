@@ -6,10 +6,50 @@
 	import Logo from '$lib/images/logo.png';
 	import type { PageServerData } from './$types';
 	import { Edit2Icon } from 'lucide-svelte';
+	import * as Dialog from '$lib/components/ui/dialog';
+	import { Skeleton } from '$lib/components/ui/skeleton';
+	import { PUBLIC_APP_URL } from '$env/static/public';
 
 	export let data: PageServerData;
+	let dialogOpen = false;
+	let daftarKelas: { classCode: string; id: number; name: string }[] = [];
+	let searched = false;
+	let selected = -1;
+
+	async function kelasDibuat() {
+		if (searched) return daftarKelas;
+		const r = await fetch(`${PUBLIC_APP_URL}/dashboard/classes/api`);
+		if (!r.ok) return [];
+		const data = await r.json();
+		daftarKelas = data.classes;
+		return daftarKelas;
+	}
 </script>
 
+<Dialog.Root bind:open={dialogOpen}>
+	<Dialog.Content>
+		<Dialog.Header>
+			<Dialog.Title>Pilih Kelas</Dialog.Title>
+			<Dialog.Description>Pilih Kelas yang Akan Diberikan Tugas</Dialog.Description>
+		</Dialog.Header>
+		{#await kelasDibuat()}
+			<Skeleton class="h-10 w-full rounded-sm" />
+		{:then listKelas}
+			<div class="flex flex-col gap-2 rounded-sm">
+				{#each listKelas as kelas}
+					<button
+						on:click={() => {
+							dialogOpen = false;
+						}}
+						class="flex items-center gap-2 rounded-sm border border-gray-300 p-2 shadow-sm"
+					>
+						<p>{kelas.name}</p>
+					</button>
+				{/each}
+			</div>
+		{/await}
+	</Dialog.Content>
+</Dialog.Root>
 <div class="flex items-center justify-between">
 	<div>
 		<h1 class="text-3xl font-bold">Perpustakaan</h1>
@@ -34,13 +74,6 @@
 				<div>
 					<h2 class="text-xl font-medium">{quiz.title}</h2>
 					<div class="mt-3 flex items-center gap-3">
-						<Avatar class="h-6 w-6">
-							<AvatarImage
-								src={data.user.name}
-								alt="user avatar"
-								class="h-full w-full object-cover"
-							/>
-						</Avatar>
 						<span class="text-gray-600">{quiz.createdAt}</span>
 					</div>
 				</div>
