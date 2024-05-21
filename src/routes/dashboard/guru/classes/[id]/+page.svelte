@@ -35,7 +35,7 @@
 			</div>
 		</div>
 		<div class="flex justify-center gap-3">
-			<Button variant="secondary" href={`/dashboard/library/${quiz.id}`}
+			<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}
 				><Edit2Icon size={15} /></Button
 			>
 			<Button variant="secondary">Sebarkan</Button>

@@ -17,7 +17,7 @@
 		<h1 class="text-3xl font-bold">Kelas Anda</h1>
 		<p class="mt-3 text-gray-600">Semua kelas yang pernah anda buat</p>
 	</div>
-	<Button href="/dashboard/classes/new">Buat Baru</Button>
+	<Button href="/dashboard/guru/classes/new">Buat Baru</Button>
 </div>
 
 <div class="pt-12"></div>
@@ -41,7 +41,7 @@
 				</div>
 			</div>
 			<div class="flex justify-center gap-3">
-				<Button variant="secondary" href={`/dashboard/classes/${kelas.id}`}
+				<Button variant="secondary" href={`/dashboard/guru/classes/${kelas.id}`}
 					><Edit2Icon size={15} /></Button
 				>
 			</div>

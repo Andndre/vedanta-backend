@@ -1,12 +1,10 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
-
-	let namaTugas = '';
 </script>
 
 <div class="flex flex-1 flex-col justify-center">
-	<h1 class="text-2xl">{namaTugas}</h1>
+	<h1 class="text-2xl">Buat Tugas Baru</h1>
 	<div class="pt-8"></div>
 	<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
 		<div>

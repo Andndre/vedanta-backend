@@ -1,40 +1,39 @@
-import { prismaClient } from "@/db";
-import type { PageServerLoad } from "./$types";
-import { error, redirect } from "@sveltejs/kit";
+import { prismaClient } from '@/db';
+import type { PageServerLoad } from './$types';
+import { error, redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async (evt) => {
+	const quiz = await prismaClient.quiz.findUnique({
+		where: {
+			id: +evt.params.id
+		},
+		select: {
+			title: true
+		}
+	});
 
-    const quiz = await prismaClient.quiz.findUnique({
-        where: {
-            id: +evt.params.id
-        },
-        select: {
-            title: true
-        }
-    });
+	if (!quiz) {
+		throw error(404, 'Quiz not found');
+	}
 
-    if (!quiz) {
-        throw error(404, 'Quiz not found');
-    }
-
-    return {
-        quiz
-    }
+	return {
+		quiz
+	};
 };
 
 export const actions = {
-    update: async ({ request, params }) => {
-        const data = Object.fromEntries(await request.formData());
+	update: async ({ request, params }) => {
+		const data = Object.fromEntries(await request.formData());
 
-        await prismaClient.quiz.update({
-            where: {
-                id: +params.id
-            },
-            data: {
-                title: data.title as string
-            }
-        });
+		await prismaClient.quiz.update({
+			where: {
+				id: +params.id
+			},
+			data: {
+				title: data.title as string
+			}
+		});
 
-        throw redirect(303, `/dashboard/library/${params.id}`);
-    }
-}
+		throw redirect(303, `/dashboard/guru/library/${params.id}`);
+	}
+};

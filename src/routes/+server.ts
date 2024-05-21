@@ -1,5 +1,5 @@
-import { redirect } from '@sveltejs/kit'
+import { redirect } from '@sveltejs/kit';
 
 export const GET = () => {
-	redirect(302, '/dashboard');
+	redirect(302, '/dashboard/guru');
 };

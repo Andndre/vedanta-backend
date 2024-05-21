@@ -18,7 +18,7 @@
 
 	async function kelasDibuat() {
 		if (searched) return daftarKelas;
-		const r = await fetch(`${PUBLIC_APP_URL}/dashboard/classes/api`);
+		const r = await fetch(`${PUBLIC_APP_URL}/dashboard/guru/classes/api`);
 		if (!r.ok) return [];
 		const data = await r.json();
 		daftarKelas = data.classes;
@@ -55,7 +55,7 @@
 		<h1 class="text-3xl font-bold">Perpustakaan</h1>
 		<p class="mt-3 text-gray-600">Semua quiz yang pernah anda buat</p>
 	</div>
-	<Button href="/dashboard/library/new">Buat Baru</Button>
+	<Button href="/dashboard/guru/library/new">Buat Baru</Button>
 </div>
 
 <div class="pt-12"></div>
@@ -79,7 +79,7 @@
 				</div>
 			</div>
 			<div class="flex justify-center gap-3">
-				<Button variant="secondary" href={`/dashboard/library/${quiz.id}`}
+				<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}
 					><Edit2Icon size={15} /></Button
 				>
 				<Button

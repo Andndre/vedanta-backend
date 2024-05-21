@@ -11,7 +11,10 @@ import { v4 } from 'uuid';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.webUser) {
-		throw redirect(302, securePath('/dashboard'));
+		if (locals.webUser.isAdmin) {
+			throw redirect(302, securePath('/dashboard/admin'));
+		}
+		throw redirect(302, securePath('/dashboard/guru'));
 	}
 	return {
 		form: await superValidate(zod(formSchema))

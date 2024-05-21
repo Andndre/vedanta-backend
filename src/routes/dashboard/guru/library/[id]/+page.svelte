@@ -13,22 +13,22 @@
 		{
 			icon: QuizIcon,
 			title: 'Pilihan Ganda',
-			href: `/dashboard/library/${data.quiz.id}/quiz/add?type=pilgan`
+			href: `/dashboard/guru/library/${data.quiz.id}/quiz/add?type=pilgan`
 		},
 		{
 			icon: QuizIcon,
 			title: 'Simak Audio',
-			href: `/dashboard/library/${data.quiz.id}/quiz/add?type=simakaudio`
+			href: `/dashboard/guru/library/${data.quiz.id}/quiz/add?type=simakaudio`
 		},
 		{
 			icon: QuizIcon,
 			title: 'Isian Singkat',
-			href: `/dashboard/library/${data.quiz.id}/quiz/add?type=isian`
+			href: `/dashboard/guru/library/${data.quiz.id}/quiz/add?type=isian`
 		},
 		{
 			icon: QuizIcon,
 			title: 'Mencocokkan Gambar',
-			href: `/dashboard/library/${data.quiz.id}/quiz/add?type=cocokgambar`
+			href: `/dashboard/guru/library/${data.quiz.id}/quiz/add?type=cocokgambar`
 		}
 	];
 
@@ -42,7 +42,7 @@
 </script>
 
 <div class="flex flex-1 flex-col justify-center">
-	<a href={`/dashboard/library/${data.quiz.id}/edit`} class="flex items-center gap-3">
+	<a href={`/dashboard/guru/library/${data.quiz.id}/edit`} class="flex items-center gap-3">
 		<h1 class="text-2xl">{data.quiz?.title}</h1>
 		<PencilLine size={15} />
 	</a>

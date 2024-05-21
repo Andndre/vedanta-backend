@@ -22,6 +22,6 @@ export const actions = {
 			}
 		});
 
-		throw redirect(302, securePath(`/dashboard/classes/${newQuiz.id}`));
+		throw redirect(302, securePath(`/dashboard/guru/classes/${newQuiz.id}`));
 	}
 };
