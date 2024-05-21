@@ -60,7 +60,7 @@
 
 <div class="pt-12"></div>
 <div class="grid grid-cols-12 gap-4">
-	{#each data.userFind.quizzesCreated as quiz}
+	{#each data.userFind.quizzesCreated as quiz, i}
 		<div class="col-span-12 flex items-end justify-between gap-6 rounded-sm bg-card p-6 shadow-md">
 			<div class="flex items-center gap-6">
 				<Avatar class="h-16 w-16 cursor-pointer">
@@ -82,7 +82,13 @@
 				<Button variant="secondary" href={`/dashboard/library/${quiz.id}`}
 					><Edit2Icon size={15} /></Button
 				>
-				<Button variant="secondary">Sebarkan</Button>
+				<Button
+					variant="secondary"
+					on:click={() => {
+						dialogOpen = true;
+						selected = i;
+					}}>Sebarkan</Button
+				>
 			</div>
 		</div>
 	{:else}
