@@ -37,15 +37,7 @@
 				</Avatar>
 				<div>
 					<h2 class="text-xl font-medium">{kelas.name}</h2>
-					<!-- <div class="mt-3 flex items-center gap-3">
-						<Avatar class="h-6 w-6">
-							<AvatarImage
-								src={data.user.name}
-								alt="user avatar"
-								class="h-full w-full object-cover"
-							/>
-						</Avatar>
-					</div> -->
+					<p>{kelas.siswa.length} Siswa</p>
 				</div>
 			</div>
 			<div class="flex justify-center gap-3">

@@ -13,7 +13,12 @@ export const load: PageServerLoad = async ({ locals }) => {
 			kelasDibuat: {
 				select: {
 					id: true,
-					name: true
+					name: true,
+					siswa: {
+						select: {
+							id: true
+						}
+					}
 				}
 			}
 		}
