@@ -208,4 +208,20 @@ export class AudioAssetDownloader {
 		}
 		return 'PASS';
 	}
+
+	static getCDNAudioPath(bab: number, sloka: number) {
+		const fileName = getPelafalanFileName(bab, sloka);
+		return 'https://cdn.hmjtiundiksha.com/vedanta/audio-sloka/' + fileName;
+	}
+
+	static async getPelafalanFromCDN(bab: number, sloka: number) {
+		let request: Response;
+		do {
+			request = await fetch(AudioAssetDownloader.getCDNAudioPath(bab, sloka), {
+				method: 'GET'
+			});
+			sloka--;
+		} while (!request.ok);
+		return AudioAssetDownloader.getCDNAudioPath(bab, sloka);
+	}
 }

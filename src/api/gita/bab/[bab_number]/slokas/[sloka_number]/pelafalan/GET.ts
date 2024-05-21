@@ -1,4 +1,4 @@
-import { searchPelafalanFilePath } from '@/models/SlokaModel';
+import { AudioAssetDownloader } from '@/models/SlokaModel';
 import { redirect } from '@sveltejs/kit';
 import { Endpoint, z, type RouteModifier } from 'sveltekit-api';
 
@@ -15,6 +15,6 @@ export const Modifier: RouteModifier = (r) => {
 };
 
 export default new Endpoint({ Modifier, Param }).handle(async ({ bab_number, sloka_number }) => {
-	const path = searchPelafalanFilePath(+bab_number, +sloka_number);
-	throw redirect(303, path);
+	const url = await AudioAssetDownloader.getPelafalanFromCDN(+bab_number, +sloka_number);
+	return redirect(302, url);
 });
