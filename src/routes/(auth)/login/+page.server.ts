@@ -62,7 +62,6 @@ export const actions = {
 		});
 
 		if (locals.webUser.isAdmin) {
-			console.log('ini admin');
 			throw redirect(302, securePath(url.searchParams.get('redirect') || '/dashboard/admin'));
 		}
 

@@ -10,7 +10,6 @@
 			const response = await fetch(`/api-json`);
 			const spec = await response.json();
 			await new Promise((resolve) => setTimeout(resolve, 3000));
-			console.log(spec);
 			var swaggerUIOptions = {
 				url: 'https://petstore.swagger.io/v2/swagger.json',
 				dom_id: '#ui-wrapper-new', // Determine what element to load swagger ui

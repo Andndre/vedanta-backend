@@ -47,8 +47,6 @@ export async function getUser(cookie: Cookies) {
 		}
 	});
 
-	console.log(cookie.get('refresh_session'));
-
 	return me;
 }
 
