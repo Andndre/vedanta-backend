@@ -3,7 +3,7 @@
 	import Footer from '$lib/components/custom/Footer.svelte';
 	import AdminHeader from '$lib/components/custom/admin-layout/Header.svelte';
 
-	import { ModeWatcher } from "mode-watcher";
+	import { ModeWatcher } from 'mode-watcher';
 </script>
 
 <ModeWatcher />

@@ -1,4 +1,4 @@
-import { prismaClient } from "@/db"
+import { prismaClient } from '@/db';
 import type { Cookies } from '@sveltejs/kit';
 import bcrypt from 'bcryptjs';
 import { v4 } from 'uuid';
@@ -46,6 +46,8 @@ export async function getUser(cookie: Cookies) {
 			refreshSession: cookie.get('refresh_session')
 		}
 	});
+
+	console.log(cookie.get('refresh_session'));
 
 	return me;
 }

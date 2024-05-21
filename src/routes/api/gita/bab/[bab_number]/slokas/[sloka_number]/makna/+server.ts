@@ -1,3 +1,3 @@
-import api from '$api'
+import api from '$api';
 
-export const GET = (evt) =>  api.handle(evt)
+export const GET = (evt) => api.handle(evt);

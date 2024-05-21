@@ -8,5 +8,9 @@ export const load: LayoutServerLoad = async (evt) => {
 		throw redirect(302, '/login');
 	}
 
+	if (webUser.isAdmin) {
+		throw redirect(302, '/dashboard/admin');
+	}
+
 	return {};
 };

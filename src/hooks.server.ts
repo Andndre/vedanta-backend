@@ -29,6 +29,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			...payload
 		};
 	} else {
+		console.log(event.cookies.get('refresh_session'));
 		// Set the authenticated user in the event's locals
 		event.locals.webUser = (await getAuthUser(event.cookies)) || null;
 	}

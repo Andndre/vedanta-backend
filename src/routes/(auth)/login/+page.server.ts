@@ -6,6 +6,8 @@ import { securePath } from '$lib/utils';
 import bcrypt from 'bcryptjs';
 import { fail, redirect } from '@sveltejs/kit';
 import { findOne } from '@/models/UserModel.js';
+import { prismaClient } from '@/db.js';
+import { v4 } from 'uuid';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.webUser) {
@@ -40,13 +42,30 @@ export const actions = {
 
 		locals.webUser = user;
 
-		cookies.set('refresh_session', locals.webUser?.refreshSession, {
+		const newRefreshSession = v4();
+
+		await prismaClient.user.update({
+			where: {
+				id: user.id
+			},
+			data: {
+				lastActiveAt: new Date(),
+				refreshSession: newRefreshSession
+			}
+		});
+
+		cookies.set('refresh_session', newRefreshSession, {
 			path: '/',
 			httpOnly: true,
 			secure: import.meta.env.PROD,
 			expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) // 30 days
 		});
 
-		throw redirect(302, securePath(url.searchParams.get('redirect') || '/dashboard'));
+		if (locals.webUser.isAdmin) {
+			console.log('ini admin');
+			throw redirect(302, securePath(url.searchParams.get('redirect') || '/dashboard/admin'));
+		}
+
+		throw redirect(302, securePath(url.searchParams.get('redirect') || '/dashboard/guru'));
 	}
 };
