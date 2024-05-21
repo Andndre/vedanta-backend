@@ -9,4 +9,8 @@
 	<PilihanGanda />
 {:else if data.type == 'isian'}
 	<Isian />
+{:else if data.type == 'simakaudio'}
+	<!-- Todo -->
+{:else if data.type == 'cocokgambar'}
+	<!-- Todo -->
 {/if}
