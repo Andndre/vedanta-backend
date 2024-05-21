@@ -23,12 +23,12 @@
 		},
 		{
 			title: 'Perpustakaan',
-			href: '/dashboard/guru/library/',
+			href: '/dashboard/guru/library',
 			icon: BookIcon
 		},
 		{
 			title: 'Kelas',
-			href: '/dashboard/guru/classes/',
+			href: '/dashboard/guru/classes',
 			icon: UsersIcon
 		}
 	];
