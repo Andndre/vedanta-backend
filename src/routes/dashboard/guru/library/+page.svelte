@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
-	import { getInitialName } from '$lib/utils';
+	import { getInitialName, ssrPromiseLoop } from '$lib/utils';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import NoData from '$lib/images/no-data.svg';
 	import Logo from '$lib/images/logo.png';
@@ -9,8 +9,8 @@
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { PUBLIC_APP_URL } from '$env/static/public';
+	import { browser } from '$app/environment';
 
-	export let data: PageServerData;
 	let dialogOpen = false;
 	let daftarKelas: { classCode: string; id: number; name: string }[] = [];
 	let searched = false;
@@ -24,6 +24,13 @@
 		daftarKelas = data.classes;
 		return daftarKelas;
 	}
+
+	async function quizzCreated() {
+		const r = await fetch(`${PUBLIC_APP_URL}/dashboard/guru/library/api`);
+		if (!r.ok) return [];
+		const data = await r.json();
+		return data;
+	}
 </script>
 
 <Dialog.Root bind:open={dialogOpen}>
@@ -32,8 +39,11 @@
 			<Dialog.Title>Pilih Kelas</Dialog.Title>
 			<Dialog.Description>Pilih Kelas yang Akan Diberikan Tugas</Dialog.Description>
 		</Dialog.Header>
-		{#await kelasDibuat()}
-			<Skeleton class="h-10 w-full rounded-sm" />
+		{#await ssrPromiseLoop(() => kelasDibuat(), browser)}
+			<div class="flex gap-3">
+				<Skeleton class="h-10 w-10 rounded-full" />
+				<Skeleton class="h-10 w-full rounded-sm" />
+			</div>
 		{:then listKelas}
 			<div class="flex flex-col gap-2 rounded-sm">
 				{#each listKelas as kelas}
@@ -60,41 +70,47 @@
 
 <div class="pt-12"></div>
 <div class="grid grid-cols-12 gap-4">
-	{#each data.userFind.quizzesCreated as quiz, i}
-		<div class="col-span-12 flex items-end justify-between gap-6 rounded-sm bg-card p-6 shadow-md">
-			<div class="flex items-center gap-6">
-				<Avatar class="h-16 w-16 cursor-pointer">
-					<AvatarImage
-						src={Logo}
-						alt="user avatar"
-						class="h-16 w-16 bg-orange-100 object-contain"
-					/>
-					<AvatarFallback>{getInitialName(quiz.title)}</AvatarFallback>
-				</Avatar>
-				<div>
-					<h2 class="text-xl font-medium">{quiz.title}</h2>
-					<div class="mt-3 flex items-center gap-3">
-						<span class="text-gray-600">{quiz.createdAt}</span>
+	{#await ssrPromiseLoop(() => quizzCreated(), browser)}
+		<Skeleton class="h-16 w-full rounded-sm" />
+	{:then data}
+		{#each data.userFind.quizzesCreated as quiz, i}
+			<div
+				class="col-span-12 flex items-end justify-between gap-6 rounded-sm bg-card p-6 shadow-md"
+			>
+				<div class="flex items-center gap-6">
+					<Avatar class="h-16 w-16 cursor-pointer">
+						<AvatarImage
+							src={Logo}
+							alt="user avatar"
+							class="h-16 w-16 bg-orange-100 object-contain"
+						/>
+						<AvatarFallback>{getInitialName(quiz.title)}</AvatarFallback>
+					</Avatar>
+					<div>
+						<h2 class="text-xl font-medium">{quiz.title}</h2>
+						<div class="mt-3 flex items-center gap-3">
+							<span class="text-gray-600">{quiz.createdAt}</span>
+						</div>
 					</div>
 				</div>
+				<div class="flex justify-center gap-3">
+					<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}
+						><Edit2Icon size={15} /></Button
+					>
+					<Button
+						variant="secondary"
+						on:click={() => {
+							dialogOpen = true;
+							selected = i;
+						}}>Sebarkan</Button
+					>
+				</div>
 			</div>
-			<div class="flex justify-center gap-3">
-				<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}
-					><Edit2Icon size={15} /></Button
-				>
-				<Button
-					variant="secondary"
-					on:click={() => {
-						dialogOpen = true;
-						selected = i;
-					}}>Sebarkan</Button
-				>
+		{:else}
+			<div class="flex flex-col justify-center items-center h-[calc(100vh-21rem)]">
+				<img src={NoData} alt="No Data" class="h-52" />
+				<p class="mx-4 mt-5">Belum ada Quiz</p>
 			</div>
-		</div>
-	{:else}
-		<div class="flex flex-col justify-center items-center h-[calc(100vh-21rem)]">
-			<img src={NoData} alt="No Data" class="h-52" />
-			<p class="mx-4 mt-5">Belum ada Quiz</p>
-		</div>
-	{/each}
+		{/each}
+	{/await}
 </div>

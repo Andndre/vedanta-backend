@@ -1,9 +1,8 @@
-import type { PageServerLoad } from './$types';
-import { prismaClient } from '@/db';
-import { error } from '@sveltejs/kit';
+import { prismaClient } from '@/db.js';
+import { error, json } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async ({ locals }) => {
-	const user = locals.webUser!;
+export const GET = async (evt) => {
+	const user = evt.locals.webUser!;
 
 	const userFind = await prismaClient.user.findUnique({
 		where: {
@@ -27,8 +26,5 @@ export const load: PageServerLoad = async ({ locals }) => {
 		error(404, 'User not found');
 	}
 
-	return {
-		userFind,
-		user
-	};
+	return json({ userFind });
 };
