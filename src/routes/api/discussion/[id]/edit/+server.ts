@@ -4,7 +4,7 @@ import { json } from '@sveltejs/kit';
 export const POST = async (evt) => {
 	const user = evt.locals.apiUser!;
 
-	const discussion = await prismaClient.discussion.findUnique({
+	const discussion = await prismaClient.discussion.findFirst({
 		where: {
 			id: +evt.params.id,
 			creatorId: user.id

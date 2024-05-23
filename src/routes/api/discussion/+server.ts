@@ -6,6 +6,19 @@ export const GET = async (evt) => {
 		take: 10,
 		where: {
 			kelasId: null
+		},
+		select: {
+			title: true,
+			createdAt: true,
+			id: true,
+			creator: {
+				select: {
+					name: true
+				}
+			}
+		},
+		orderBy: {
+			createdAt: 'desc'
 		}
 	});
 	return json({

@@ -1,7 +1,7 @@
 import { prismaClient } from '@/db.js';
 import { json } from '@sveltejs/kit';
 
-export const GET = async (evt) => {
+export const DELETE = async (evt) => {
 	const user = evt.locals.apiUser!;
 
 	const discussion = await prismaClient.discussion.findUnique({

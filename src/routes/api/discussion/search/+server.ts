@@ -15,9 +15,29 @@ export const GET = async (evt) => {
 				title: {
 					search: searchQuery
 				}
+			},
+			select: {
+				title: true,
+				body: true,
+				creator: {
+					select: {
+						name: true
+					}
+				}
+			},
+			take: 10,
+			orderBy: {
+				createdAt: 'desc'
 			}
 		});
-		return json({ discussions, error: false });
+		return json({
+			discussions: discussions.map((e) => ({
+				title: e.title,
+				body: e.body,
+				creatorName: e.creator.name
+			})),
+			error: false
+		});
 	} catch (err) {
 		return json({ discussions: [], error: true });
 	}
