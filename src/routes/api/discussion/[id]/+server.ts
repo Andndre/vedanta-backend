@@ -12,6 +12,14 @@ export const GET = async (evt) => {
 			likesCount: true,
 			repliesCount: true,
 			createdAt: true,
+			userLikes: {
+				where: {
+					userId: evt.locals.apiUser!.id
+				},
+				select: {
+					userId: true
+				}
+			},
 			creator: {
 				select: {
 					name: true
@@ -25,6 +33,14 @@ export const GET = async (evt) => {
 					discussionReplyId: null // top level
 				},
 				select: {
+					usersLiked: {
+						where: {
+							userId: evt.locals.apiUser!.id
+						},
+						select: {
+							userId: true
+						}
+					},
 					id: true,
 					reply: true,
 					creator: {
@@ -62,8 +78,18 @@ export const GET = async (evt) => {
 		});
 	}
 
+	const isLiked = discussion.userLikes.some((u) => u.userId === evt.locals.apiUser?.id);
+	const { userLikes, ...rest } = discussion;
+	const withIsLiked = { isLiked, ...rest };
+	const repliesWithIsLiked = discussion.replies.map((r) => {
+		const isLiked = r.usersLiked.some((u) => u.userId === evt.locals.apiUser?.id);
+		const { usersLiked, ...rest } = r;
+		return { isLiked, ...rest };
+	});
+	const withIsLikedAndReplies = { ...withIsLiked, replies: repliesWithIsLiked };
+
 	return json({
-		discussion,
+		discussion: withIsLikedAndReplies,
 		error: false
 	});
 };
