@@ -17,7 +17,14 @@ export const GET = async (evt) => {
 			repliesCount: true,
 			createdAt: true,
 			replies: {
+				orderBy: {
+					createdAt: 'asc'
+				},
+				where: {
+					discussionReplyId: null // top level
+				},
 				select: {
+					id: true,
 					reply: true,
 					creator: {
 						select: {
@@ -27,7 +34,11 @@ export const GET = async (evt) => {
 					likesCount: true,
 					createdAt: true,
 					replies: {
+						orderBy: {
+							createdAt: 'asc'
+						},
 						select: {
+							id: true,
 							likesCount: true,
 							reply: true,
 							createdAt: true,
