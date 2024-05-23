@@ -15,14 +15,28 @@ export const GET = async (evt) => {
 				select: {
 					name: true
 				}
+			},
+			userLikes: {
+				select: {
+					userId: true
+				}
 			}
 		},
 		orderBy: {
 			createdAt: 'desc'
 		}
 	});
+
+	const response = discussions.map((d) => {
+		const { userLikes, ...rest } = d;
+		return {
+			...rest,
+			isLiked: d.userLikes.some((u) => u.userId === evt.locals.apiUser?.id)
+		};
+	});
+
 	return json({
 		error: false,
-		discussions
+		discussions: response
 	});
 };
