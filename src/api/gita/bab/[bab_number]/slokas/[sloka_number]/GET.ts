@@ -11,7 +11,7 @@ export const Output = z.object({
 	numberBab: z.number(),
 	content: z.string(),
 	translationIndo: z.string(),
-	makna: z.string().nullable(),
+	makna: z.string(),
 	isLiked: z.boolean()
 });
 
