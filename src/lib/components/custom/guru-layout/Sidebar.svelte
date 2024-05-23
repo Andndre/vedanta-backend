@@ -12,6 +12,7 @@
 	type NavItem = {
 		title: string;
 		href: string;
+		highlightMatch: boolean;
 		icon: ComponentType<Icon>;
 	};
 
@@ -19,16 +20,19 @@
 		{
 			title: 'Home',
 			href: '/dashboard/guru',
+			highlightMatch: true,
 			icon: HomeIcon
 		},
 		{
 			title: 'Perpustakaan',
 			href: '/dashboard/guru/library',
+			highlightMatch: false,
 			icon: BookIcon
 		},
 		{
 			title: 'Kelas',
 			href: '/dashboard/guru/classes',
+			highlightMatch: false,
 			icon: UsersIcon
 		}
 	];
@@ -65,7 +69,7 @@
 					class={cn(
 						'flex items-center gap-3',
 						'rounded-md text-accent transition-all hover:bg-gray-200 dark:hover:bg-accent',
-						pathname == e.href
+						(e.highlightMatch ? pathname == e.href : pathname.startsWith(e.href))
 							? 'text-primary dark:bg-accent dark:text-accent-foreground'
 							: 'text-muted-foreground',
 						navbarOpen ? 'px-6 py-2' : 'p-2'
