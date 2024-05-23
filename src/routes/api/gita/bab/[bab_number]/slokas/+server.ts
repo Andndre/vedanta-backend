@@ -6,5 +6,5 @@ export const GET = async (evt) => {
 	if (!sloka) {
 		throw error(404, 'sloka not found');
 	}
-	return json(sloka);
+	return json({ slokas: sloka });
 };
