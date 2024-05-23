@@ -181,6 +181,7 @@ model UserLikedDiscussionReply {
   reply DiscussionReply @relation(fields: [discussionReplyId], references: [id], onDelete: Cascade)
   user  User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, discussionReplyId], name: "likedDiscussionReply")
   @@index([userId, discussionReplyId])
 }
 
