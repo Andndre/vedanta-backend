@@ -7,7 +7,7 @@ export const POST = async (evt) => {
 		body: string;
 	};
 	const user = evt.locals.apiUser!;
-	const discussion = await prismaClient.discussion.create({
+	await prismaClient.discussion.create({
 		data: {
 			title: body.title,
 			creatorId: user.id,
@@ -16,6 +16,6 @@ export const POST = async (evt) => {
 	});
 	return json({
 		error: false,
-		discussion
+		message: 'discussion created'
 	});
 };

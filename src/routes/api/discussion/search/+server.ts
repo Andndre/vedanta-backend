@@ -23,7 +23,8 @@ export const GET = async (evt) => {
 					select: {
 						name: true
 					}
-				}
+				},
+				id: true
 			},
 			take: 10,
 			orderBy: {
