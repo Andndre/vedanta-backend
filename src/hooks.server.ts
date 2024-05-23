@@ -21,13 +21,17 @@ export const handle: Handle = async ({ event, resolve }) => {
 		if (!bearer) {
 			return error(401, 'No Bearer token provided');
 		}
-		const payload = verifyJWT(bearer);
-		if (!payload) {
+		try {
+			const payload = verifyJWT(bearer);
+			if (!payload) {
+				return error(401, 'Invalid token');
+			}
+			event.locals.apiUser = {
+				...payload
+			};
+		} catch (err) {
 			return error(401, 'Invalid token');
 		}
-		event.locals.apiUser = {
-			...payload
-		};
 	} else {
 		// Set the authenticated user in the event's locals
 		event.locals.webUser = (await getAuthUser(event.cookies)) || null;
