@@ -133,6 +133,7 @@ model Discussion {
   userLikes UserLikedDiscussion[]
 
   @@index([creatorId])
+  @@fulltext([title, body])
 }
 
 // Many to many relationship antara user dan discussion (like)
