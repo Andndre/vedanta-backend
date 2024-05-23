@@ -1,5 +1,6 @@
 import { prismaClient } from '@/db.js';
 import { error } from '@/response.js';
+import { json } from '@sveltejs/kit';
 
 export const POST = async (evt) => {
 	// join class for user with classCode
@@ -20,4 +21,9 @@ export const POST = async (evt) => {
 	} catch (err) {
 		return error(500, 'Failed to join class');
 	}
+
+	return json({
+		error: false,
+		message: 'Successfully joined class'
+	});
 };
