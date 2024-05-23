@@ -10,6 +10,7 @@
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { browser } from '$app/environment';
+	import Loading from '$lib/components/custom/Loading.svelte';
 
 	let dialogOpen = false;
 	let daftarKelas: { classCode: string; id: number; name: string }[] = [];
@@ -69,10 +70,12 @@
 </div>
 
 <div class="pt-12"></div>
-<div class="grid grid-cols-12 gap-4">
-	{#await ssrPromiseLoop(() => quizzCreated(), browser)}
-		<Skeleton class="h-16 w-full rounded-sm" />
-	{:then data}
+{#await ssrPromiseLoop(() => quizzCreated(), browser)}
+	<div class="flex flex-1 flex-col items-center justify-center">
+		<Loading className="w-10" />
+	</div>
+{:then data}
+	<div class="grid grid-cols-12 gap-4">
 		{#each data.userFind.quizzesCreated as quiz, i}
 			<div
 				class="col-span-12 flex items-end justify-between gap-6 rounded-sm bg-card p-6 shadow-md"
@@ -112,5 +115,5 @@
 				<p class="mx-4 mt-5">Belum ada Quiz</p>
 			</div>
 		{/each}
-	{/await}
-</div>
+	</div>
+{/await}
