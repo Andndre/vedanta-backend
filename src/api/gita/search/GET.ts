@@ -7,8 +7,7 @@ export const Output = z.object({
 			number: z.number({ description: 'Sloka number' }),
 			numberBab: z.number({ description: 'Bab number' }),
 			content: z.string({ description: 'Sloka content' }),
-			translationIndo: z.string({ description: 'Translation' }),
-			makna: z.string({ description: 'Makna' })
+			translationIndo: z.string({ description: 'Translation' })
 		})
 	),
 	error: z.boolean({ description: 'true if error' })

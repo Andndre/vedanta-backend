@@ -19,7 +19,14 @@ export const GET = async (evt) => {
 				search: searchQuery
 			}
 		},
-		take: 10
+		take: 10,
+		select: {
+			id: true,
+			content: true,
+			translationIndo: true,
+			number: true,
+			numberBab: true
+		}
 	});
 	return json({
 		gitas,
