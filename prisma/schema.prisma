@@ -16,16 +16,18 @@ datasource db {
 
 // User (pengguna aplikasi kecuali admin)
 model User {
-  id             String   @id @default(uuid())
-  name           String
-  email          String   @unique
-  password       String   @db.VarChar(255)
-  points         Int      @default(0)
-  activeStreak   Int      @default(0)
-  lastActiveAt   DateTime @default(now())
-  isAdmin        Boolean  @default(false)
-  refreshSession String   @unique @db.VarChar(36)
+  id                    String   @id @default(uuid())
+  name                  String
+  email                 String   @unique
+  password              String   @db.VarChar(255)
+  points                Int      @default(0)
+  activeStreak          Int      @default(0)
+  lastActiveAt          DateTime @default(now())
+  isAdmin               Boolean  @default(false)
+  refreshSession        String   @unique @db.VarChar(36)
+  bacaanSlokaTerakhirId Int?
 
+  bacaanSlokaTerakhir     GitaSloka?                 @relation(fields: [bacaanSlokaTerakhirId], references: [id])
   sessions                ChatSession[]
   slokasLiked             UserLikedGitaSloka[]
   likedDiscussions        UserLikedDiscussion[]
@@ -69,6 +71,7 @@ model GitaSloka {
 
   usersLiked UserLikedGitaSloka[]
   bab        GitaBab              @relation(fields: [numberBab], references: [number], onDelete: Cascade)
+  User       User[]
 
   @@unique([number, numberBab])
 }
@@ -106,6 +109,8 @@ model UserLikedGitaSloka {
 
   user  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   sloka GitaSloka @relation(fields: [slokaId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, slokaId], name: "likedSloka")
 }
 
 // Discussion yang dibuat oleh user

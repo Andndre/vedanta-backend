@@ -1,4 +1,3 @@
-import { allInBab } from '@/models/SlokaModel';
 import { Endpoint, z, type RouteModifier } from 'sveltekit-api';
 
 export const Param = z.object({
@@ -11,7 +10,8 @@ export const Output = z.object({
 			number: z.number(),
 			id: z.number(),
 			translationIndo: z.string(),
-			content: z.string()
+			content: z.string(),
+			isLiked: z.boolean()
 		})
 	)
 });
@@ -23,6 +23,7 @@ export const Modifier: RouteModifier = (r) => {
 	return r;
 };
 
-export default new Endpoint({ Output, Modifier, Param }).handle(async ({ bab_number }) => {
-	return { slokas: await allInBab(+bab_number) };
+// @ts-ignore
+export default new Endpoint({ Input, Output, Error, Modifier }).handle(async (body) => {
+	return new Response();
 });

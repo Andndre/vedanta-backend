@@ -4,17 +4,59 @@ import { unlinkSync, existsSync, writeFileSync } from 'fs';
 import { readdir } from 'fs/promises';
 import combinations from 'combinations';
 
-export const allInBab = (bab_number: number) => {
-	return prismaClient.gitaSloka.findMany({
+export const allInBab = async (bab_number: number, userId: string) => {
+	const result = await prismaClient.gitaSloka.findMany({
 		where: { numberBab: bab_number },
-		select: { id: true, number: true, content: true, translationIndo: true }
+		select: {
+			id: true,
+			number: true,
+			content: true,
+			translationIndo: true,
+			usersLiked: {
+				where: {
+					userId: userId
+				}
+			}
+		}
 	});
+
+	if (!result) {
+		return null;
+	}
+
+	// Check if usersLiked contains any items and set isLiked accordingly
+	const withIsLiked = result.map((sloka) => {
+		// Destructure usersLiked and create a new object without it
+		const { usersLiked, ...rest } = { ...sloka, isLiked: sloka.usersLiked.length > 0 };
+		return rest;
+	});
+
+	return withIsLiked;
 };
 
-export const one = (bab_number: number, sloka_number: number) => {
-	return prismaClient.gitaSloka.findFirst({
-		where: { number: sloka_number, numberBab: bab_number }
+export const one = async (bab_number: number, sloka_number: number, userId: string) => {
+	const result = await prismaClient.gitaSloka.findFirst({
+		where: { number: sloka_number, numberBab: bab_number },
+		include: {
+			usersLiked: {
+				where: {
+					userId: userId
+				}
+			}
+		}
 	});
+
+	if (!result) {
+		return null;
+	}
+
+	// Check if usersLiked contains any items and set isLiked accordingly
+	const isLiked = result.usersLiked.length > 0;
+
+	// Destructure usersLiked and create a new object without it
+	const { usersLiked, ...rest } = { ...result, isLiked };
+
+	return rest;
 };
 
 export const makna = (bab_number: number, sloka_number: number) => {

@@ -25,25 +25,8 @@ export const Error = {
 };
 
 export default new Endpoint({ Output, Modifier, Param, Error }).handle(
-	async ({ bab_number, sloka_number }) => {
-		const sloka = await one(+bab_number, +sloka_number);
-		if (!sloka) {
-			throw Error[404];
-		}
-		let makna = sloka.makna;
-		if (!makna) {
-			const { text, error } = await GaneshChatSession.singleChat(
-				`Dalam Bab ${sloka.numberBab} Sloka ${sloka.number} Bhagavad Gita, disebutkan: "${sloka.content}" jika diterjemahan: "${sloka.translationIndo}". Apa makna dari isi sloka tersebut?`
-			);
-			if (error) {
-				throw Error[500];
-			}
-			makna = text;
-			await saveMakna(+bab_number, +sloka_number, text);
-		}
-		return {
-			makna,
-			error: false
-		};
+	// @ts-ignore
+	async () => {
+		return new Response();
 	}
 );

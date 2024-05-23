@@ -1,4 +1,3 @@
-import { one } from '@/models/SlokaModel';
 import { Endpoint, z, type RouteModifier, error } from 'sveltekit-api';
 
 export const Param = z.object({
@@ -12,7 +11,8 @@ export const Output = z.object({
 	numberBab: z.number(),
 	content: z.string(),
 	translationIndo: z.string(),
-	makna: z.string().nullable()
+	makna: z.string().nullable(),
+	isLiked: z.boolean()
 });
 
 export const Modifier: RouteModifier = (r) => {
@@ -26,12 +26,7 @@ export const Error = {
 	404: error(404, 'Sloka tidak ditemukan')
 };
 
-export default new Endpoint({ Output, Modifier, Param, Error }).handle(
-	async ({ bab_number, sloka_number }) => {
-		const sloka = await one(+bab_number, +sloka_number);
-		if (!sloka) {
-			throw Error[404];
-		}
-		return sloka;
-	}
-);
+// @ts-ignore
+export default new Endpoint({ Input, Output, Error, Modifier }).handle(async (body) => {
+	return new Response();
+});
