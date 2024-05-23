@@ -39,8 +39,10 @@ export const POST = async (evt) => {
 				}
 			});
 		} catch (error) {
-			console.log(error);
-			console.log('already liked that sloka');
+			return json({
+				error: true,
+				message: 'Already liked that sloka'
+			});
 		}
 	} else {
 		try {
@@ -53,7 +55,10 @@ export const POST = async (evt) => {
 				}
 			});
 		} catch (error) {
-			console.log('already unliked that sloka');
+			return json({
+				error: true,
+				message: 'Sloka not liked'
+			});
 		}
 	}
 
