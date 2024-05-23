@@ -10,12 +10,13 @@
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { browser } from '$app/environment';
-	import Loading from '$lib/components/custom/Loading.svelte';
 
 	let dialogOpen = false;
 	let daftarKelas: { classCode: string; id: number; name: string }[] = [];
 	let searched = false;
 	let selected = -1;
+
+	export let data: PageServerData;
 
 	async function kelasDibuat() {
 		if (searched) return daftarKelas;
@@ -24,13 +25,6 @@
 		const data = await r.json();
 		daftarKelas = data.classes;
 		return daftarKelas;
-	}
-
-	async function quizzCreated() {
-		const r = await fetch(`${PUBLIC_APP_URL}/dashboard/guru/library/api`);
-		if (!r.ok) return [];
-		const data = await r.json();
-		return data;
 	}
 </script>
 
@@ -70,50 +64,43 @@
 </div>
 
 <div class="pt-12"></div>
-{#await ssrPromiseLoop(() => quizzCreated(), browser)}
-	<div class="flex flex-1 flex-col items-center justify-center">
-		<Loading className="w-10" />
-	</div>
-{:then data}
-	<div class="grid grid-cols-12 gap-4">
-		{#each data.userFind.quizzesCreated as quiz, i}
-			<div
-				class="col-span-12 flex items-end justify-between gap-6 rounded-sm bg-card p-6 shadow-md"
-			>
-				<div class="flex items-center gap-6">
-					<Avatar class="h-16 w-16 cursor-pointer">
-						<AvatarImage
-							src={Logo}
-							alt="user avatar"
-							class="h-16 w-16 bg-orange-100 object-contain"
-						/>
-						<AvatarFallback>{getInitialName(quiz.title)}</AvatarFallback>
-					</Avatar>
-					<div>
-						<h2 class="text-xl font-medium">{quiz.title}</h2>
-						<div class="mt-3 flex items-center gap-3">
-							<span class="text-gray-600">{quiz.createdAt}</span>
-						</div>
+
+<div class="grid grid-cols-12 gap-4">
+	{#each data.userFind.quizzesCreated as quiz, i}
+		<div class="col-span-12 flex items-end justify-between gap-6 rounded-sm bg-card p-6 shadow-md">
+			<div class="flex items-center gap-6">
+				<Avatar class="h-16 w-16 cursor-pointer">
+					<AvatarImage
+						src={Logo}
+						alt="user avatar"
+						class="h-16 w-16 bg-orange-100 object-contain"
+					/>
+					<AvatarFallback>{getInitialName(quiz.title)}</AvatarFallback>
+				</Avatar>
+				<div>
+					<h2 class="text-xl font-medium">{quiz.title}</h2>
+					<div class="mt-3 flex items-center gap-3">
+						<span class="text-gray-600">{quiz.createdAt}</span>
 					</div>
 				</div>
-				<div class="flex justify-center gap-3">
-					<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}
-						><Edit2Icon size={15} /></Button
-					>
-					<Button
-						variant="secondary"
-						on:click={() => {
-							dialogOpen = true;
-							selected = i;
-						}}>Sebarkan</Button
-					>
-				</div>
 			</div>
-		{:else}
-			<div class="flex flex-col justify-center items-center h-[calc(100vh-21rem)]">
-				<img src={NoData} alt="No Data" class="h-52" />
-				<p class="mx-4 mt-5">Belum ada Quiz</p>
+			<div class="flex justify-center gap-3">
+				<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}
+					><Edit2Icon size={15} /></Button
+				>
+				<Button
+					variant="secondary"
+					on:click={() => {
+						dialogOpen = true;
+						selected = i;
+					}}>Sebarkan</Button
+				>
 			</div>
-		{/each}
-	</div>
-{/await}
+		</div>
+	{:else}
+		<div class="flex flex-col justify-center items-center h-[calc(100vh-21rem)]">
+			<img src={NoData} alt="No Data" class="h-52" />
+			<p class="mx-4 mt-5">Belum ada Quiz</p>
+		</div>
+	{/each}
+</div>
