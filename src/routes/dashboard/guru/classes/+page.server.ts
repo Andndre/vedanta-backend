@@ -2,7 +2,7 @@ import type { PageServerLoad } from './$types';
 import { prismaClient } from '@/db';
 import { error } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals, setHeaders }) => {
 	const user = locals.webUser!;
 
 	const userFind = await prismaClient.user.findUnique({
@@ -27,6 +27,11 @@ export const load: PageServerLoad = async ({ locals }) => {
 	if (!userFind) {
 		error(404, 'User not found');
 	}
+
+	// cache for 5 minutes
+	setHeaders({
+		'Cache-Control': 'public, max-age=300'
+	});
 
 	return {
 		userFind,

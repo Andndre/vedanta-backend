@@ -26,5 +26,10 @@ export const GET = async (evt) => {
 		error(404, 'User not found');
 	}
 
+	// cache for 5 minutes
+	evt.setHeaders({
+		'Cache-Control': 'public, max-age=300'
+	});
+
 	return json({ userFind });
 };
