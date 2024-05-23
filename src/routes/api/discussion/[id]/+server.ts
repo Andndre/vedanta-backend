@@ -7,15 +7,16 @@ export const GET = async (evt) => {
 			id: +evt.params.id
 		},
 		select: {
+			title: true,
+			body: true,
+			likesCount: true,
+			repliesCount: true,
+			createdAt: true,
 			creator: {
 				select: {
 					name: true
 				}
 			},
-			body: true,
-			likesCount: true,
-			repliesCount: true,
-			createdAt: true,
 			replies: {
 				orderBy: {
 					createdAt: 'asc'
