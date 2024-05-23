@@ -53,5 +53,5 @@ export const GET = async (evt) => {
 		name: m.user.name
 	}));
 
-	return json({ members: response });
+	return json({ members: response, error: false });
 };
