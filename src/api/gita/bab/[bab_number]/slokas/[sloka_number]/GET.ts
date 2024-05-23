@@ -27,6 +27,6 @@ export const Error = {
 };
 
 // @ts-ignore
-export default new Endpoint({ Input, Output, Error, Modifier }).handle(async (body) => {
+export default new Endpoint({ Output, Error, Modifier }).handle(async (body) => {
 	return new Response();
 });

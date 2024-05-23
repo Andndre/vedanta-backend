@@ -4,6 +4,11 @@ export const Input = z.object({
 	like: z.boolean()
 });
 
+export const Param = z.object({
+	bab_number: z.string(),
+	sloka_number: z.string()
+});
+
 export const Output = z.object({
 	like: z.boolean(),
 	error: z.boolean({ description: 'True jika error' })
@@ -21,6 +26,6 @@ export const Modifier: RouteModifier = (r) => {
 };
 
 // @ts-ignore
-export default new Endpoint({ Input, Output, Error, Modifier }).handle(async (body) => {
+export default new Endpoint({ Input, Output, Error, Modifier, Param }).handle(async (body) => {
 	return new Response();
 });

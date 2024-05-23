@@ -24,6 +24,6 @@ export const Modifier: RouteModifier = (r) => {
 };
 
 // @ts-ignore
-export default new Endpoint({ Input, Output, Error, Modifier }).handle(async (body) => {
+export default new Endpoint({ Output, Error, Modifier, Param }).handle(async (body) => {
 	return new Response();
 });

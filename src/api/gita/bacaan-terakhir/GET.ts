@@ -1,4 +1,3 @@
-import { allBab } from '@/models/BabModel';
 import { Endpoint, z, type RouteModifier } from 'sveltekit-api';
 
 export const Output = z.object({

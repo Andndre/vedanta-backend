@@ -1,5 +1,3 @@
-import { one, saveMakna } from '@/models/SlokaModel';
-import { GaneshChatSession } from '@/services/ChatService';
 import { Endpoint, z, type RouteModifier, error } from 'sveltekit-api';
 
 export const Param = z.object({
