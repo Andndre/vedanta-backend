@@ -242,6 +242,7 @@ model UserKelas {
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   kelas Kelas @relation(fields: [kelasId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, kelasId])
   @@index([userId])
 }
 
