@@ -13,11 +13,23 @@ export const POST = async (evt) => {
 	const { like } = body;
 	if (like) {
 		try {
-			prismaClient.userLikedDiscussion.create({
-				data: {
-					discussionId: +evt.params.id,
-					userId: user.id
-				}
+			await prismaClient.$transaction(async (prisma) => {
+				await prisma.userLikedDiscussion.create({
+					data: {
+						discussionId: +evt.params.id,
+						userId: user.id
+					}
+				});
+				await prisma.discussion.update({
+					where: {
+						id: +evt.params.id
+					},
+					data: {
+						likesCount: {
+							increment: 1
+						}
+					}
+				});
 			});
 		} catch (err) {
 			console.log(err);
@@ -25,13 +37,25 @@ export const POST = async (evt) => {
 		}
 	} else {
 		try {
-			await prismaClient.userLikedDiscussion.delete({
-				where: {
-					likedDiscussion: {
-						userId: user.id,
-						discussionId: +evt.params.id
+			await prismaClient.$transaction(async (prisma) => {
+				await prisma.userLikedDiscussion.delete({
+					where: {
+						likedDiscussion: {
+							userId: user.id,
+							discussionId: +evt.params.id
+						}
 					}
-				}
+				});
+				await prisma.discussion.update({
+					where: {
+						id: +evt.params.id
+					},
+					data: {
+						likesCount: {
+							decrement: 1
+						}
+					}
+				});
 			});
 		} catch (err) {
 			console.log(err);
