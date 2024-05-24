@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AdminSidebar from '$lib/components/custom/guru-layout/Sidebar.svelte';
+	import AdminSidebar from '$lib/components/custom/admin-layout/Sidebar.svelte';
 	import Footer from '$lib/components/custom/Footer.svelte';
 	import AdminHeader from '$lib/components/custom/admin-layout/Header.svelte';
 
