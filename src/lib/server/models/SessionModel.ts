@@ -36,8 +36,17 @@ export const findByIdWithHistory = (sessionId: string) => {
 		where: {
 			id: sessionId
 		},
-		include: {
-			history: true
+		select: {
+			id: true,
+			title: true,
+			createdAt: true,
+			userId: true,
+			history: {
+				select: {
+					parts: true,
+					role: true
+				}
+			}
 		}
 	});
 };
