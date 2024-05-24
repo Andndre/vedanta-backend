@@ -5,6 +5,11 @@ export const GET = async (evt) => {
 	const doa = await prismaClient.doa.findUnique({
 		where: {
 			id: +evt.params.id_doa
+		},
+		select: {
+			id: true,
+			title: true,
+			body: true
 		}
 	});
 

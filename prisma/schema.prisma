@@ -199,6 +199,7 @@ model Doa {
   UserHomeworkDoa UserHomeworkDoa[]
 
   @@index([title])
+  @@fulltext([title, body])
 }
 
 // Many to many relationship antara user dan doa (like)
