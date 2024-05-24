@@ -3,7 +3,7 @@ import { create, saveHistory, findById, getHistory, listFromUser } from '@/model
 
 import type { MessageHistory } from '@/types';
 import {
-	ChatSession,
+	type ChatSession,
 	GoogleGenerativeAI,
 	type GenerateContentStreamResult,
 	type GenerateContentResult

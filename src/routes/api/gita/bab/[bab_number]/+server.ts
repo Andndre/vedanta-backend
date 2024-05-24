@@ -2,8 +2,6 @@ import { one } from '@/models/BabModel.js';
 import { error } from '@/response.js';
 import { json } from '@sveltejs/kit';
 
-export const prerender = true;
-
 export const GET = async (evt) => {
 	const { bab_number } = evt.params;
 	const bab = await one(+bab_number);
