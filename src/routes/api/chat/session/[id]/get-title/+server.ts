@@ -2,10 +2,6 @@ import { updateTitle, findByIdWithHistory } from '@/models/SessionModel';
 import { error } from '@/response';
 import { GaneshChatSession } from '@/services/ChatService';
 import { json } from '@sveltejs/kit';
-import { Output } from '$api/chat/session/[id]/get-title/GET';
-import type { z } from 'sveltekit-api';
-
-type Output = z.infer<typeof Output>;
 
 export const GET = async (evt) => {
 	try {
@@ -34,7 +30,7 @@ export const GET = async (evt) => {
 		return json({
 			error: false,
 			response: judul
-		} satisfies Output);
+		});
 	} catch (e) {
 		return error(500, 'Something went wrong');
 	}
