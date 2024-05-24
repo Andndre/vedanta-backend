@@ -1,7 +1,9 @@
 <script lang="ts">
 	import type { PageServerData } from './$types';
 	import Isian from './Isian.svelte';
+	import MencocokkanGambar from './MencocokkanGambar.svelte';
 	import PilihanGanda from './PilihanGanda.svelte';
+	import SimakAudio from './SimakAudio.svelte';
 	export let data: PageServerData;
 </script>
 
@@ -10,7 +12,7 @@
 {:else if data.type == 'isian'}
 	<Isian />
 {:else if data.type == 'simakaudio'}
-	<!-- Todo -->
+	<SimakAudio />
 {:else if data.type == 'cocokgambar'}
-	<!-- Todo -->
+	<MencocokkanGambar />
 {/if}
