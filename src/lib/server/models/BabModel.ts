@@ -1,7 +1,13 @@
-import { prismaClient } from "@/db";
+import { prismaClient } from '@/db';
 
 export const allBab = () => {
-	return prismaClient.gitaBab.findMany();
+	return prismaClient.gitaBab.findMany({
+		select: {
+			title: true,
+			number: true,
+			translationIndo: true
+		}
+	});
 };
 
 export const one = (bab_number: number) => {
