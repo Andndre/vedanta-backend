@@ -20,6 +20,9 @@ importers:
       '@vercel/blob':
         specifier: ^0.23.2
         version: 0.23.2
+      '@vercel/speed-insights':
+        specifier: ^1.0.11
+        version: 1.0.11(@sveltejs/kit@2.5.2(@sveltejs/vite-plugin-svelte@3.0.0(svelte@4.2.7)(vite@5.0.3(@types/node@20.11.25)))(svelte@4.2.7)(vite@5.0.3(@types/node@20.11.25)))(react@18.3.1)(svelte@4.2.7)
       bcryptjs:
         specifier: ^2.4.3
         version: 2.4.3
@@ -880,6 +883,29 @@ packages:
     resolution: {integrity: sha512-NHxohEqad6Ra/r4lGknO52uc/GrWILXAMs1BB4401GTqww0fw1bAqzpG1XHuDO+dprg4GvsD9ZLLSsdo78p9hQ==}
     engines: {node: '>=16'}
     hasBin: true
+
+  '@vercel/speed-insights@1.0.11':
+    resolution: {integrity: sha512-l9hzSNmJvb2Yqpgd/BzpiT0J0aQDdtqxOf3Xm+iW4PICxVvhY1ef7Otdx4GXI+88dVkws57qMzXiShz19gXzSQ==}
+    peerDependencies:
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      react: ^18 || ^19
+      svelte: ^4
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
 
   '@vinejs/compiler@2.4.0':
     resolution: {integrity: sha512-qEhp+Ux4wCeyYlQpB5TddjlRRyxbZz4RVYG/UHGnnnn3eOw326dZGCJldOOEl6huBFoOguMUQfhKLLSjJ0v+XQ==}
@@ -3740,6 +3766,12 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
+
+  '@vercel/speed-insights@1.0.11(@sveltejs/kit@2.5.2(@sveltejs/vite-plugin-svelte@3.0.0(svelte@4.2.7)(vite@5.0.3(@types/node@20.11.25)))(svelte@4.2.7)(vite@5.0.3(@types/node@20.11.25)))(react@18.3.1)(svelte@4.2.7)':
+    optionalDependencies:
+      '@sveltejs/kit': 2.5.2(@sveltejs/vite-plugin-svelte@3.0.0(svelte@4.2.7)(vite@5.0.3(@types/node@20.11.25)))(svelte@4.2.7)(vite@5.0.3(@types/node@20.11.25))
+      react: 18.3.1
+      svelte: 4.2.7
 
   '@vinejs/compiler@2.4.0':
     optional: true
