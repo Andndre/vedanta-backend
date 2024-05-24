@@ -33,7 +33,7 @@ export const POST = async (evt) => {
 		});
 	} catch (err) {
 		console.log(err);
-		return error(500, 'Failed to join class');
+		return error(500, 'Already joined that class');
 	}
 
 	return json({
