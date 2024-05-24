@@ -6,5 +6,9 @@ export const GET = async (evt) => {
 	if (!sloka) {
 		throw error(404, 'sloka not found');
 	}
+	// cache
+	evt.setHeaders({
+		'Cache-Control': 'public, max-age=86400, s-maxage=86400' // 1 day
+	});
 	return json({ slokas: sloka });
 };

@@ -8,5 +8,9 @@ export const GET = async (evt) => {
 	if (!bab) {
 		throw error(404, 'bab not found');
 	}
+	// cache
+	evt.setHeaders({
+		'Cache-Control': 'public, max-age=86400, s-maxage=86400' // 1 day
+	});
 	return json({ bab });
 };
