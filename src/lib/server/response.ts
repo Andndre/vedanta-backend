@@ -4,7 +4,7 @@ export const error = (status: number, message: string) => {
 	return json(
 		{
 			error: true,
-			response: message
+			message
 		},
 		{
 			status,

@@ -211,6 +211,7 @@ model UserLikedDoa {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   doa  Doa  @relation(fields: [doaId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, doaId], name: "likedDoa")
   @@index([userId, doaId])
 }
 
