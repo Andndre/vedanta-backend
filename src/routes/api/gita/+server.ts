@@ -1,3 +1,7 @@
-import api from '$api'
+import { allBab } from '@/models/BabModel.js';
+import { json } from '@sveltejs/kit';
 
-export const GET = (evt) => api.handle(evt)
+export const GET = async (evt) => {
+	const babs = await allBab();
+	return json({ babs });
+};

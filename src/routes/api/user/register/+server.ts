@@ -1,14 +1,14 @@
-import { Input, Output } from '$api/user/register/POST';
 import { isExists, create } from '@/models/UserModel.js';
 import { error } from '@/response.js';
 import { json } from '@sveltejs/kit';
 import type { z } from 'sveltekit-api';
 
-type Body = z.infer<typeof Input>;
-type Output = z.infer<typeof Output>;
-
 export const POST = async (evt) => {
-	const body = (await evt.request.json()) as Body;
+	const body = (await evt.request.json()) as {
+		email: string;
+		password: string;
+		name: string;
+	};
 	if (await isExists(body.email)) {
 		return error(409, 'User already exists');
 	}
@@ -16,6 +16,6 @@ export const POST = async (evt) => {
 	return json({
 		message: 'Successfully created user',
 		error: false,
-		user	
-	} satisfies Output);
+		user
+	});
 };

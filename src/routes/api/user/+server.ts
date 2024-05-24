@@ -1,10 +1,7 @@
-import { Output } from '$api/user/GET';
 import { prismaClient } from '@/db.js';
 import { error } from '@/response.js';
 import { json } from '@sveltejs/kit';
 import type { z } from 'sveltekit-api';
-
-type Output = z.infer<typeof Output>;
 
 export const GET = async (evt) => {
 	if (!evt.locals.apiUser) {
@@ -30,5 +27,5 @@ export const GET = async (evt) => {
 	return json({
 		error: false,
 		user
-	} satisfies Output);
+	});
 };
