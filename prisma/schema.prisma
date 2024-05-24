@@ -27,6 +27,7 @@ model User {
   isAdmin               Boolean  @default(false)
   refreshSession        String   @unique @db.VarChar(36)
   bacaanSlokaTerakhirId Int?
+  profilePicture        String?
 
   bacaanSlokaTerakhir     GitaSloka?                 @relation(fields: [bacaanSlokaTerakhirId], references: [id])
   sessions                ChatSession[]
