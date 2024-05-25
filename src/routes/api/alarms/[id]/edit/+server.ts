@@ -1,27 +1,32 @@
 import { prismaClient } from '@/db.js';
+import { error } from '@/response.js';
 import { json } from '@sveltejs/kit';
 
 export const POST = async (evt) => {
-	const body = await evt.request.json();
+	const body = (await evt.request.json()) as {
+		ulangiDoa: number;
+		jam: string;
+		label: string;
+		doaId: number;
+	};
 	try {
 		await prismaClient.alarmDoa.update({
 			where: {
-				id: +evt.params.id
+				id: +evt.params.id,
+				userId: evt.locals.apiUser!.id
 			},
 			data: {
 				ulangiDoa: body.ulangiDoa,
-				jam: new Date(body.jam),
-				label: body.label
+				jam: body.jam,
+				label: body.label,
+				doaId: body.doaId
 			}
 		});
 		return json({
 			error: false,
 			message: 'success'
 		});
-	} catch (error) {
-		return json({
-			error: true,
-			message: error
-		});
+	} catch (err) {
+		return error(500, 'Failed to update alarm: ' + err);
 	}
 };

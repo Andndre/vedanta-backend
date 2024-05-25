@@ -217,13 +217,13 @@ model UserLikedDoa {
 
 // Alarm doa yang dimiliki oleh user
 model AlarmDoa {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   ulangiDoa Int
   doaId     Int
   userId    String
-  active    Boolean  @default(false)
-  jam       DateTime @default(now())
-  label     String   @default("Alarm Doa")
+  active    Boolean @default(false)
+  jam       String
+  label     String
 
   doa  Doa  @relation(fields: [doaId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

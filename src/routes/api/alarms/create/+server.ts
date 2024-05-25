@@ -5,7 +5,7 @@ export const POST = async (evt) => {
 	const body = (await evt.request.json()) as {
 		doaId: number;
 		ulangiDoa: number;
-		jam: Date;
+		jam: string;
 		label: string;
 	};
 
@@ -20,7 +20,7 @@ export const POST = async (evt) => {
 	});
 
 	return json({
-		alarmCreated: alarm,
+		alarm,
 		error: false
 	});
 };
