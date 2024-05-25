@@ -51,7 +51,7 @@ export const GET = async (evt) => {
 			return {
 				sameDay: false,
 				isStreak: true,
-				day: (userFind.activeStreak % 7) + 1,
+				day: userFind.activeStreak % 7,
 				currentStreakTotal: userFind.activeStreak + 1,
 				pointReward
 			};
@@ -80,7 +80,7 @@ export const GET = async (evt) => {
 			return {
 				sameDay: true,
 				isStreak: false,
-				day: (userFind.activeStreak % 7) + 1,
+				day: userFind.activeStreak % 7,
 				currentStreakTotal: userFind.activeStreak,
 				pointReward: 0
 			};
@@ -89,6 +89,6 @@ export const GET = async (evt) => {
 
 	return json({
 		error: false,
-		user
+		data: res
 	});
 };
