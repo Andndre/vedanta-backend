@@ -3,6 +3,13 @@ import { twMerge } from 'tailwind-merge';
 import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 
+export const POINT_WEEK_REWARD = [5, 20, 50, 10, 25, 75, 100];
+
+export function getPointReward(activeStreak: number) {
+	const weekStreak = (activeStreak - 1) % 7;
+	return POINT_WEEK_REWARD[weekStreak];
+}
+
 /**
  * Jika hacker mengubah url redirectTo di path dengan url mereka,
  * maka path tersebut akan menjadi tidak valid (Error 404).
