@@ -418,7 +418,7 @@ model Mission {
   description   String
   maxProgress   Int
   rewardStars   Int
-  missionTypeId Int
+  missionTypeId Int    @unique
 
   missionType MissionType   @relation(fields: [missionTypeId], references: [id])
   users       UserMission[]
