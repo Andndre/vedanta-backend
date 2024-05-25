@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `AlarmDoa` MODIFY `jam` VARCHAR(191) NOT NULL,
+    ALTER COLUMN `label` DROP DEFAULT;
