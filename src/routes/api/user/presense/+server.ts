@@ -80,7 +80,7 @@ export const GET = async (evt) => {
 			return {
 				sameDay: true,
 				isStreak: false,
-				day: userFind.activeStreak % 7,
+				day: userFind.activeStreak % 7 || 7,
 				currentStreakTotal: userFind.activeStreak,
 				pointReward: 0
 			};
