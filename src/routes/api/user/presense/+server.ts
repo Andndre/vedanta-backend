@@ -51,7 +51,7 @@ export const GET = async (evt) => {
 			return {
 				sameDay: false,
 				isStreak: true,
-				day: userFind.activeStreak % 7,
+				day: userFind.activeStreak % 7 || 7,
 				currentStreakTotal: userFind.activeStreak + 1,
 				pointReward
 			};
