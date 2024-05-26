@@ -13,7 +13,7 @@ export const POST = async (evt) => {
 	};
 
 	await prismaClient.$transaction(async (prisma) => {
-		const discussionReply = await prisma.discussionReply.create({
+		await prisma.discussionReply.create({
 			data: {
 				reply: body.reply,
 				creatorId: user.id,
