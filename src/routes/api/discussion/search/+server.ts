@@ -24,7 +24,9 @@ export const GET = async (evt) => {
 						name: true
 					}
 				},
-				id: true
+				id: true,
+				likesCount: true,
+				repliesCount: true
 			},
 			take: 10,
 			orderBy: {
