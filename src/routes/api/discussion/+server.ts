@@ -12,6 +12,8 @@ export const GET = async (evt) => {
 		select: {
 			title: true,
 			createdAt: true,
+			likesCount: true,
+			repliesCount: true,
 			id: true,
 			creator: {
 				select: {
