@@ -81,12 +81,20 @@ export const GET = async (evt) => {
 		});
 	}
 
+	const URL_CDN = 'https://cdn.hmjtiundiksha.com/';
+
 	const isLiked = discussion.userLikes.some((u) => u.userId === evt.locals.apiUser?.id);
 	const { userLikes, ...rest } = discussion;
+	rest.creator.profilePicture = URL_CDN + discussion.creator.profilePicture;
 	const withIsLiked = { isLiked, ...rest };
 	const repliesWithIsLiked = discussion.replies.map((r) => {
 		const isLiked = r.usersLiked.some((u) => u.userId === evt.locals.apiUser?.id);
 		const { usersLiked, ...rest } = r;
+		rest.creator.profilePicture = URL_CDN + r.creator.profilePicture;
+		rest.replies = r.replies.map((r) => {
+			r.creator.profilePicture = URL_CDN + r.creator.profilePicture;
+			return { isLiked, ...r };
+		});
 		return { isLiked, ...rest };
 	});
 	const withIsLikedAndReplies = { ...withIsLiked, replies: repliesWithIsLiked };
