@@ -35,7 +35,8 @@ export const GET = async (evt) => {
 			discussions: discussions.map((e) => ({
 				title: e.title,
 				body: e.body,
-				creatorName: e.creator.name
+				creatorName: e.creator.name,
+				id: e.id
 			})),
 			error: false
 		});
