@@ -14,8 +14,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		pathname.startsWith('/api') &&
 		pathname !== '/api/user/register' &&
 		pathname !== '/api/user/login' &&
-		pathname !== '/api-json' &&
-		!(pathname.startsWith('/api/gita') && pathname.endsWith('/pelafalan'))
+		pathname !== '/api-json'
 	) {
 		const authorization = event.request.headers.get('Authorization');
 		const bearer = authorization?.replace('Bearer ', '');

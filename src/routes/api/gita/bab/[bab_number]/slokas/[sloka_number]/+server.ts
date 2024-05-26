@@ -1,4 +1,4 @@
-import { one, saveMakna } from '@/models/SlokaModel.js';
+import { AudioAssetDownloader, one, saveMakna } from '@/models/SlokaModel.js';
 import { error, json } from '@sveltejs/kit';
 import { prismaClient } from '@/db.js';
 import { GaneshChatSession } from '@/services/ChatService.js';
@@ -33,8 +33,13 @@ export const GET = async (evt) => {
 		await saveMakna(+evt.params.bab_number, +evt.params.sloka_number, text);
 	}
 
-	const response = { ...sloka, makna };
+	const urlPelafalan = await AudioAssetDownloader.getPelafalanFromCDN(
+		+evt.params.bab_number,
+		+evt.params.sloka_number
+	);
+	const response = { ...sloka, makna, urlPelafalan };
 
+	// get pelafalan url
 	// cache
 	evt.setHeaders({
 		'Cache-Control': 'public, max-age=86400, s-maxage=86400' // 1 day
