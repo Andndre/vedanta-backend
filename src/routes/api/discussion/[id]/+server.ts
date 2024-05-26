@@ -22,7 +22,8 @@ export const GET = async (evt) => {
 			},
 			creator: {
 				select: {
-					name: true
+					name: true,
+					profilePicture: true
 				}
 			},
 			replies: {
@@ -45,7 +46,8 @@ export const GET = async (evt) => {
 					reply: true,
 					creator: {
 						select: {
-							name: true
+							name: true,
+							profilePicture: true
 						}
 					},
 					likesCount: true,
@@ -61,7 +63,8 @@ export const GET = async (evt) => {
 							createdAt: true,
 							creator: {
 								select: {
-									name: true
+									name: true,
+									profilePicture: true
 								}
 							}
 						}
