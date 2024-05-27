@@ -20,7 +20,8 @@ export const load: PageServerLoad = async (evt) => {
 						select: {
 							name: true
 						}
-					}
+					},
+					fromTemplateId: true
 				}
 			}
 		}

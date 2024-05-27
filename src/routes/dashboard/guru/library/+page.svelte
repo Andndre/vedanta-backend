@@ -5,7 +5,7 @@
 	import NoData from '$lib/images/no-data.svg';
 	import Logo from '$lib/images/logo.png';
 	import type { PageServerData } from './$types';
-	import { Edit2Icon, UsersIcon } from 'lucide-svelte';
+	import { Edit2Icon, EyeIcon, UsersIcon } from 'lucide-svelte';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { PUBLIC_APP_URL } from '$env/static/public';
@@ -102,12 +102,14 @@
 						<h2 class="text-xl font-medium">{quiz.title}</h2>
 						<div class="mt-3 flex flex-col gap-3">
 							{#if quiz.kelasId}
-								<span class="flex items-center gap-3 text-gray-600"
-									><UsersIcon size={15} /> {quiz.kelas?.name}</span
-								>
+								<a href="/dashboard/guru/classes/{quiz.kelasId}">
+									<span class="flex items-center gap-3 text-gray-600"
+										><UsersIcon size={15} /> {quiz.kelas?.name}</span
+									>
+								</a>
 								<span class="text-gray-600">Disebarkan {waktuYangLalu(quiz.createdAt)}</span>
 							{:else}
-								<span class="text-gray-600">{waktuYangLalu(quiz.createdAt)}</span>
+								<span class="text-gray-600">Dibuat {waktuYangLalu(quiz.createdAt)}</span>
 							{/if}
 						</div>
 					</div>
@@ -121,8 +123,13 @@
 						on:click={() => {
 							dialogOpen = true;
 							selected = i;
-						}}>Sebarkan</Button
+						}}>{quiz.kelasId ? 'Sebarkan lagi' : 'Sebarkan'}</Button
 					>
+					{#if quiz.kelasId}
+						<Button href="/dashboard/guru/library/{quiz.fromTemplateId}" variant="secondary"
+							><EyeIcon size={15} class="mr-2" /> Template</Button
+						>
+					{/if}
 				</div>
 			</div>
 		{/if}
