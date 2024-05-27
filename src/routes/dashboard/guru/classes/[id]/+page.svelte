@@ -38,7 +38,6 @@
 			<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}
 				><Edit2Icon size={15} /></Button
 			>
-			<Button variant="secondary">Sebarkan</Button>
 		</div>
 	</div>
 {/each}

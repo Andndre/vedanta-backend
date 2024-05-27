@@ -292,6 +292,7 @@ model Quiz {
   title          String
   createdAt      DateTime  @default(now())
   dueDate        DateTime?
+  isDraft        Boolean   @default(false)
 
   creator              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   template             Quiz?            @relation(fields: [fromTemplateId], references: [id], name: "fromTemplate")
