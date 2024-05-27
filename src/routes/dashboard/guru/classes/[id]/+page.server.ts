@@ -14,14 +14,16 @@ export const load: PageServerLoad = async (evt) => {
 				select: {
 					title: true,
 					createdAt: true,
-					id: true
+					id: true,
+					isDraft: true
 				}
 			},
 			siswa: {
 				select: {
 					id: true
 				}
-			}
+			},
+			id: true
 		}
 	});
 	if (!kelas) {

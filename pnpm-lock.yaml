@@ -56,6 +56,9 @@ importers:
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
+      svelte-sonner:
+        specifier: ^0.3.24
+        version: 0.3.24(svelte@4.2.7)
       swagger-ui:
         specifier: ^5.17.7
         version: 5.17.7(ramda@0.30.0)
@@ -2558,6 +2561,11 @@ packages:
         optional: true
       typescript:
         optional: true
+
+  svelte-sonner@0.3.24:
+    resolution: {integrity: sha512-txuL0JBUs0v6qGrr0PGCsbXmKHuthdrAkfISYi8umuveF7+gINb6EXl6VmKY9aHhyxCqvVgqd6yophQNrnor4w==}
+    peerDependencies:
+      svelte: '>=3 <5'
 
   svelte@4.2.7:
     resolution: {integrity: sha512-UExR1KS7raTdycsUrKLtStayu4hpdV3VZQgM0akX8XbXgLBlosdE/Sf3crOgyh9xIjqSYB3UEBuUlIQKRQX2hg==}
@@ -5374,6 +5382,10 @@ snapshots:
       postcss: 8.4.35
       postcss-load-config: 5.0.2(jiti@1.21.0)(postcss@8.4.35)
       typescript: 5.3.3
+
+  svelte-sonner@0.3.24(svelte@4.2.7):
+    dependencies:
+      svelte: 4.2.7
 
   svelte@4.2.7:
     dependencies:

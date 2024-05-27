@@ -3,7 +3,7 @@
 	import { Edit2Icon, UserIcon } from 'lucide-svelte';
 	import type { PageServerData } from './$types';
 	import { Avatar, AvatarFallback, AvatarImage } from '$lib/components/ui/avatar';
-	import { getInitialName } from '$lib/utils';
+	import { cn, getInitialName } from '$lib/utils';
 	import Logo from '$lib/images/logo.png';
 
 	export let data: PageServerData;
@@ -32,12 +32,17 @@
 			</Avatar>
 			<div>
 				<h2 class="text-xl font-medium">{quiz.title}</h2>
+				<div class="pt-3"></div>
+				<span class={cn('rounded-full px-3 py-1', quiz.isDraft ? 'bg-red-100' : 'bg-green-100')}>
+					{quiz.isDraft ? 'Draft' : 'Publik'}
+				</span>
 			</div>
 		</div>
 		<div class="flex justify-center gap-3">
-			<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}
-				><Edit2Icon size={15} /></Button
+			<Button variant="secondary" href="/dashboard/guru/classes/{data.kelas.id}/edit"
+				><Edit2Icon size={15} class="me-2" /> Edit</Button
 			>
+			<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}>Lihat Soal</Button>
 		</div>
 	</div>
 {/each}
