@@ -10,6 +10,7 @@
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 
 	let dialogOpen = false;
 	let daftarKelas: { classCode: string; id: number; name: string }[] = [];
@@ -45,6 +46,13 @@
 					<button
 						on:click={() => {
 							dialogOpen = false;
+
+							goto(
+								'/dashboard/guru/classes/' +
+									kelas.id +
+									'/assign-quiz/' +
+									data.userFind.quizzesCreated[selected].id
+							);
 						}}
 						class="flex items-center gap-2 rounded-sm border border-gray-300 p-2 shadow-sm"
 					>

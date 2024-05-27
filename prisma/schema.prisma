@@ -243,7 +243,6 @@ model Kelas {
   allHomeworkDoa HomeWorkDoa[]
   discussions    Discussion[]
   quizzes        Quiz[]
-  Stage          Stage[]
 
   @@index([classCode, pengajarId])
 }
@@ -263,12 +262,10 @@ model UserKelas {
 model Stage {
   id          Int    @id @default(autoincrement())
   materiId    Int
-  kelasId     Int
   description String
   title       String
   image_path  String
 
-  kelas  Kelas  @relation(fields: [kelasId], references: [id], onDelete: Cascade)
   materi Materi @relation(fields: [materiId], references: [id], onDelete: Cascade)
   Quiz   Quiz[]
 }
