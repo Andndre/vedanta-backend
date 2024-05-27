@@ -284,13 +284,14 @@ model Materi {
 }
 
 model Quiz {
-  id             Int      @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   userId         String
   fromTemplateId Int?
   kelasId        Int?
   stageId        Int?
   title          String
-  createdAt      DateTime @default(now())
+  createdAt      DateTime  @default(now())
+  dueDate        DateTime?
 
   creator              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   template             Quiz?            @relation(fields: [fromTemplateId], references: [id], name: "fromTemplate")

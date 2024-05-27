@@ -11,13 +11,11 @@ export const load: PageServerLoad = async (evt) => {
 		},
 		select: {
 			quizzesCreated: {
-				where: {
-					kelasId: null
-				},
 				select: {
 					id: true,
 					title: true,
-					createdAt: true
+					createdAt: true,
+					kelasId: true
 				}
 			}
 		}

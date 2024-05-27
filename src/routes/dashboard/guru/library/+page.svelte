@@ -16,6 +16,7 @@
 	let daftarKelas: { classCode: string; id: number; name: string }[] = [];
 	let searched = false;
 	let selected = -1;
+	let tabActive = 0;
 
 	export let data: PageServerData;
 
@@ -73,38 +74,51 @@
 
 <div class="pt-12"></div>
 
+<div class="flex gap-1 pb-3">
+	<Button variant={tabActive == 0 ? 'secondary' : 'outline'} on:click={() => (tabActive = 0)}
+		>Template</Button
+	>
+	<Button variant={tabActive == 1 ? 'secondary' : 'outline'} on:click={() => (tabActive = 1)}
+		>Disebarkan</Button
+	>
+</div>
+
 <div class="grid grid-cols-12 gap-4">
 	{#each data.userFind.quizzesCreated as quiz, i}
-		<div class="col-span-12 flex items-end justify-between gap-6 rounded-sm bg-card p-6 shadow-md">
-			<div class="flex items-center gap-6">
-				<Avatar class="h-16 w-16 cursor-pointer">
-					<AvatarImage
-						src={Logo}
-						alt="user avatar"
-						class="h-16 w-16 bg-orange-100 object-contain"
-					/>
-					<AvatarFallback>{getInitialName(quiz.title)}</AvatarFallback>
-				</Avatar>
-				<div>
-					<h2 class="text-xl font-medium">{quiz.title}</h2>
-					<div class="mt-3 flex items-center gap-3">
-						<span class="text-gray-600">{quiz.createdAt}</span>
+		{#if tabActive == 0 ? quiz.kelasId == null : quiz.kelasId != null}
+			<div
+				class="col-span-12 flex items-end justify-between gap-6 rounded-sm bg-card p-6 shadow-md"
+			>
+				<div class="flex items-center gap-6">
+					<Avatar class="h-16 w-16 cursor-pointer">
+						<AvatarImage
+							src={Logo}
+							alt="user avatar"
+							class="h-16 w-16 bg-orange-100 object-contain"
+						/>
+						<AvatarFallback>{getInitialName(quiz.title)}</AvatarFallback>
+					</Avatar>
+					<div>
+						<h2 class="text-xl font-medium">{quiz.title}</h2>
+						<div class="mt-3 flex items-center gap-3">
+							<span class="text-gray-600">{quiz.createdAt}</span>
+						</div>
 					</div>
 				</div>
+				<div class="flex justify-center gap-3">
+					<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}
+						><Edit2Icon size={15} /></Button
+					>
+					<Button
+						variant="secondary"
+						on:click={() => {
+							dialogOpen = true;
+							selected = i;
+						}}>Sebarkan</Button
+					>
+				</div>
 			</div>
-			<div class="flex justify-center gap-3">
-				<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}
-					><Edit2Icon size={15} /></Button
-				>
-				<Button
-					variant="secondary"
-					on:click={() => {
-						dialogOpen = true;
-						selected = i;
-					}}>Sebarkan</Button
-				>
-			</div>
-		</div>
+		{/if}
 	{:else}
 		<div class="flex flex-col justify-center items-center h-[calc(100vh-21rem)]">
 			<img src={NoData} alt="No Data" class="h-52" />
