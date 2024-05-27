@@ -27,7 +27,7 @@ export function waktuYangLalu(waktu: Date) {
 	}
 	interval = seconds / 3600;
 	if (interval > 1) {
-		return Math.floor(interval) + ' ham yang lalu';
+		return Math.floor(interval) + ' jam yang lalu';
 	}
 	interval = seconds / 60;
 	if (interval > 1) {
