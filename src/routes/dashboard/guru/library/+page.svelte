@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
-	import { getInitialName, ssrPromiseLoop } from '$lib/utils';
+	import { getInitialName, ssrPromiseLoop, waktuYangLalu } from '$lib/utils';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import NoData from '$lib/images/no-data.svg';
 	import Logo from '$lib/images/logo.png';
 	import type { PageServerData } from './$types';
-	import { Edit2Icon } from 'lucide-svelte';
+	import { Edit2Icon, UsersIcon } from 'lucide-svelte';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { PUBLIC_APP_URL } from '$env/static/public';
@@ -100,8 +100,15 @@
 					</Avatar>
 					<div>
 						<h2 class="text-xl font-medium">{quiz.title}</h2>
-						<div class="mt-3 flex items-center gap-3">
-							<span class="text-gray-600">{quiz.createdAt}</span>
+						<div class="mt-3 flex flex-col gap-3">
+							{#if quiz.kelasId}
+								<span class="flex items-center gap-3 text-gray-600"
+									><UsersIcon size={15} /> {quiz.kelas?.name}</span
+								>
+								<span class="text-gray-600">Disebarkan {waktuYangLalu(quiz.createdAt)}</span>
+							{:else}
+								<span class="text-gray-600">{waktuYangLalu(quiz.createdAt)}</span>
+							{/if}
 						</div>
 					</div>
 				</div>

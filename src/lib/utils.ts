@@ -10,6 +10,32 @@ export function getPointReward(activeStreak: number) {
 	return POINT_WEEK_REWARD[weekStreak];
 }
 
+export function waktuYangLalu(waktu: Date) {
+	let seconds = Math.floor((new Date().getTime() - waktu.getTime()) / 1000);
+	let interval = seconds / 31536000;
+
+	if (interval > 1) {
+		return Math.floor(interval) + ' tahun yang lalu';
+	}
+	interval = seconds / 2592000;
+	if (interval > 1) {
+		return Math.floor(interval) + ' bulan yang lalu';
+	}
+	interval = seconds / 86400;
+	if (interval > 1) {
+		return Math.floor(interval) + ' hari yang lalu';
+	}
+	interval = seconds / 3600;
+	if (interval > 1) {
+		return Math.floor(interval) + ' ham yang lalu';
+	}
+	interval = seconds / 60;
+	if (interval > 1) {
+		return Math.floor(interval) + ' menit yang lalu';
+	}
+	return Math.floor(seconds) + ' detik yang lalu';
+}
+
 /**
  * Jika hacker mengubah url redirectTo di path dengan url mereka,
  * maka path tersebut akan menjadi tidak valid (Error 404).

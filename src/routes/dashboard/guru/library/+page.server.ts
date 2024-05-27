@@ -15,7 +15,12 @@ export const load: PageServerLoad = async (evt) => {
 					id: true,
 					title: true,
 					createdAt: true,
-					kelasId: true
+					kelasId: true,
+					kelas: {
+						select: {
+							name: true
+						}
+					}
 				}
 			}
 		}
