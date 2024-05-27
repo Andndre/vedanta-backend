@@ -243,6 +243,7 @@ model Kelas {
   allHomeworkDoa HomeWorkDoa[]
   discussions    Discussion[]
   quizzes        Quiz[]
+  Stage          Stage[]
 
   @@index([classCode, pengajarId])
 }
@@ -259,6 +260,19 @@ model UserKelas {
   @@index([userId])
 }
 
+model Stage {
+  id          Int    @id @default(autoincrement())
+  materiId    Int
+  kelasId     Int
+  description String
+  title       String
+  image_path  String
+
+  kelas  Kelas  @relation(fields: [kelasId], references: [id], onDelete: Cascade)
+  materi Materi @relation(fields: [materiId], references: [id], onDelete: Cascade)
+  Quiz   Quiz[]
+}
+
 model Materi {
   id          Int    @id @default(autoincrement())
   videoLink   String
@@ -266,8 +280,8 @@ model Materi {
   description String
   title       String
 
-  kelas   Kelas? @relation(fields: [kelasId], references: [id], onDelete: Cascade)
-  quizzes Quiz[]
+  kelas Kelas?  @relation(fields: [kelasId], references: [id], onDelete: Cascade)
+  Stage Stage[]
 
   @@index([kelasId])
 }
@@ -275,19 +289,19 @@ model Materi {
 model Quiz {
   id             Int      @id @default(autoincrement())
   userId         String
-  materiId       Int?
   fromTemplateId Int?
   kelasId        Int?
+  stageId        Int?
   title          String
   createdAt      DateTime @default(now())
 
   creator              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  materi               Materi?          @relation(fields: [materiId], references: [id], onDelete: SetNull)
   template             Quiz?            @relation(fields: [fromTemplateId], references: [id], name: "fromTemplate")
   entries              QuizEntry[]
   quizesUsesAsTemplate Quiz[]           @relation(name: "fromTemplate")
   userQuizResult       UserQuizResult[]
   kelas                Kelas?           @relation(fields: [kelasId], references: [id])
+  stage                Stage?           @relation(fields: [stageId], references: [id])
 }
 
 model QuizEntry {
@@ -407,8 +421,9 @@ model UserBadge {
 }
 
 model MissionType {
-  id   Int    @id @default(autoincrement())
-  name String
+  id      Int    @id @default(autoincrement())
+  name    String
+  colorBg String @default("#FFFFFF")
 
   missions Mission[]
 }
@@ -433,6 +448,8 @@ model UserMission {
 
   mission Mission @relation(fields: [missionId], references: [id])
   user    User    @relation(fields: [userId], references: [id])
+
+  @@unique([userId, missionId], name: "userMission")
 }
 
 model UserNotification {
