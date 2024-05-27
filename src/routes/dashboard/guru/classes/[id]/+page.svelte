@@ -16,6 +16,9 @@
 	</div>
 	<div class="flex gap-3">
 		<Button>Beri Tugas</Button>
+		<Button variant="ghost" href="/dashboard/guru/classes/{data.kelas.id}/edit"
+			><Edit2Icon size={15} class="me-2" /> Edit</Button
+		>
 		<Button variant="ghost"><UserIcon size={15} /> Kelola Peserta</Button>
 	</div>
 </div>
@@ -39,7 +42,7 @@
 			</div>
 		</div>
 		<div class="flex justify-center gap-3">
-			<Button variant="secondary" href="/dashboard/guru/classes/{data.kelas.id}/edit"
+			<Button variant="secondary" href="/dashboard/guru/classes/{data.kelas.id}/quiz/{quiz.id}/edit"
 				><Edit2Icon size={15} class="me-2" /> Edit</Button
 			>
 			<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}>Lihat Soal</Button>
