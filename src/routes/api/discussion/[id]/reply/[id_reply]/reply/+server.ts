@@ -13,14 +13,24 @@ export const POST = async (evt) => {
 	};
 
 	await prismaClient.$transaction(async (prisma) => {
-		const discussionReply = await prisma.discussionReply.create({
+		await prisma.discussionReply.create({
 			data: {
 				reply: body.reply,
 				creatorId: user.id,
 				discussionId: +evt.params.id,
-				discussionReplyId: +evt.params.id_reply
+				discussionReplyId: +evt.params.id_reply,
 			}
 		});
+		await prisma.discussion.update({
+			where: {
+				id: +evt.params.id_reply
+			},
+			data: {
+				likesCount: {
+					increment: 1
+				}
+			}
+		})
 	});
 
 	return json({
