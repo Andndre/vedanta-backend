@@ -15,7 +15,7 @@
 		<p>{data.kelas.siswa.length} Siswa</p>
 	</div>
 	<div class="flex gap-3">
-		<Button>Beri Tugas</Button>
+		<Button href="/dashboard/guru/classes/{data.kelas.id}/assign">Beri Tugas</Button>
 		<Button variant="ghost" href="/dashboard/guru/classes/{data.kelas.id}/edit"
 			><Edit2Icon size={15} class="me-2" /> Edit</Button
 		>

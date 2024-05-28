@@ -32,7 +32,6 @@
 				</Avatar>
 				<div>
 					<h2 class="text-lg">{siswa.user.name}</h2>
-					<!-- <p>{kelas.siswa.length} Siswa</p> -->
 				</div>
 			</div>
 			<form action="?/remove" method="post">
