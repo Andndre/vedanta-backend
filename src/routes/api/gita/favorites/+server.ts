@@ -38,7 +38,8 @@ export const GET = async (evt) => {
 			isLiked: res.isLiked,
 			number: res.sloka.number,
 			content: res.sloka.content,
-			translationIndo: res.sloka.translationIndo
+			translationIndo: res.sloka.translationIndo,
+			numberBab: res.sloka.numberBab
 		};
 	});
 
