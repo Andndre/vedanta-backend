@@ -6,7 +6,6 @@ export const POST = async (evt) => {
 		doaId: number;
 		ulangiDoa: number;
 		jam: string;
-		label: string;
 	};
 
 	const alarm = await prismaClient.alarmDoa.create({
@@ -14,8 +13,7 @@ export const POST = async (evt) => {
 			userId: evt.locals.apiUser!.id,
 			doaId: body.doaId,
 			ulangiDoa: body.ulangiDoa,
-			jam: body.jam,
-			label: body.label
+			jam: body.jam
 		}
 	});
 

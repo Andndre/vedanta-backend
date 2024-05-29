@@ -6,7 +6,6 @@ export const POST = async (evt) => {
 	const body = (await evt.request.json()) as {
 		ulangiDoa: number;
 		jam: string;
-		label: string;
 		doaId: number;
 	};
 	try {
@@ -18,7 +17,6 @@ export const POST = async (evt) => {
 			data: {
 				ulangiDoa: body.ulangiDoa,
 				jam: body.jam,
-				label: body.label,
 				doaId: body.doaId
 			}
 		});

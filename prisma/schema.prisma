@@ -223,7 +223,6 @@ model AlarmDoa {
   userId    String
   active    Boolean @default(false)
   jam       String
-  label     String
 
   doa  Doa  @relation(fields: [doaId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
