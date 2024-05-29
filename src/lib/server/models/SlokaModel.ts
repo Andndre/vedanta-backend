@@ -259,11 +259,12 @@ export class AudioAssetDownloader {
 	static async getPelafalanFromCDN(bab: number, sloka: number) {
 		let request: Response;
 		do {
-			request = await fetch(AudioAssetDownloader.getCDNAudioPath(bab, sloka), {
+			const path = AudioAssetDownloader.getCDNAudioPath(bab, sloka);
+			request = await fetch(path, {
 				method: 'GET'
 			});
 			sloka--;
 		} while (!request.ok);
-		return AudioAssetDownloader.getCDNAudioPath(bab, sloka);
+		return AudioAssetDownloader.getCDNAudioPath(bab, sloka + 1);
 	}
 }
