@@ -37,7 +37,9 @@ export const GET = async (evt) => {
 		+evt.params.bab_number,
 		+evt.params.sloka_number
 	);
-	const response = { ...sloka, makna, urlPelafalan };
+	const response = { ...sloka, makna, urlPelafalan, babTitle: sloka.bab.title };
+
+	const { bab, ...rest } = response;
 
 	// get pelafalan url
 	// cache
@@ -45,5 +47,5 @@ export const GET = async (evt) => {
 		'Cache-Control': 'public, max-age=86400, s-maxage=86400' // 1 day
 	});
 
-	return json(response);
+	return json(rest);
 };

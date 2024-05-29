@@ -42,6 +42,11 @@ export const one = async (bab_number: number, sloka_number: number, userId: stri
 				where: {
 					userId: userId
 				}
+			},
+			bab: {
+				select: {
+					title: true
+				}
 			}
 		}
 	});
