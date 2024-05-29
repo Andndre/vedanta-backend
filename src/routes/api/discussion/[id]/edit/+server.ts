@@ -20,7 +20,6 @@ export const POST = async (evt) => {
 
 	const body = (await evt.request.json()) as {
 		title: string;
-		body: string;
 	};
 
 	await prismaClient.discussion.update({
@@ -28,8 +27,7 @@ export const POST = async (evt) => {
 			id: +evt.params.id
 		},
 		data: {
-			title: body.title,
-			body: body.body
+			title: body.title
 		}
 	});
 

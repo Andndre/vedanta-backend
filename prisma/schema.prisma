@@ -121,7 +121,6 @@ model UserLikedGitaSloka {
 model Discussion {
   id           Int      @id @default(autoincrement())
   title        String   @db.VarChar(300)
-  body         String   @db.Text
   createdAt    DateTime @default(now())
   repliesCount Int      @default(0)
   likesCount   Int      @default(0)
@@ -134,7 +133,7 @@ model Discussion {
   userLikes UserLikedDiscussion[]
 
   @@index([creatorId])
-  @@fulltext([title, body])
+  @@fulltext([title])
 }
 
 // Many to many relationship antara user dan discussion (like)

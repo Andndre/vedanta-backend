@@ -8,7 +8,6 @@ export const GET = async (evt) => {
 		},
 		select: {
 			title: true,
-			body: true,
 			likesCount: true,
 			repliesCount: true,
 			createdAt: true,

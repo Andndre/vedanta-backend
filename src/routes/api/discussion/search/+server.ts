@@ -9,16 +9,12 @@ export const GET = async (evt) => {
 	try {
 		const discussions = await prismaClient.discussion.findMany({
 			where: {
-				body: {
-					search: searchQuery
-				},
 				title: {
 					search: searchQuery
 				}
 			},
 			select: {
 				title: true,
-				body: true,
 				creator: {
 					select: {
 						name: true
@@ -36,7 +32,6 @@ export const GET = async (evt) => {
 		return json({
 			discussions: discussions.map((e) => ({
 				title: e.title,
-				body: e.body,
 				creatorName: e.creator.name,
 				id: e.id
 			})),
