@@ -1,7 +1,6 @@
 import { prismaClient } from '@/db.js';
 import { error } from '@/response.js';
 import { json } from '@sveltejs/kit';
-import type { z } from 'sveltekit-api';
 
 export const GET = async (evt) => {
 	if (!evt.locals.apiUser) {
@@ -18,14 +17,19 @@ export const GET = async (evt) => {
 			name: true,
 			points: true,
 			lastActiveAt: true,
-			id: true
+			id: true,
+			profilePicture: true
 		}
 	});
 	if (!user) {
 		return error(404, 'User not found');
 	}
+	const response = {
+		...user,
+		profilePicture: `https://cdn.hmjtiundiksha.com/${user.profilePicture}`
+	};
 	return json({
 		error: false,
-		user
+		user: response
 	});
 };
