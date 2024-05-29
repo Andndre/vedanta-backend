@@ -19,8 +19,18 @@ export const GET = async (evt) => {
 		}
 	});
 
+	const withTitle = alarms.map((a) => ({
+		...a,
+		title: a.doa.title
+	}));
+
+	const response = withTitle.map((a) => {
+		const { doa, ...rest } = a;
+		return rest;
+	});
+
 	return json({
-		alarms,
+		response,
 		error: false
 	});
 };
