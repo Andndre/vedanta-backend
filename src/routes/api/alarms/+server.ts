@@ -30,7 +30,7 @@ export const GET = async (evt) => {
 	});
 
 	return json({
-		response,
+		doas: response,
 		error: false
 	});
 };
