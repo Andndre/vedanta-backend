@@ -9,7 +9,8 @@ export const GET = async (evt) => {
 		select: {
 			id: true,
 			title: true,
-			body: true
+			body: true,
+			pelafalanFile: true
 		}
 	});
 
@@ -20,8 +21,13 @@ export const GET = async (evt) => {
 		});
 	}
 
+	const withFullPelafalan = {
+		...doa,
+		pelafalanFile: `https://cdn.hmjtiundiksha.com/${doa.pelafalanFile}`
+	};
+
 	return json({
-		doa,
+		doa: withFullPelafalan,
 		error: false
 	});
 };

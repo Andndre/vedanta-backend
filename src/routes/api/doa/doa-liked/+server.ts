@@ -16,8 +16,10 @@ export const GET = async (evt) => {
 		}
 	});
 
+	const response = doas.map((d) => ({ ...d.doa, isLiked: true }));
+
 	return json({
-		doas,
+		doas: response,
 		error: false
 	});
 };

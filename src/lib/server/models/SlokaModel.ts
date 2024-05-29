@@ -188,7 +188,7 @@ export class AudioAssetDownloader {
 		console.log('-------------------------------');
 
 		for (let bab = 0; bab < AudioAssetDownloader.possiblyGrouped.length; bab++) {
-			const groupSorted = AudioAssetDownloader.possiblyGrouped[bab].toSorted((a, b) => a - b);
+			const groupSorted = AudioAssetDownloader.possiblyGrouped[bab].sort((a, b) => a - b);
 			console.log('For bab ' + (bab + 1) + '.. skipped verses:');
 			console.log(groupSorted);
 			const groups: number[][] = [];
