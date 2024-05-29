@@ -188,9 +188,10 @@ model UserLikedDiscussionReply {
 
 // Doa yang bisa dilihat oleh user (ditambahkan oleh admin)
 model Doa {
-  id            Int    @id @default(autoincrement())
+  id            Int     @id @default(autoincrement())
   title         String
   body          String
+  makna         String?
   pelafalanFile String
 
   usersLiked      UserLikedDoa[]
