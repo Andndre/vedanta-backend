@@ -10,7 +10,8 @@ export const GET = async (evt) => {
 			id: true,
 			title: true,
 			body: true,
-			pelafalanFile: true
+			pelafalanFile: true,
+			makna: true
 		}
 	});
 
@@ -23,7 +24,8 @@ export const GET = async (evt) => {
 
 	const withFullPelafalan = {
 		...doa,
-		pelafalanFile: `https://cdn.hmjtiundiksha.com/${doa.pelafalanFile}`
+		pelafalanFile: `https://cdn.hmjtiundiksha.com/${doa.pelafalanFile}`,
+		makna: doa.makna || ''
 	};
 
 	return json({
