@@ -3,39 +3,27 @@ import type { Actions, PageServerLoad } from './$types';
 import { error, redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async (evt) => {
-	const user = evt.locals.webUser;
-
-	const stageInfo = await prismaClient.stage.findUnique({
+	const stage = await prismaClient.stage.findUnique({
 		where: {
 			id: +evt.params.id
 		},
 		select: {
-			id: true,
 			materi: {
 				select: {
 					title: true,
 					description: true,
-					id: true,
 					videoLink: true
-				}
-			},
-			description: true,
-			image_path: true,
-			title: true,
-			Quiz: {
-				select: {
-					_count: true
 				}
 			}
 		}
 	});
 
-	if (!stageInfo) {
+	if (!stage) {
 		throw error(404, 'Stage not found');
 	}
 
 	return {
-		stageInfo
+		stage
 	};
 };
 
@@ -44,6 +32,7 @@ export const actions: Actions = {
 		const data = Object.fromEntries(await evt.request.formData()) as {
 			title: string;
 			description: string;
+			videoLink: string;
 		};
 
 		const stage = await prismaClient.stage.update({
@@ -51,8 +40,12 @@ export const actions: Actions = {
 				id: +evt.params.id
 			},
 			data: {
-				title: data.title,
-				description: data.description
+				materi: {
+					upsert: {
+						create: data,
+						update: data
+					}
+				}
 			}
 		});
 

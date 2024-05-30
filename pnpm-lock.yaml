@@ -135,6 +135,9 @@ importers:
       svelte-check:
         specifier: ^3.6.0
         version: 3.6.0(postcss-load-config@5.0.2(jiti@1.21.0)(postcss@8.4.35))(postcss@8.4.35)(svelte@4.2.7)
+      svelte-youtube-embed:
+        specifier: ^0.2.3
+        version: 0.2.3
       sveltekit-api:
         specifier: ^0.5.2
         version: 0.5.2(@sveltejs/kit@2.5.2(@sveltejs/vite-plugin-svelte@3.0.0(svelte@4.2.7)(vite@5.0.3(@types/node@20.11.25)))(svelte@4.2.7)(vite@5.0.3(@types/node@20.11.25)))(svelte@4.2.7)
@@ -2566,6 +2569,9 @@ packages:
     resolution: {integrity: sha512-txuL0JBUs0v6qGrr0PGCsbXmKHuthdrAkfISYi8umuveF7+gINb6EXl6VmKY9aHhyxCqvVgqd6yophQNrnor4w==}
     peerDependencies:
       svelte: '>=3 <5'
+
+  svelte-youtube-embed@0.2.3:
+    resolution: {integrity: sha512-+HYK224eJ5tSEM6chZgODuSOuaXqv/l5Xj6tvvjqQfrQzdG33jyjYVNzREXIVTerdWSvyqbm5A2BpL8tdwNhQw==}
 
   svelte@4.2.7:
     resolution: {integrity: sha512-UExR1KS7raTdycsUrKLtStayu4hpdV3VZQgM0akX8XbXgLBlosdE/Sf3crOgyh9xIjqSYB3UEBuUlIQKRQX2hg==}
@@ -5386,6 +5392,8 @@ snapshots:
   svelte-sonner@0.3.24(svelte@4.2.7):
     dependencies:
       svelte: 4.2.7
+
+  svelte-youtube-embed@0.2.3: {}
 
   svelte@4.2.7:
     dependencies:

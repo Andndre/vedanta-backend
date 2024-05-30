@@ -2,6 +2,8 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import Label from '$lib/components/ui/label/label.svelte';
+	import { EditIcon, MessageCircleWarningIcon } from 'lucide-svelte';
+	import YoutubePlayer from '$lib/components/custom/YotubePlayer.svelte';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -22,16 +24,33 @@
 			<Button variant={'ghost'}>Perbarui Cover</Button>
 		</div>
 	</div>
-	<div>
-		<Label>Judul</Label>
-		<p>{data.stageInfo.title}</p>
-	</div>
-	<div>
-		<Label>Deskripsi</Label>
-		<p>{data.stageInfo.description}</p>
-	</div>
+	<form action="?/update" method="POST" class="space-y-3">
+		<div>
+			<Label>Judul</Label>
+			<!-- <p>{data.stageInfo.title}</p> -->
+			<Input name="title" value={data.stageInfo.title} />
+		</div>
+		<div>
+			<Label>Deskripsi</Label>
+			<Input name="description" value={data.stageInfo.description} />
+		</div>
+
+		<Button type="submit">Simpan</Button>
+	</form>
 	<div>
 		<Label>Materi</Label>
-		<p>{data.stageInfo.materi ? 'Ada' : 'Tidak Ada'}</p>
+		<div class="flex items-center gap-2">
+			<p>{data.stageInfo.materi ? 'Ada' : 'Tidak Ada'}</p>
+			<Button variant="secondary" href={`/dashboard/admin/stage/${data.stageInfo.id}/materi`}
+				><EditIcon size={15} /></Button
+			>
+			{#if !data.stageInfo.materi}
+				<MessageCircleWarningIcon color="red" />
+				<span class="text-sm">Materi belum diisi</span>
+			{/if}
+		</div>
+		{#if data.stageInfo.materi?.videoLink}
+			<YoutubePlayer videoId={data.stageInfo.materi?.videoLink} />
+		{/if}
 	</div>
 </div>
