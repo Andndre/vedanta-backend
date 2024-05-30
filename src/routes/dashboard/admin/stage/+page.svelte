@@ -19,7 +19,9 @@
 	>
 		<div class="flex flex-col">
 			<h2 class="text-xl font-bold">{stage.title}</h2>
+			<div class="pt-2"></div>
+			<p>{stage.description}</p>
 		</div>
-		<Button variant="ghost" href={`/dashboard/admin/stage/${stage.id}/edit`}>Edit</Button>
+		<Button variant="ghost" href={`/dashboard/admin/stage/${stage.id}`}>Info</Button>
 	</div>
 {/each}

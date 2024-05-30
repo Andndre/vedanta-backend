@@ -260,12 +260,12 @@ model UserKelas {
 
 model Stage {
   id          Int    @id @default(autoincrement())
-  materiId    Int
+  materiId    Int?
   description String
   title       String
   image_path  String
 
-  materi Materi @relation(fields: [materiId], references: [id], onDelete: Cascade)
+  materi Materi? @relation(fields: [materiId], references: [id], onDelete: SetNull)
   Quiz   Quiz[]
 }
 
