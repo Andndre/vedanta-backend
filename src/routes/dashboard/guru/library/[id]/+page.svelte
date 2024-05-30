@@ -39,6 +39,14 @@
 	function isIsian(obj: any): obj is IsianSingkat {
 		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'isian';
 	}
+
+	function isSimakAudio(obj: any): obj is IsianSingkat {
+		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'simakaudio';
+	}
+
+	function isCocokGambar(obj: any): obj is IsianSingkat {
+		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'cocokgambar';
+	}
 </script>
 
 <div class="flex flex-1 flex-col justify-center">
@@ -109,6 +117,18 @@
 			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
 				<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
 				<p>Jawaban: {item.questionModel.correct}</p>
+			</div>
+			<div class="pt-3"></div>
+		{:else if isSimakAudio(item.questionModel)}
+			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
+				<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
+				<p class="italic">Simak Audio</p>
+			</div>
+			<div class="pt-3"></div>
+		{:else if isCocokGambar(item.questionModel)}
+			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
+				<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
+				<p class="italic">Cocok Gambar</p>
 			</div>
 			<div class="pt-3"></div>
 		{:else}
