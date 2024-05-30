@@ -259,11 +259,12 @@ model UserKelas {
 }
 
 model Stage {
-  id          Int    @id @default(autoincrement())
-  materiId    Int?
-  description String
-  title       String
-  image_path  String
+  id                     Int    @id @default(autoincrement())
+  materiId               Int?
+  description            String
+  title                  String
+  image_path             String
+  points_reward_finished Int    @default(0)
 
   materi Materi? @relation(fields: [materiId], references: [id], onDelete: SetNull)
   Quiz   Quiz[]
