@@ -15,9 +15,9 @@
 
 <form action="?/update" method="POST" class="flex flex-col gap-3">
 	<Label>Judul</Label>
-	<Input name="title" />
+	<Input name="title" value={data.stage.materi?.title} />
 	<Label>Deskripsi</Label>
-	<Input name="description" />
+	<Input name="description" value={data.stage.materi?.description} />
 	<Label>Video ID (hanya ID)</Label>
 	<Input name="videoLink" bind:value={videoId} />
 
