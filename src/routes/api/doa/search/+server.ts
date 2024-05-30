@@ -28,8 +28,6 @@ export const GET = async (evt) => {
 		take: 10
 	});
 
-	console.log(doas);
-
 	return json({
 		doas,
 		error: false
