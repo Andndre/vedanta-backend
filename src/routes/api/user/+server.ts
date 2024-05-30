@@ -26,7 +26,9 @@ export const GET = async (evt) => {
 	}
 	const response = {
 		...user,
-		profilePicture: `https://cdn.hmjtiundiksha.com/${user.profilePicture}`
+		profilePicture: user.profilePicture
+			? `https://cdn.hmjtiundiksha.com/${user.profilePicture}`
+			: null
 	};
 	return json({
 		error: false,

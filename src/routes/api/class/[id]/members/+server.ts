@@ -37,7 +37,8 @@ export const GET = async (evt) => {
 				select: {
 					user: {
 						select: {
-							name: true
+							name: true,
+							profilePicture: true
 						}
 					}
 				}
@@ -50,7 +51,10 @@ export const GET = async (evt) => {
 	}
 
 	const response = members.siswa.map((m) => ({
-		name: m.user.name
+		name: m.user.name,
+		profilePicture: m.user.profilePicture
+			? `https://cdn.hmjtiundiksha.com/${m.user.profilePicture}`
+			: null
 	}));
 
 	return json({ members: response, error: false });
