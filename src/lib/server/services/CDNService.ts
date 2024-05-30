@@ -17,7 +17,9 @@ export const uploadFile = async (file: Blob, destination: string) => {
 
 	const resBody = (await res.json()) as { path: string };
 
-	if (!res.ok) return null;
+	if (!res.ok) {
+		return null;
+	}
 
 	return resBody.path;
 };

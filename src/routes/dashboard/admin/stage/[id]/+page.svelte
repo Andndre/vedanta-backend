@@ -5,7 +5,6 @@
 	import { EditIcon, MessageCircleWarningIcon } from 'lucide-svelte';
 	import YoutubePlayer from '$lib/components/custom/YotubePlayer.svelte';
 	import type { PageServerData } from './$types';
-	import { Quiz } from '$lib/types/quiz';
 
 	export let data: PageServerData;
 </script>
