@@ -12,7 +12,7 @@
 <h1 class="text-2xl font-bold">Detail Stage</h1>
 <div class="pt-8"></div>
 <div class="flex flex-col gap-5">
-	<div class="space-y-2">
+	<form class="space-y-2" action="?/updateImage" method="POST" enctype="multipart/form-data">
 		<Label>Cover:</Label>
 		<img
 			class="w-56"
@@ -20,10 +20,10 @@
 			alt="cover"
 		/>
 		<div class="flex gap-3">
-			<Input type="file" class="w-56" />
-			<Button variant={'ghost'}>Perbarui Cover</Button>
+			<Input type="file" class="w-56" name="image" />
+			<Button variant={'ghost'} type="submit">Perbarui Cover</Button>
 		</div>
-	</div>
+	</form>
 	<form action="?/update" method="POST" class="space-y-3">
 		<div>
 			<Label>Judul</Label>
