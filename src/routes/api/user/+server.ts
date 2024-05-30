@@ -18,7 +18,16 @@ export const GET = async (evt) => {
 			points: true,
 			lastActiveAt: true,
 			id: true,
-			profilePicture: true
+			profilePicture: true,
+			badges: {
+				select: {
+					badge: {
+						select: {
+							id: true
+						}
+					}
+				}
+			}
 		}
 	});
 	if (!user) {
@@ -28,8 +37,10 @@ export const GET = async (evt) => {
 		...user,
 		profilePicture: user.profilePicture
 			? `https://cdn.hmjtiundiksha.com/${user.profilePicture}`
-			: null
+			: null,
+		badges: user.badges.length
 	};
+
 	return json({
 		error: false,
 		user: response
