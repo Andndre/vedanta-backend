@@ -12,15 +12,23 @@ export const GET = async (evt) => {
 
 	const doas = await prismaClient.doa.findMany({
 		where: {
-			title: {
-				search: searchQuery
-			},
-			body: {
-				search: searchQuery
-			}
+			OR: [
+				{
+					title: {
+						contains: searchQuery
+					}
+				},
+				{
+					body: {
+						contains: searchQuery
+					}
+				}
+			]
 		},
 		take: 10
 	});
+
+	console.log(doas);
 
 	return json({
 		doas,
