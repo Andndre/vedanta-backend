@@ -14,6 +14,8 @@
 	<div class="pt-3"></div>
 	<Textarea name="body" placeholder="Isi Doa" rows={10} required value={data.doa.body}></Textarea>
 	<div class="pt-3"></div>
+	<Textarea name="makna" placeholder="Makna" rows={10} required value={data.doa.makna}></Textarea>
+	<div class="pt-3"></div>
 	<Input name="pelafalan" type="file" accept="audio/*" />
 	<div class="pt-3"></div>
 	{#if data.doa.pelafalanFile}

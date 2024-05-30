@@ -42,6 +42,7 @@ export const actions: Actions = {
 		}
 		const title = data.get('title') as string;
 		const body = data.get('body') as string;
+		const makna = data.get('makna') as string;
 
 		if (containsPelafalan) {
 			const path = await uploadFile(data.get('pelafalan') as Blob, 'vedanta/pelafalan-doa');
@@ -55,7 +56,8 @@ export const actions: Actions = {
 				data: {
 					title,
 					body,
-					pelafalanFile: path
+					pelafalanFile: path,
+					makna
 				}
 			});
 		} else {
@@ -65,7 +67,8 @@ export const actions: Actions = {
 				},
 				data: {
 					title,
-					body
+					body,
+					makna
 				}
 			});
 		}

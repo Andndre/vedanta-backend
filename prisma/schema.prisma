@@ -219,12 +219,12 @@ model UserLikedDoa {
 model AlarmDoa {
   id        Int     @id @default(autoincrement())
   ulangiDoa Int
-  doaId     Int
+  doaId     Int?
   userId    String
   active    Boolean @default(false)
   jam       String
 
-  doa  Doa  @relation(fields: [doaId], references: [id], onDelete: Cascade)
+  doa  Doa? @relation(fields: [doaId], references: [id], onDelete: SetNull)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])

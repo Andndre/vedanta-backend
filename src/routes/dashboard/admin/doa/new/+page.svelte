@@ -11,6 +11,8 @@
 	<div class="pt-3"></div>
 	<Textarea name="body" placeholder="Isi Doa" rows={10} required></Textarea>
 	<div class="pt-3"></div>
+	<Textarea name="makna" placeholder="Makna" rows={10} required></Textarea>
+	<div class="pt-3"></div>
 	<Input name="pelafalan" type="file" accept="audio/*" required />
 	<div class="pt-3"></div>
 	<Button type="submit">Simpan</Button>
