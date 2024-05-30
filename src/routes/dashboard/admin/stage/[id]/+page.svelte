@@ -5,6 +5,7 @@
 	import { EditIcon, MessageCircleWarningIcon } from 'lucide-svelte';
 	import YoutubePlayer from '$lib/components/custom/YotubePlayer.svelte';
 	import type { PageServerData } from './$types';
+	import { Quiz } from '$lib/types/quiz';
 
 	export let data: PageServerData;
 </script>
@@ -37,6 +38,19 @@
 
 		<Button type="submit">Simpan</Button>
 	</form>
+	<div>
+		<Label>Quiz</Label>
+		<div class="flex items-center gap-2">
+			<p>{data.stageInfo.Quiz.length > 0 ? `${data.stageInfo.Quiz.length} quiz` : 'Tidak Ada'}</p>
+			<Button variant="secondary" href={`/dashboard/admin/stage/${data.stageInfo.id}/quiz`}
+				><EditIcon size={15} /></Button
+			>
+			{#if !data.stageInfo.Quiz.length}
+				<MessageCircleWarningIcon color="red" />
+				<span class="text-sm">Quiz belum diisi</span>
+			{/if}
+		</div>
+	</div>
 	<div>
 		<Label>Materi</Label>
 		<div class="flex items-center gap-2">

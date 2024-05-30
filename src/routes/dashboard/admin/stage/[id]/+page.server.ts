@@ -24,7 +24,7 @@ export const load: PageServerLoad = async (evt) => {
 			title: true,
 			Quiz: {
 				select: {
-					_count: true
+					id: true
 				}
 			}
 		}
