@@ -9,14 +9,14 @@
 	let opsi4: File | null = null;
 </script>
 
-<form action="?/save" method="POST">
+<form action="?/save" method="POST" enctype="multipart/form-data">
 	<div class="flex justify-end">
-		<input type="hidden" value="pilgan" name="type" />
+		<input type="hidden" value="cocokgambar" name="type" />
 		<input type="hidden" bind:value={title} name="title" />
-		<input type="hidden" bind:value={opsi1} name="optionOne" />
+		<!-- <input type="hidden" bind:value={opsi1} name="optionOne" />
 		<input type="hidden" bind:value={opsi2} name="optionTwo" />
 		<input type="hidden" bind:value={opsi3} name="optionThree" />
-		<input type="hidden" bind:value={opsi4} name="optionFour" />
+		<input type="hidden" bind:value={opsi4} name="optionFour" /> -->
 		<Button type="submit">Simpan</Button>
 	</div>
 
@@ -42,9 +42,7 @@
 		>
 			<div class="flex w-full justify-end p-3"><RadioGroup.Item value="a" id="r1" /></div>
 			<div class="flex h-full items-center">
-				<p contenteditable="true" class="w-full p-2 text-center outline-none">
-					{opsi1}
-				</p>
+				<input type="file" name="optionOne" />
 			</div>
 		</div>
 		<div
@@ -52,9 +50,7 @@
 		>
 			<div class="flex w-full justify-end p-3"><RadioGroup.Item value="b" id="r2" /></div>
 			<div class="flex h-full items-center">
-				<p contenteditable="true" class="w-full p-2 text-center outline-none">
-					{opsi2}
-				</p>
+				<input type="file" name="optionTwo" />
 			</div>
 		</div>
 		<div
@@ -62,9 +58,7 @@
 		>
 			<div class="flex w-full justify-end p-3"><RadioGroup.Item value="c" id="r3" /></div>
 			<div class="flex h-full items-center">
-				<p contenteditable="true" class="w-full p-2 text-center outline-none">
-					{opsi3}
-				</p>
+				<input type="file" name="optionThree" />
 			</div>
 		</div>
 		<div
@@ -72,9 +66,7 @@
 		>
 			<div class="flex w-full justify-end p-3"><RadioGroup.Item value="d" id="r4" /></div>
 			<div class="flex h-full items-center">
-				<p contenteditable="true" class="w-full p-2 text-center outline-none">
-					{opsi4}
-				</p>
+				<input type="file" name="optionFour" />
 			</div>
 		</div>
 		<RadioGroup.Input name="correct" required />

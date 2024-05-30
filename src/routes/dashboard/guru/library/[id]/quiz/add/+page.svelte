@@ -15,4 +15,6 @@
 	<SimakAudio />
 {:else if data.type == 'cocokgambar'}
 	<MencocokkanGambar />
+{:else}
+	Harap inputkan gambar dengan benar
 {/if}

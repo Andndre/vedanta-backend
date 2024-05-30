@@ -2,7 +2,15 @@
 	import { page } from '$app/stores';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import { cn } from '$lib/utils';
-	import { type Icon, ArrowLeft, ArrowRight, HomeIcon, BookIcon, UsersIcon } from 'lucide-svelte';
+	import {
+		type Icon,
+		ArrowLeft,
+		ArrowRight,
+		HomeIcon,
+		BookIcon,
+		UsersIcon,
+		DoorOpenIcon
+	} from 'lucide-svelte';
 	import type { ComponentType } from 'svelte';
 	import LucideIcons from '../LucideIcons.svelte';
 	import logo from '$lib/images/logo.png';
@@ -28,6 +36,12 @@
 			href: '/dashboard/admin/doa',
 			highlightMatch: false,
 			icon: BookIcon
+		},
+		{
+			title: 'Stage',
+			href: '/dashboard/admin/stage',
+			highlightMatch: false,
+			icon: DoorOpenIcon
 		}
 	];
 

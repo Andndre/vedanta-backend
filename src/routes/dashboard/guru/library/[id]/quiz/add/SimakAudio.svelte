@@ -8,10 +8,13 @@
 	let opsi2 = 'Ketikkan Pilihan 2';
 	let opsi3 = 'Ketikkan Pilihan 3';
 	let opsi4 = 'Ketikkan Pilihan 4';
+
+	let inputElement: HTMLInputElement;
 </script>
 
-<form action="?/save" method="POST">
+<form action="?/save" method="POST" enctype="multipart/form-data">
 	<div class="flex justify-end">
+		<input type="hidden" name="type" value="simakaudio" />
 		<input type="hidden" value="pilgan" name="type" />
 		<input type="hidden" bind:value={opsi1} name="optionOne" />
 		<input type="hidden" bind:value={opsi2} name="optionTwo" />
@@ -24,7 +27,7 @@
 
 	<div class="rounded-md bg-purple-900 p-4">
 		<div class="flex h-44 w-full flex-col items-center justify-center rounded-sm bg-purple-950">
-			<FileDrag name="audio" />
+			<input type="file" name="audio" accept="audio/*" />
 		</div>
 	</div>
 
