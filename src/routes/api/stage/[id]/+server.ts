@@ -39,7 +39,5 @@ export const GET = async (evt) => {
 		finished: stage.Quiz.reduce((curr, q) => curr + q.userQuizResult.length, 0)
 	};
 
-	const { Quiz, ...rest } = withQuizCount;
-
-	return json(rest);
+	return json(withQuizCount);
 };
