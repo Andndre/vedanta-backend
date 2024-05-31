@@ -16,5 +16,5 @@
 {:else if data.type == 'cocokgambar'}
 	<MencocokkanGambar />
 {:else}
-	Harap inputkan gambar dengan benar
+	Harap inputkan dengan benar (pastikan jawaban yang benar sudah dipilih)
 {/if}

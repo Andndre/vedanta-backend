@@ -8,8 +8,8 @@
 <form action="?/save" method="POST">
 	<div class="flex justify-end">
 		<input type="hidden" value="isian" name="type" />
-		<input type="hidden" bind:value={title} name="title" />
-		<input type="hidden" bind:value={correct} name="correct" />
+		<input type="hidden" bind:value={title} name="title" required />
+		<input type="hidden" bind:value={correct} name="correct" required />
 		<Button type="submit">Simpan</Button>
 	</div>
 
