@@ -7,7 +7,17 @@ export const GET = async (evt) => {
 		select: {
 			id: true,
 			title: true,
-			description: true
+			description: true,
+			image_path: true,
+			Quiz: {
+				select: {
+					userQuizResult: {
+						where: {
+							userId: evt.locals.apiUser!.id
+						}
+					}
+				}
+			}
 		}
 	});
 
@@ -15,8 +25,22 @@ export const GET = async (evt) => {
 		return error(404, 'Stage not found');
 	}
 
+	const withQuizCount = stage.map((s) => {
+		return {
+			...s,
+			quizCount: s.Quiz.length,
+			finished: s.Quiz.reduce((curr, q) => curr + q.userQuizResult.length, 0),
+			image_path: s.image_path ? 'https://cdn.hmjtiundiksha.com/' + s.image_path : null
+		};
+	});
+
+	const withOutQuiz = withQuizCount.map((s) => {
+		const { Quiz, ...rest } = s;
+		return rest;
+	});
+
 	return json({
-		stage,
+		stage: withOutQuiz,
 		error: false
 	});
 };
