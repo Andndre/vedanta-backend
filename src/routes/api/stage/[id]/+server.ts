@@ -7,10 +7,12 @@ export const GET = async (evt) => {
 			id: +evt.params.id
 		},
 		select: {
+			id: true,
 			title: true,
 			materi: {
 				select: {
-					id: true
+					id: true,
+					videoLink: true
 				}
 			},
 			Quiz: {

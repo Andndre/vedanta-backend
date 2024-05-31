@@ -30,7 +30,8 @@ export const GET = async (evt) => {
 			...s,
 			quizCount: s.Quiz.length,
 			finished: s.Quiz.reduce((curr, q) => curr + q.userQuizResult.length, 0),
-			image_path: s.image_path ? 'https://cdn.hmjtiundiksha.com/' + s.image_path : null
+			image_path: s.image_path ? 'https://cdn.hmjtiundiksha.com/' + s.image_path : null,
+			id: s.id
 		};
 	});
 
