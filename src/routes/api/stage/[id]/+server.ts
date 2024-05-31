@@ -7,6 +7,7 @@ export const GET = async (evt) => {
 			id: +evt.params.id
 		},
 		select: {
+			title: true,
 			materi: {
 				select: {
 					id: true
@@ -15,17 +16,9 @@ export const GET = async (evt) => {
 			Quiz: {
 				select: {
 					id: true,
-					entries: {
-						select: {
-							usersAnsweredQuiz: {
-								where: {
-									userId: evt.locals.apiUser!.id
-								},
-								select: {
-									id: true
-								}
-							},
-							id: true
+					userQuizResult: {
+						where: {
+							userId: evt.locals.apiUser!.id
 						}
 					}
 				}
@@ -40,24 +33,13 @@ export const GET = async (evt) => {
 		});
 	}
 
-	let sumEntryAnswered = 0;
-
-	for (let i = 0; i < stage.Quiz.length; i++) {
-		for (let j = 0; j < stage.Quiz[i].entries.length; j++) {
-			sumEntryAnswered += stage.Quiz[i].entries[j].usersAnsweredQuiz.length;
-		}
-	}
-
-	const expected = {
-		stage: {
-			points_reward_finish: stage.points_reward_finished,
-			entry_count: stage.Quiz.entries.length,
-			entry_answered: sumEntryAnswered,
-			materi_id: stage.materi ? stage.materi.id : null
-		}
+	const withQuizCount = {
+		...stage,
+		quizCount: stage.Quiz.length,
+		finished: stage.Quiz.reduce((curr, q) => curr + q.userQuizResult.length, 0)
 	};
 
-	return json({
-		...expected
-	});
+	const { Quiz, ...rest } = withQuizCount;
+
+	return json(rest);
 };
