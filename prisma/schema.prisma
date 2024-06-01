@@ -329,7 +329,7 @@ model UserQuizResult {
 
 model UserAnswerQuizEntry {
   id           Int    @id @default(autoincrement())
-  quizId       Int
+  quizEntryId  Int    @map("quizId")
   userId       String
   point        Int
   answer       String
@@ -337,9 +337,7 @@ model UserAnswerQuizEntry {
 
   user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   quizResult UserQuizResult @relation(fields: [quizResultId], references: [id], onDelete: Cascade)
-  quiz       QuizEntry      @relation(fields: [quizId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, quizId])
+  quizEntry  QuizEntry      @relation(fields: [quizEntryId], references: [id], onDelete: Cascade)
 }
 
 model HomeWorkDoa {
