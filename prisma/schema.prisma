@@ -190,7 +190,7 @@ model Doa {
   id            Int     @id @default(autoincrement())
   title         String
   body          String
-  makna         String?
+  makna         String? @db.LongText
   pelafalanFile String
 
   usersLiked      UserLikedDoa[]
