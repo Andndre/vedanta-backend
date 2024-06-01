@@ -1,7 +1,12 @@
 import { prismaClient } from '@/db.js';
+import { error } from '@/response.js';
 import { json } from '@sveltejs/kit';
 
 export const GET = async (evt) => {
+	if (!evt.locals.apiUser) {
+		return error(401, 'Unauthorized');
+	}
+
 	const stage = await prismaClient.stage.findUnique({
 		where: {
 			id: +evt.params.id
@@ -20,7 +25,7 @@ export const GET = async (evt) => {
 					id: true,
 					userQuizResult: {
 						where: {
-							userId: evt.locals.apiUser!.id
+							userId: evt.locals.apiUser.id
 						}
 					}
 				}

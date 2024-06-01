@@ -315,15 +315,16 @@ model QuizEntry {
 }
 
 model UserQuizResult {
-  id         Int     @id @default(autoincrement())
-  completed  Boolean @default(false)
-  scoreTotal Int
-  userId     String
-  quizId     Int
+  id        Int     @id @default(autoincrement())
+  completed Boolean @default(false)
+  userId    String
+  quizId    Int
 
   user    User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   quiz    Quiz                  @relation(fields: [quizId], references: [id], onDelete: Cascade)
   entries UserAnswerQuizEntry[]
+
+  @@unique([userId, quizId])
 }
 
 model UserAnswerQuizEntry {
@@ -337,6 +338,8 @@ model UserAnswerQuizEntry {
   user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   quizResult UserQuizResult @relation(fields: [quizResultId], references: [id], onDelete: Cascade)
   quiz       QuizEntry      @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, quizId])
 }
 
 model HomeWorkDoa {
