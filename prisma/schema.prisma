@@ -265,6 +265,7 @@ model Stage {
   title                  String
   image_path             String
   points_reward_finished Int    @default(0)
+  points_reward_per_quiz Int    @default(0)
 
   materi Materi? @relation(fields: [materiId], references: [id], onDelete: SetNull)
   Quiz   Quiz[]
@@ -338,6 +339,9 @@ model UserAnswerQuizEntry {
   user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   quizResult UserQuizResult @relation(fields: [quizResultId], references: [id], onDelete: Cascade)
   quizEntry  QuizEntry      @relation(fields: [quizEntryId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, quizEntryId])
+  @@index([userId, quizEntryId])
 }
 
 model HomeWorkDoa {

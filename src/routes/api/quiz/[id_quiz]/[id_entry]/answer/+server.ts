@@ -74,8 +74,8 @@ export const POST = async (evt) => {
 
 		let findAnswer = await prisma.userAnswerQuizEntry.findUnique({
 			where: {
-				userId_quizId: {
-					quizId: +evt.params.id_quiz,
+				userId_quizEntryId: {
+					quizEntryId: +evt.params.id_entry,
 					userId: user.id
 				}
 			},
@@ -85,9 +85,6 @@ export const POST = async (evt) => {
 				point: true
 			}
 		});
-
-		console.log(findAnswer);
-
 		if (findAnswer) {
 			findAnswer = await prisma.userAnswerQuizEntry.update({
 				where: {
@@ -98,18 +95,16 @@ export const POST = async (evt) => {
 					point: correct === answer ? scoreCorrect : 0
 				}
 			});
-			console.log(findAnswer);
 		} else {
 			findAnswer = await prisma.userAnswerQuizEntry.create({
 				data: {
 					answer,
 					point: correct === answer ? scoreCorrect : 0,
-					quizId: +evt.params.id_quiz,
+					quizEntryId: +evt.params.id_entry,
 					userId: user.id,
 					quizResultId: result.id
 				}
 			});
-			console.log(findAnswer);
 		}
 
 		return {

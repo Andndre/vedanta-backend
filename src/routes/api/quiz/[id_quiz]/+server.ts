@@ -50,8 +50,41 @@ export const GET = async (evt) => {
 	const { entries, ...rest } = withFirstQuizThatUserDidNotAnswer;
 
 	if (!rest.nextId) {
-		// APA?
-		return json({});
+		const d = await prismaClient.userQuizResult.findUnique({
+			where: {
+				userId_quizId: {
+					quizId: +evt.params.id_quiz,
+					userId: evt.locals.apiUser.id
+				}
+			}
+		});
+
+		if (!d) {
+			return json({ type: 'NOOO WAYY' });
+		}
+
+		if (d.completed) {
+			return json({ type: 'COMPLETED' });
+		}
+
+		const stage = await prismaClient.quiz.findUnique({
+			where: {
+				id: +evt.params.id_quiz
+			},
+			select: {
+				stage: {
+					select: {
+						points_reward_finished: true
+					}
+				}
+			}
+		});
+
+		if (!stage?.stage) {
+			return json({ type: 'NOOO WAYY' });
+		}
+
+		return json({ type: 'COMPLETING', reward: stage.stage.points_reward_finished });
 	}
 
 	const quizEntry = await prismaClient.quizEntry.findUnique({
@@ -60,5 +93,5 @@ export const GET = async (evt) => {
 		}
 	});
 
-	return json(quizEntry);
+	return json({ quizEntry, type: 'entry' });
 };
