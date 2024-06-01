@@ -40,8 +40,23 @@ export const GET = async (evt) => {
 		return rest;
 	});
 
+	// tambahkan variable status lock untuk quiz pertama yang belum diselesaikan (1 setelah yang seharusnya dikerjakan)
+	let lock = false;
+	const withLock = withOutQuiz.map((s) => {
+		if (!lock) {
+			if (s.finished < s.quizCount) {
+				lock = true;
+				return { ...s, locked: false };
+			} else {
+				return { ...s, locked: false };
+			}
+		} else {
+			return { ...s, locked: true };
+		}
+	});
+
 	return json({
-		stage: withOutQuiz,
+		stage: withLock,
 		error: false
 	});
 };
