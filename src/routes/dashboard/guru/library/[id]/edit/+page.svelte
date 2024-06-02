@@ -8,7 +8,7 @@
 
 <h1 class="text-2xl">Edit</h1>
 <div class="pt-8"></div>
-<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
+<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-card p-8 shadow-sm">
 	<form action="?/update" method="POST">
 		<Input placeholder="Judul" required name="title" value={data.quiz?.title} />
 		<div class="pt-3"></div>

@@ -24,7 +24,7 @@
 	<div class="py-8"></div>
 	<h1 class="text-3xl font-bold">Profile</h1>
 	<div class="py-4"></div>
-	<div class="flex max-w-4xl flex-wrap-reverse gap-3 rounded-md bg-white p-6 py-4 shadow-md">
+	<div class="flex max-w-4xl flex-wrap-reverse gap-3 rounded-md bg-card p-6 py-4 shadow-md">
 		<form action="?/save" class="min-w-52 flex-[2] space-y-3" method="POST">
 			<div class="space-y-2">
 				<Label>Nama</Label>

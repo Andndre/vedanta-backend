@@ -6,7 +6,7 @@
 <div class="flex flex-1 flex-col justify-center">
 	<h1 class="text-2xl">Buat Quiz Baru</h1>
 	<div class="pt-8"></div>
-	<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
+	<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-card p-8 shadow-sm">
 		<div>
 			<h2>Berikan Judul</h2>
 			<div class="pt-3"></div>

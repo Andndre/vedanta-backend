@@ -29,7 +29,7 @@
 <h1 class="text-2xl font-bold">Berikan Tugas Doa</h1>
 <div class="pt-8"></div>
 
-<form action="?/save" method="POST" class="space-y-3 rounded-md bg-white p-8 shadow-md">
+<form action="?/save" method="POST" class="space-y-3 rounded-md bg-card p-8 shadow-md">
 	<Label>Cari Doa</Label>
 	<div class="relative">
 		<Input
@@ -42,7 +42,7 @@
 		/>
 		{#if listPencarian.length > 0 && !complete}
 			<div
-				class="absolute left-0 top-12 flex w-full flex-col items-start rounded-md bg-white p-4 shadow-md"
+				class="absolute left-0 top-12 flex w-full flex-col items-start rounded-md bg-card p-4 shadow-md"
 			>
 				{#each listPencarian as cari}
 					<button

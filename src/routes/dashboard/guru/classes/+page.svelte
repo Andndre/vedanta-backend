@@ -24,7 +24,7 @@
 <div class="grid grid-cols-12 gap-4">
 	{#each data.userFind.kelasDibuat as kelas}
 		<div
-			class="col-span-12 flex items-center justify-between gap-6 rounded-sm bg-card p-6 shadow-md"
+			class="col-span-12 flex items-center justify-between gap-6 rounded-sm border bg-card p-6 shadow-md"
 		>
 			<div class="flex items-center gap-6">
 				<Avatar class="h-16 w-16 cursor-pointer">

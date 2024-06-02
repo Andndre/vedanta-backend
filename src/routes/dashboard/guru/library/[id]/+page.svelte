@@ -78,7 +78,7 @@
 		<PencilLine size={15} />
 	</a>
 	<div class="pt-8"></div>
-	<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
+	<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-card p-8 shadow-sm">
 		<div class="flex items-center justify-between">
 			<h2 class="text-xl font-semibold">{data.quiz?.entries.length} Pertanyaan</h2>
 			<Dialog.Root>
@@ -115,7 +115,7 @@
 	{#if item.questionModel && typeof item.questionModel == 'object'}
 		{#if isPilgan(item.questionModel)}
 			<div
-				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
+				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-card p-8 shadow-sm"
 			>
 				<div class="space-y-3">
 					<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
@@ -142,7 +142,7 @@
 			<div class="pt-3"></div>
 		{:else if isIsian(item.questionModel)}
 			<div
-				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
+				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-card p-8 shadow-sm"
 			>
 				<div class="space-y-3">
 					<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
@@ -155,7 +155,7 @@
 			<div class="pt-3"></div>
 		{:else if isSimakAudio(item.questionModel)}
 			<div
-				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
+				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-card p-8 shadow-sm"
 			>
 				<div class="space-y-3">
 					<p class="font-medium">{i + 1} <span>Simak Audio</span></p>
@@ -184,7 +184,7 @@
 			<div class="pt-3"></div>
 		{:else if isCocokGambar(item.questionModel)}
 			<div
-				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
+				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-card p-8 shadow-sm"
 			>
 				<div class="space-y-3">
 					<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
@@ -231,7 +231,7 @@
 			<div class="pt-3"></div>
 		{:else}
 			<div
-				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
+				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-card p-8 shadow-sm"
 			>
 				{item.questionModel}
 			</div>

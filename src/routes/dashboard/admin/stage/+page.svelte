@@ -15,7 +15,7 @@
 	<!-- card -->
 	<div class="pt-8"></div>
 	<div
-		class="flex flex-row justify-between gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
+		class="flex flex-row justify-between gap-3 rounded-lg border border-gray-200 bg-card p-8 shadow-sm"
 	>
 		<div class="flex flex-col">
 			<h2 class="text-xl font-bold">{stage.title}</h2>

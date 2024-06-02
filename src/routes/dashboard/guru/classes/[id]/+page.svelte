@@ -29,7 +29,9 @@
 <h2 class="font-medium">Daftar Tugas</h2>
 <div class="pt-2"></div>
 {#each data.kelas.quizzes as quiz}
-	<div class="col-span-12 flex items-end justify-between gap-6 rounded-sm bg-card p-6 shadow-md">
+	<div
+		class="col-span-12 flex items-end justify-between gap-6 rounded-md border bg-card p-6 shadow-md"
+	>
 		<div class="flex items-center gap-6">
 			<Avatar class="h-16 w-16 cursor-pointer">
 				<AvatarImage src={Logo} alt="user avatar" class="h-16 w-16 bg-orange-100 object-contain" />
@@ -38,7 +40,12 @@
 			<div>
 				<h2 class="text-xl font-medium">{quiz.title}</h2>
 				<div class="pt-3"></div>
-				<span class={cn('rounded-full px-3 py-1', quiz.isDraft ? 'bg-red-100' : 'bg-green-100')}>
+				<span
+					class={cn(
+						'rounded-full px-3 py-1',
+						quiz.isDraft ? 'bg-red-100' : 'bg-green-100 dark:bg-green-500'
+					)}
+				>
 					{quiz.isDraft ? 'Draft' : 'Terlihat oleh siswa'}
 				</span>
 			</div>
@@ -56,7 +63,9 @@
 {/each}
 <div class="pt-6"></div>
 {#each data.kelas.allHomeworkDoa as doa}
-	<div class="col-span-12 flex items-end justify-between gap-6 rounded-sm bg-card p-6 shadow-md">
+	<div
+		class="col-span-12 flex items-end justify-between gap-6 rounded-md border bg-card p-6 shadow-md"
+	>
 		<div class="flex items-center gap-6">
 			<Avatar class="h-16 w-16 cursor-pointer">
 				<AvatarImage src={Logo} alt="user avatar" class="h-16 w-16 bg-orange-100 object-contain" />

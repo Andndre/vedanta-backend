@@ -12,7 +12,7 @@
 	action="?/save"
 	method="POST"
 	enctype="multipart/form-data"
-	class="space-y-3 rounded-md bg-white p-8 shadow-md"
+	class="space-y-3 rounded-md bg-card p-8 shadow-md"
 >
 	<Input type="hidden" name="type" value="cocokgambar" class="space-y-3 rounded-md p-8 shadow-md" />
 	<div class="space-y-2">

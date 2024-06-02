@@ -37,7 +37,7 @@
 	<Form.Button class="w-full">Sign In</Form.Button>
 </form>
 
-<p class="mt-10 text-center text-sm text-gray-500">
+<p class="mt-10 text-center text-sm text-gray-500 dark:text-gray-400">
 	Belum punya akun?
 	<a href="/register" class="font-semibold leading-6 text-primary">daftar</a>
 </p>

@@ -12,7 +12,7 @@
 
 <div class="py-4"></div>
 
-<form action="?/save" method="POST" class="space-y-3 rounded-md bg-white p-8 shadow-md">
+<form action="?/save" method="POST" class="space-y-3 rounded-md bg-card p-8 shadow-md">
 	<div class="space-y-2">
 		<Label>Judul</Label>
 		<Input placeholder="Judul" required name="title" value={data.quiz.title} />
