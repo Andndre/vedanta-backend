@@ -2,16 +2,13 @@
 	// @ts-ignore
 	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import type { Action, ActionData, PageServerData } from './$types';
+	import type { PageServerData } from './$types';
 
 	import QuizIcon from '$lib/images/icons/quiz.png';
-	import type { CocokGambar, IsianSingkat, PilihanGanda } from '$lib/types/quiz';
+	import type { CocokGambar, IsianSingkat, PilihanGanda, SimakAudio } from '$lib/types/quiz';
 	import { PencilLine, PlusIcon } from 'lucide-svelte';
-	import SimakAudio from './quiz/add/SimakAudio.svelte';
 
 	export let data: PageServerData;
-
-	export let form: ActionData;
 
 	const quizItemOption = [
 		{
