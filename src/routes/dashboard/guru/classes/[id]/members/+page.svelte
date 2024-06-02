@@ -37,7 +37,7 @@
 			<form action="?/remove" method="post">
 				<input type="hidden" name="id" value={siswa.user.id} />
 				<Button type="submit" variant="ghost" class="flex items-center gap-2"
-					><LogOutIcon size={15} /> Keluarkan</Button
+					><LogOutIcon size={15} class="mr-2" /> Keluarkan</Button
 				>
 			</form>
 		</div>

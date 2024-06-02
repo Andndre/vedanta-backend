@@ -17,17 +17,17 @@
 	<div class="flex gap-3">
 		<Button href="/dashboard/guru/classes/{data.kelas.id}/assign">Beri Tugas</Button>
 		<Button variant="ghost" href="/dashboard/guru/classes/{data.kelas.id}/edit"
-			><Edit2Icon size={15} class="me-2" /> Edit</Button
+			><Edit2Icon size={15} class="mr-2" /> Edit</Button
 		>
 		<Button href="/dashboard/guru/classes/{data.kelas.id}/members" variant="ghost"
-			><UserIcon size={15} /> Kelola Peserta</Button
+			><UserIcon size={15} class="mr-2" /> Kelola Peserta</Button
 		>
 	</div>
 </div>
 
 <div class="pt-3"></div>
-<h2>Daftar Tugas</h2>
-
+<h2 class="font-medium">Daftar Tugas</h2>
+<div class="pt-2"></div>
 {#each data.kelas.quizzes as quiz}
 	<div class="col-span-12 flex items-end justify-between gap-6 rounded-sm bg-card p-6 shadow-md">
 		<div class="flex items-center gap-6">
@@ -39,15 +39,15 @@
 				<h2 class="text-xl font-medium">{quiz.title}</h2>
 				<div class="pt-3"></div>
 				<span class={cn('rounded-full px-3 py-1', quiz.isDraft ? 'bg-red-100' : 'bg-green-100')}>
-					{quiz.isDraft ? 'Draft' : 'Publik'}
+					{quiz.isDraft ? 'Draft' : 'Terlihat oleh siswa'}
 				</span>
 			</div>
 		</div>
 		<div class="flex justify-center gap-3">
-			<Button variant="secondary" href="/dashboard/guru/classes/{data.kelas.id}/quiz/{quiz.id}/edit"
+			<Button variant="secondary" href="/dashboard/guru/classes/{data.kelas.id}/quiz/{quiz.id}"
 				><Edit2Icon size={15} class="me-2" /> Edit</Button
 			>
-			<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}>Lihat Soal</Button>
+			<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}>Lihat Hasil</Button>
 		</div>
 	</div>
 {/each}
