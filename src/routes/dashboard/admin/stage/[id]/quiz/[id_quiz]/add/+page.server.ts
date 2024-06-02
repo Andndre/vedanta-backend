@@ -22,8 +22,6 @@ export const actions = {
 				message: 'Correct answer is required'
 			});
 		}
-		const convert = await JSON.parse(JSON.stringify(data));
-		console.log(convert);
 		let quiz: any;
 		switch (data.type) {
 			case 'isian':
