@@ -9,6 +9,6 @@
 </h1>
 <p class="leading-7 [&:not(:first-child)]:mt-6">
 	Ini adalah halaman guru yang dimana anda dapat mengelola data dalam aplikasi seperti kelas dan
-	penugasan, materi umum, quiz umum, dan hadiah umum.
+	penugasan.
 </p>
 <blockquote class="mt-6 border-l-2 pl-6 italic">Jaga akun anda dengan baik!</blockquote>
