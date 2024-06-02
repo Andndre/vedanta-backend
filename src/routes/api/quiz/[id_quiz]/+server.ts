@@ -74,7 +74,7 @@ export const GET = async (evt) => {
 			select: {
 				stage: {
 					select: {
-						points_reward_finished: true
+						points_reward_per_quiz: true
 					}
 				}
 			}
@@ -84,7 +84,7 @@ export const GET = async (evt) => {
 			return json({ type: 'NOOO WAYY' });
 		}
 
-		return json({ type: 'COMPLETING', reward: stage.stage.points_reward_finished });
+		return json({ type: 'COMPLETING', reward: stage.stage.points_reward_per_quiz });
 	}
 
 	const quizEntry = await prismaClient.quizEntry.findUnique({

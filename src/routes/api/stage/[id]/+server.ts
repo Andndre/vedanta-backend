@@ -25,7 +25,8 @@ export const GET = async (evt) => {
 					id: true,
 					userQuizResult: {
 						where: {
-							userId: evt.locals.apiUser.id
+							userId: evt.locals.apiUser.id,
+							completed: true
 						}
 					}
 				}
