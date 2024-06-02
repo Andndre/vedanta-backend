@@ -1,13 +1,17 @@
 <script lang="ts">
+	// @ts-ignore
 	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import type { PageServerData } from './$types';
+	import type { Action, ActionData, PageServerData } from './$types';
 
 	import QuizIcon from '$lib/images/icons/quiz.png';
-	import type { IsianSingkat, PilihanGanda } from '$lib/types/quiz';
+	import type { CocokGambar, IsianSingkat, PilihanGanda } from '$lib/types/quiz';
 	import { PencilLine, PlusIcon } from 'lucide-svelte';
+	import SimakAudio from './quiz/add/SimakAudio.svelte';
 
 	export let data: PageServerData;
+
+	export let form: ActionData;
 
 	const quizItemOption = [
 		{
@@ -33,6 +37,7 @@
 	];
 
 	function isPilgan(obj: any): obj is PilihanGanda {
+		console.log(obj);
 		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'pilgan';
 	}
 
@@ -40,11 +45,12 @@
 		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'isian';
 	}
 
-	function isSimakAudio(obj: any): obj is IsianSingkat {
+	function isSimakAudio(obj: any): obj is SimakAudio {
+		console.log(obj);
 		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'simakaudio';
 	}
 
-	function isCocokGambar(obj: any): obj is IsianSingkat {
+	function isCocokGambar(obj: any): obj is CocokGambar {
 		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'cocokgambar';
 	}
 </script>
@@ -121,8 +127,24 @@
 			<div class="pt-3"></div>
 		{:else if isSimakAudio(item.questionModel)}
 			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-				<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
-				<p class="italic">Simak Audio</p>
+				<p class="font-medium">{i + 1} <span>Simak Audio</span></p>
+				<audio src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.audioUrl} controls
+				></audio>
+				<div class="grid grid-cols-12">
+					<div class="col-span-6">
+						<p>a. {item.questionModel.optionOne}</p>
+					</div>
+					<div class="col-span-6">
+						<p>b. {item.questionModel.optionTwo}</p>
+					</div>
+					<div class="col-span-6">
+						<p>c. {item.questionModel.optionThree}</p>
+					</div>
+					<div class="col-span-6">
+						<p>d. {item.questionModel.optionFour}</p>
+					</div>
+				</div>
+				<p>Jawaban: {item.questionModel.correct}</p>
 			</div>
 			<div class="pt-3"></div>
 		{:else if isCocokGambar(item.questionModel)}

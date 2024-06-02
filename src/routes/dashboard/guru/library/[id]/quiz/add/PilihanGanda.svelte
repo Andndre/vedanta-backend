@@ -1,25 +1,42 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
+	import Input from '$lib/components/ui/input/input.svelte';
+	import Label from '$lib/components/ui/label/label.svelte';
 	import * as RadioGroup from '$lib/components/ui/radio-group';
-
-	let title: string;
-	let opsi1 = 'Ketikkan Pilihan 1';
-	let opsi2 = 'Ketikkan Pilihan 2';
-	let opsi3 = 'Ketikkan Pilihan 3';
-	let opsi4 = 'Ketikkan Pilihan 4';
 </script>
 
-<form action="?/save" method="POST">
-	<div class="flex justify-end">
-		<input type="hidden" value="pilgan" name="type" />
-		<input type="hidden" bind:value={title} name="title" />
-		<input type="hidden" bind:value={opsi1} name="optionOne" />
-		<input type="hidden" bind:value={opsi2} name="optionTwo" />
-		<input type="hidden" bind:value={opsi3} name="optionThree" />
-		<input type="hidden" bind:value={opsi4} name="optionFour" />
-		<Button type="submit">Simpan</Button>
+<h1 class="text-2xl font-bold">Inputkan Pertanyaan Pilihan Ganda</h1>
+<div class="py-3"></div>
+<form action="?/save" method="POST" class="space-y-3 rounded-md p-8 shadow-md">
+	<Input type="hidden" name="type" value="pilgan" />
+	<div class="space-y-2">
+		<Label>Pertanyaan</Label>
+		<Input name="title" placeholder="Ketikkan Pertanyaan..." required />
 	</div>
-
+	<div class="space-y-2">
+		<Label>Opsi <span class="italic">(tandai opsi yang benar)</span></Label>
+		<RadioGroup.Root required>
+			<div class="flex items-center space-x-3">
+				<RadioGroup.Item value="a" id="r2" />
+				<Input required class="border-none" name="optionOne" placeholder="Ketikkan opsi A" />
+			</div>
+			<div class="flex items-center space-x-3">
+				<RadioGroup.Item value="b" id="r2" />
+				<Input required class="border-none" name="optionTwo" placeholder="Ketikkan opsi B" />
+			</div>
+			<div class="flex items-center space-x-3">
+				<RadioGroup.Item value="c" id="r2" />
+				<Input required class="border-none" name="optionThree" placeholder="Ketikkan opsi C" />
+			</div>
+			<div class="flex items-center space-x-3">
+				<RadioGroup.Item value="d" id="r2" />
+				<Input required class="border-none" name="optionFour" placeholder="Ketikkan opsi D" />
+			</div>
+			<RadioGroup.Input required name="correct" />
+		</RadioGroup.Root>
+	</div>
+	<Button type="submit">Simpan</Button>
+	<!-- 
 	<div class="pt-3"></div>
 
 	<div class="rounded-md bg-purple-900 p-4">
@@ -78,5 +95,5 @@
 			</div>
 		</div>
 		<RadioGroup.Input name="correct" required />
-	</RadioGroup.Root>
+	</RadioGroup.Root> -->
 </form>

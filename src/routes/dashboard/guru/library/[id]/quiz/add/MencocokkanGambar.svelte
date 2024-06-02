@@ -1,22 +1,50 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
+	import Input from '$lib/components/ui/input/input.svelte';
+	import Label from '$lib/components/ui/label/label.svelte';
 	import * as RadioGroup from '$lib/components/ui/radio-group';
-
-	let title: string;
-	let opsi1: File | null = null;
-	let opsi2: File | null = null;
-	let opsi3: File | null = null;
-	let opsi4: File | null = null;
 </script>
 
-<form action="?/save" method="POST" enctype="multipart/form-data">
-	<div class="flex justify-end">
+<h1 class="text-2xl font-bold">Inputkan Pertanyaan Pilihan Ganda</h1>
+<div class="py-3"></div>
+<form
+	action="?/save"
+	method="POST"
+	enctype="multipart/form-data"
+	class="space-y-3 rounded-md p-8 shadow-md"
+>
+	<Input type="hidden" name="type" value="pilgan" class="space-y-3 rounded-md p-8 shadow-md" />
+	<div class="space-y-2">
+		<Label>Pertanyaan</Label>
+		<Input name="title" placeholder="Ketikkan Pertanyaan..." required />
+	</div>
+	<div class="space-y-2">
+		<Label>Opsi <span class="italic">(tandai opsi yang benar)</span></Label>
+		<RadioGroup.Root required>
+			<div class="flex items-center space-x-3">
+				<RadioGroup.Item value="a" id="r2" />
+				<Input required class="border-none" name="optionOne" placeholder="Ketikkan opsi A" />
+			</div>
+			<div class="flex items-center space-x-3">
+				<RadioGroup.Item value="b" id="r2" />
+				<Input required class="border-none" name="optionTwo" placeholder="Ketikkan opsi B" />
+			</div>
+			<div class="flex items-center space-x-3">
+				<RadioGroup.Item value="c" id="r2" />
+				<Input required class="border-none" name="optionThree" placeholder="Ketikkan opsi C" />
+			</div>
+			<div class="flex items-center space-x-3">
+				<RadioGroup.Item value="d" id="r2" />
+				<Input required class="border-none" name="optionFour" placeholder="Ketikkan opsi D" />
+			</div>
+			<RadioGroup.Input required name="correct" />
+		</RadioGroup.Root>
+	</div>
+	<Button type="submit">Simpan</Button>
+
+	<!-- <div class="flex justify-end">
 		<input type="hidden" value="cocokgambar" name="type" />
 		<input type="hidden" bind:value={title} name="title" />
-		<!-- <input type="hidden" bind:value={opsi1} name="optionOne" />
-		<input type="hidden" bind:value={opsi2} name="optionTwo" />
-		<input type="hidden" bind:value={opsi3} name="optionThree" />
-		<input type="hidden" bind:value={opsi4} name="optionFour" /> -->
 		<Button type="submit">Simpan</Button>
 	</div>
 
@@ -70,5 +98,5 @@
 			</div>
 		</div>
 		<RadioGroup.Input name="correct" required />
-	</RadioGroup.Root>
+	</RadioGroup.Root> -->
 </form>

@@ -25,10 +25,12 @@ export const actions = {
 		const body = await evt.request.formData();
 		const data = Object.fromEntries(body);
 		if (data.correct == 'undefined') {
+			console.log('Correct answer is required');
 			return fail(400, {
 				message: 'Correct answer is required'
 			});
 		}
+		console.log(data);
 		let quiz: Quiz = new Quiz(data.title as string, QuizType.IsianSingkat);
 		switch (data.type) {
 			case 'isian':
@@ -44,9 +46,10 @@ export const actions = {
 				);
 				break;
 			case 'simakaudio':
-				const file = body.get('optionOne') as Blob;
+				const file = body.get('audio') as Blob;
 				const url = await uploadFile(file, 'vedanta/quiz/simak-audio');
 				if (!url) {
+					console.log('Failed to upload audio');
 					return fail(500, {
 						message: 'Failed to upload audio'
 					});
@@ -71,6 +74,7 @@ export const actions = {
 				const urlKetiga = await uploadFile(opsiKetiga, 'vedanta/quiz/cocok-gambar');
 				const urlKeempat = await uploadFile(opsiKeempat, 'vedanta/quiz/cocok-gambar');
 				if (!urlPertama || !urlKedua || !urlKetiga || !urlKeempat) {
+					console.log('Failed to upload image');
 					return fail(500, {
 						message: 'Failed to upload image'
 					});
@@ -86,7 +90,6 @@ export const actions = {
 				break;
 		}
 		const object = JSON.parse(JSON.stringify(quiz));
-		console.log(object);
 		await prismaClient.quizEntry.create({
 			data: {
 				questionModel: object as Prisma.JsonObject,

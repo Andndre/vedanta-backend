@@ -1,8 +1,8 @@
 export enum QuizType {
-	PilihanGanda,
-	IsianSingkat,
-	SimakAudio,
-	CocokGambar
+	PilihanGanda = 'pilgan',
+	IsianSingkat = 'isian',
+	SimakAudio = 'simakaudio',
+	CocokGambar = 'cocokgambar'
 }
 
 export class Quiz {
