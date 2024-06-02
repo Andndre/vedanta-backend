@@ -124,7 +124,7 @@
 			>
 				<div class="space-y-3">
 					<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
-					<div class="grid grid-cols-12">
+					<div class="grid grid-cols-12 gap-3">
 						<div class="col-span-12 lg:col-span-6">
 							<p>a. {item.questionModel.optionOne}</p>
 						</div>
@@ -166,7 +166,7 @@
 					<p class="font-medium">{i + 1} <span>Simak Audio</span></p>
 					<audio src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.audioUrl} controls
 					></audio>
-					<div class="grid grid-cols-12">
+					<div class="grid grid-cols-12 gap-3">
 						<div class="col-span-12 lg:col-span-6">
 							<p>a. {item.questionModel.optionOne}</p>
 						</div>
