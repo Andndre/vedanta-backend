@@ -34,14 +34,14 @@
 			<Label>Deskripsi</Label>
 			<Input name="description" value={data.stageInfo.description} />
 		</div>
-		<div>
+		<!-- <div>
 			<Label>Deskripsi</Label>
 			<Input name="description" value={data.stageInfo.description} />
 		</div>
 		<div>
 			<Label>Deskripsi</Label>
 			<Input name="description" value={data.stageInfo.description} />
-		</div>
+		</div> -->
 
 		<Button type="submit">Simpan</Button>
 	</form>
