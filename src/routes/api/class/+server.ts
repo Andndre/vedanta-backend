@@ -33,10 +33,5 @@ export const GET = async (evt) => {
 		id: c.kelas.id
 	}));
 
-	// cache for 5 minutes
-	evt.setHeaders({
-		'Cache-Control': 'public, max-age=300'
-	});
-
 	return json({ classes: response, error: false });
 };

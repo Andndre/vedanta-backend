@@ -31,11 +31,6 @@ export const load: PageServerLoad = async (evt) => {
 		error(404, 'User not found');
 	}
 
-	// cache for 5 minutes
-	evt.setHeaders({
-		'Cache-Control': 'public, max-age=300'
-	});
-
 	return {
 		userFind
 	};

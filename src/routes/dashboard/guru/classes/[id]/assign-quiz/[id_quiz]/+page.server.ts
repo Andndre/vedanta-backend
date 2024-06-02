@@ -55,7 +55,7 @@ export const actions: Actions = {
 			throw error(404, 'Quiz not found');
 		}
 
-		await prismaClient.$transaction(async (prisma) => {
+		const newID = await prismaClient.$transaction(async (prisma) => {
 			const { id } = await prisma.quiz.create({
 				data: {
 					title: judul as string,
@@ -76,8 +76,10 @@ export const actions: Actions = {
 			await prisma.quizEntry.createMany({
 				data: withId
 			});
+
+			return id;
 		});
 
-		throw redirect(303, `/dashboard/guru/classes/${idKelas}/quiz/${idQuiz}`);
+		throw redirect(303, `/dashboard/guru/classes/${idKelas}/quiz/${newID}`);
 	}
 };
