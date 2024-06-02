@@ -3,7 +3,7 @@
 	import { Edit2Icon, UserIcon } from 'lucide-svelte';
 	import type { PageServerData } from './$types';
 	import { Avatar, AvatarFallback, AvatarImage } from '$lib/components/ui/avatar';
-	import { cn, getInitialName } from '$lib/utils';
+	import { cn, getInitialName, waktuYangLalu } from '$lib/utils';
 	import Logo from '$lib/images/logo.png';
 
 	export let data: PageServerData;
@@ -48,6 +48,26 @@
 				><Edit2Icon size={15} class="me-2" /> Edit</Button
 			>
 			<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}>Lihat Hasil</Button>
+		</div>
+	</div>
+{/each}
+<div class="pt-6"></div>
+{#each data.kelas.allHomeworkDoa as doa}
+	<div class="col-span-12 flex items-end justify-between gap-6 rounded-sm bg-card p-6 shadow-md">
+		<div class="flex items-center gap-6">
+			<Avatar class="h-16 w-16 cursor-pointer">
+				<AvatarImage src={Logo} alt="user avatar" class="h-16 w-16 bg-orange-100 object-contain" />
+				<AvatarFallback>{getInitialName(doa.doa.title)}</AvatarFallback>
+			</Avatar>
+			<div>
+				<h2 class="text-xl font-medium">{doa.doa.title}</h2>
+				<div class="pt-3"></div>
+			</div>
+		</div>
+		<div class="flex justify-center gap-3">
+			<Button variant="secondary" href="/dashboard/guru/classes/{data.kelas.id}/doa/{doa.doa.id}"
+				>Lihat Hasil</Button
+			>
 		</div>
 	</div>
 {/each}
