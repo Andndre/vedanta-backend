@@ -3,6 +3,14 @@ import type { PageServerLoad } from './$types';
 import type { Prisma } from '@prisma/client';
 import { fail, redirect } from '@sveltejs/kit';
 import { uploadFile } from '@/services/CDNService';
+import {
+	CocokGambar,
+	IsianSingkat,
+	PilihanGanda,
+	Quiz,
+	QuizType,
+	SimakAudio
+} from '$lib/types/quiz';
 
 export const load: PageServerLoad = async (evt) => {
 	const type = evt.url.searchParams.get('type');
@@ -22,72 +30,62 @@ export const actions = {
 				message: 'Correct answer is required'
 			});
 		}
-		let quiz: any;
+		let quiz: Quiz = new Quiz(data.title as string, QuizType.IsianSingkat);
 		switch (data.type) {
 			case 'isian':
-				quiz = {
-					title: data.title as string,
-					correct: data.correct as string,
-					type: 'isian'
-				};
-				break;
+				quiz = new IsianSingkat(data.title as string, data.correct as string);
 			case 'pilgan':
-				quiz = {
-					title: data.title as string,
-					correct: data.correct as string,
-					optionOne: data.optionOne as string,
-					optionTwo: data.optionTwo as string,
-					optionThree: data.optionThree as string,
-					optionFour: data.optionFour as string,
-					type: 'pilgan'
-				};
+				quiz = new PilihanGanda(
+					data.title as string,
+					data.correct as string,
+					data.optionOne as string,
+					data.optionTwo as string,
+					data.optionThree as string,
+					data.optionFour as string
+				);
 				break;
 			case 'simakaudio':
 				const file = body.get('audio') as Blob;
 				const url = await uploadFile(file, 'vedanta/quiz/simak-audio');
 				if (!url) {
-					console.log('failed to upload audio');
+					console.log('Failed to upload audio');
 					return fail(500, {
 						message: 'Failed to upload audio'
 					});
 				}
-				quiz = {
-					title: data.title as string,
-					audio: url,
-					correct: data.correct as string,
-					optionOne: data.optionOne as string,
-					optionTwo: data.optionTwo as string,
-					optionThree: data.optionThree as string,
-					optionFour: data.optionFour as string,
-					type: 'simakaudio'
-				};
+				quiz = new SimakAudio(
+					data.title as string,
+					data.correct as string,
+					url,
+					data.optionOne as string,
+					data.optionTwo as string,
+					data.optionThree as string,
+					data.optionFour as string
+				);
 				break;
 			case 'cocokgambar':
 				const opsiPertama = body.get('optionOne') as Blob;
 				const opsiKedua = body.get('optionTwo') as Blob;
 				const opsiKetiga = body.get('optionThree') as Blob;
 				const opsiKeempat = body.get('optionFour') as Blob;
-
 				const urlPertama = await uploadFile(opsiPertama, 'vedanta/quiz/cocok-gambar');
 				const urlKedua = await uploadFile(opsiKedua, 'vedanta/quiz/cocok-gambar');
 				const urlKetiga = await uploadFile(opsiKetiga, 'vedanta/quiz/cocok-gambar');
 				const urlKeempat = await uploadFile(opsiKeempat, 'vedanta/quiz/cocok-gambar');
-
 				if (!urlPertama || !urlKedua || !urlKetiga || !urlKeempat) {
-					console.log('failed to upload image');
+					console.log('Failed to upload image');
 					return fail(500, {
 						message: 'Failed to upload image'
 					});
 				}
-				quiz = {
-					title: data.title as string,
-					correct: data.correct as string,
-					optionOne: urlPertama,
-					optionTwo: urlKedua,
-					optionThree: urlKetiga,
-					optionFour: urlKeempat,
-					type: 'cocokgambar'
-				};
+				quiz = new CocokGambar(
+					data.title as string,
+					data.correct as string,
+					urlPertama,
+					urlKedua,
+					urlKetiga,
+					urlKeempat
+				);
 				break;
 		}
 		const object = JSON.parse(JSON.stringify(quiz));
