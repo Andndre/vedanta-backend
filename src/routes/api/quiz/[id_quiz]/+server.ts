@@ -86,7 +86,41 @@ export const GET = async (evt) => {
 		});
 
 		if (!stage?.stage) {
-			return json({ type: 'NOOO WAYY' });
+			const kelas = await prismaClient.quiz.findUnique({
+				where: {
+					id: +evt.params.id_quiz
+				},
+				select: {
+					kelas: {
+						select: {
+							id: true
+						}
+					}
+				}
+			});
+
+			// TODO: customize reward in class (by the teacher)
+
+			if (!kelas?.kelas) {
+				return json({ type: 'NOOO WAYY 2' });
+			}
+
+			const updated = await prismaClient.userQuizResult.update({
+				where: {
+					id: d.id
+				},
+				data: {
+					completed: true
+				}
+			});
+
+			return json({
+				id: +evt.params.id_quiz,
+				type: 'COMPLETING',
+				reward: 50,
+				correctCount: updated.correctCount,
+				countQuiz: withFirstQuizThatUserDidNotAnswer.entries.length
+			});
 		}
 
 		const updated = await prismaClient.userQuizResult.update({
@@ -99,6 +133,7 @@ export const GET = async (evt) => {
 		});
 
 		return json({
+			id: +evt.params.id_quiz,
 			type: 'COMPLETING',
 			reward: stage.stage.points_reward_per_quiz,
 			correctCount: updated.correctCount,
