@@ -47,7 +47,10 @@
 			<Button variant="secondary" href="/dashboard/guru/classes/{data.kelas.id}/quiz/{quiz.id}"
 				><Edit2Icon size={15} class="me-2" /> Edit</Button
 			>
-			<Button variant="secondary" href={`/dashboard/guru/library/${quiz.id}`}>Lihat Hasil</Button>
+			<Button
+				variant="secondary"
+				href={`/dashboard/guru/classes/${data.kelas.id}/quiz/${quiz.id}/result`}>Lihat Hasil</Button
+			>
 		</div>
 	</div>
 {/each}
@@ -65,7 +68,7 @@
 			</div>
 		</div>
 		<div class="flex justify-center gap-3">
-			<Button variant="secondary" href="/dashboard/guru/classes/{data.kelas.id}/doa/{doa.doa.id}"
+			<Button variant="secondary" href="/dashboard/guru/classes/{data.kelas.id}/doa/{doa.id}/result"
 				>Lihat Hasil</Button
 			>
 		</div>

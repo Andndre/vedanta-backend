@@ -20,6 +20,7 @@ export const load: PageServerLoad = async (evt) => {
 			},
 			allHomeworkDoa: {
 				select: {
+					id: true,
 					doa: {
 						select: {
 							title: true,
