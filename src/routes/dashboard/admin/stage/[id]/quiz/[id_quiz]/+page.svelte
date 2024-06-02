@@ -78,7 +78,10 @@
 </Dialog.Root>
 
 <div class="flex flex-1 flex-col justify-center">
-	<a href={`/dashboard/guru/library/${data.quiz.id}/edit`} class="flex items-center gap-3">
+	<a
+		href={`/dashboard/admin/stage/${data.idStage}/quiz/${data.quiz.id}/edit`}
+		class="flex items-center gap-3"
+	>
 		<h1 class="text-2xl">{data.quiz?.title}</h1>
 		<PencilLine size={15} />
 	</a>
