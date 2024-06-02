@@ -30,7 +30,6 @@ export const actions = {
 				message: 'Correct answer is required'
 			});
 		}
-		console.log(data);
 		let quiz: Quiz = new Quiz(data.title as string, QuizType.IsianSingkat);
 		switch (data.type) {
 			case 'isian':

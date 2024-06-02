@@ -38,7 +38,6 @@
 	let idSelected: number | null = null;
 
 	function isPilgan(obj: any): obj is PilihanGanda {
-		console.log(obj);
 		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'pilgan';
 	}
 
@@ -47,7 +46,6 @@
 	}
 
 	function isSimakAudio(obj: any): obj is SimakAudio {
-		console.log(obj);
 		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'simakaudio';
 	}
 
