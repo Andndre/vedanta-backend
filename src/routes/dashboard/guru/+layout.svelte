@@ -8,7 +8,7 @@
 
 <ModeWatcher />
 
-<div class="flex min-h-screen w-full">
+<div class="relative flex min-h-screen w-full">
 	<GuruSideBar />
 	<div class="flex flex-1 flex-col">
 		<!-- Header component -->

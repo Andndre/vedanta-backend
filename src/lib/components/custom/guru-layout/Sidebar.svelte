@@ -46,8 +46,8 @@
 
 <aside
 	class={cn(
-		'z-[100] flex min-h-screen max-w-[250px] flex-col border-r bg-card p-4 shadow-xl',
-		navbarOpen ? 'fixed md:static' : 'static'
+		'top-0 z-[100] flex h-screen max-w-[250px] flex-col border-r bg-card p-4 shadow-xl',
+		navbarOpen ? 'fixed md:sticky' : 'sticky'
 	)}
 >
 	<div class="mt-8 flex flex-col items-center">

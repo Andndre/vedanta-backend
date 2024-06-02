@@ -103,16 +103,16 @@
 			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
 				<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
 				<div class="grid grid-cols-12">
-					<div class="col-span-6">
+					<div class="col-span-12 lg:col-span-6">
 						<p>a. {item.questionModel.optionOne}</p>
 					</div>
-					<div class="col-span-6">
+					<div class="col-span-12 lg:col-span-6">
 						<p>b. {item.questionModel.optionTwo}</p>
 					</div>
-					<div class="col-span-6">
+					<div class="col-span-12 lg:col-span-6">
 						<p>c. {item.questionModel.optionThree}</p>
 					</div>
-					<div class="col-span-6">
+					<div class="col-span-12 lg:col-span-6">
 						<p>d. {item.questionModel.optionFour}</p>
 					</div>
 				</div>
@@ -131,16 +131,16 @@
 				<audio src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.audioUrl} controls
 				></audio>
 				<div class="grid grid-cols-12">
-					<div class="col-span-6">
+					<div class="col-span-12 lg:col-span-6">
 						<p>a. {item.questionModel.optionOne}</p>
 					</div>
-					<div class="col-span-6">
+					<div class="col-span-12 lg:col-span-6">
 						<p>b. {item.questionModel.optionTwo}</p>
 					</div>
-					<div class="col-span-6">
+					<div class="col-span-12 lg:col-span-6">
 						<p>c. {item.questionModel.optionThree}</p>
 					</div>
-					<div class="col-span-6">
+					<div class="col-span-12 lg:col-span-6">
 						<p>d. {item.questionModel.optionFour}</p>
 					</div>
 				</div>
