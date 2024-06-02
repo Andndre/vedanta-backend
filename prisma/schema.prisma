@@ -316,10 +316,11 @@ model QuizEntry {
 }
 
 model UserQuizResult {
-  id        Int     @id @default(autoincrement())
-  completed Boolean @default(false)
-  userId    String
-  quizId    Int
+  id           Int     @id @default(autoincrement())
+  completed    Boolean @default(false)
+  userId       String
+  quizId       Int
+  correctCount Int     @default(0)
 
   user    User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   quiz    Quiz                  @relation(fields: [quizId], references: [id], onDelete: Cascade)
