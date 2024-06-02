@@ -12,7 +12,7 @@
 			Berikan Tugas Quiz
 		</div>
 	</a>
-	<a href="/dashboard/guru/classes/{data.id}/assign/tugas-doa">
+	<a href="/dashboard/guru/classes/{data.id}/assign-tugas-doa">
 		<div class="rounded-sm border border-gray-300 p-4 shadow-sm hover:bg-primary hover:text-white">
 			Berikan Tugas Doa
 		</div>
