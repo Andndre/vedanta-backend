@@ -107,6 +107,17 @@ export const POST = async (evt) => {
 			});
 		}
 
+		if (correct === answer) {
+			await prisma.userQuizResult.update({
+				where: {
+					id: result.id
+				},
+				data: {
+					correctCount: result.correctCount + 1
+				}
+			});
+		}
+
 		return {
 			correct: correct === answer,
 			answer: findAnswer.answer,

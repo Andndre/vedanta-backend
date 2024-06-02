@@ -42,9 +42,14 @@ export const GET = async (evt) => {
 		return null;
 	});
 
+	let index = 0;
+
 	const withFirstQuizThatUserDidNotAnswer = {
 		...quiz,
-		nextId: firstQuizThatUserDidNotAnswer.find((q) => q !== null)
+		nextId: firstQuizThatUserDidNotAnswer.find((q) => {
+			index += 1;
+			return q !== null;
+		})
 	};
 
 	const { entries, ...rest } = withFirstQuizThatUserDidNotAnswer;
@@ -84,7 +89,21 @@ export const GET = async (evt) => {
 			return json({ type: 'NOOO WAYY' });
 		}
 
-		return json({ type: 'COMPLETING', reward: stage.stage.points_reward_per_quiz });
+		const updated = await prismaClient.userQuizResult.update({
+			where: {
+				id: d.id
+			},
+			data: {
+				completed: true
+			}
+		});
+
+		return json({
+			type: 'COMPLETING',
+			reward: stage.stage.points_reward_per_quiz,
+			correctCount: updated.correctCount,
+			countQuiz: withFirstQuizThatUserDidNotAnswer.entries.length
+		});
 	}
 
 	const quizEntry = await prismaClient.quizEntry.findUnique({
@@ -93,5 +112,8 @@ export const GET = async (evt) => {
 		}
 	});
 
-	return json({ quizEntry, type: 'entry' });
+	return json({
+		quizEntry: { ...quizEntry, number: index, entryCount: firstQuizThatUserDidNotAnswer.length },
+		type: 'entry'
+	});
 };
