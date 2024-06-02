@@ -9,6 +9,7 @@
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 
 	export let avatar: string | null;
+	export let name: string;
 </script>
 
 <header class="flex justify-end border-b px-4 py-2 shadow-sm lg:px-8">
@@ -17,7 +18,7 @@
 			<PopoverTrigger>
 				<Avatar class="cursor-pointer">
 					<AvatarImage src={avatar} alt="user avatar" />
-					<AvatarFallback>AN</AvatarFallback>
+					<AvatarFallback>{name}</AvatarFallback>
 				</Avatar>
 			</PopoverTrigger>
 			<PopoverContent class="p-0">
