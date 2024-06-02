@@ -18,7 +18,8 @@ export const load: PageServerLoad = async (evt) => {
 					kelasId: true,
 					kelas: {
 						select: {
-							name: true
+							name: true,
+							id: true
 						}
 					},
 					fromTemplateId: true

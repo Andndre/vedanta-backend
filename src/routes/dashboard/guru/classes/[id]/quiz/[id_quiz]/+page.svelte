@@ -19,11 +19,17 @@
 	</div>
 	<div class="space-y-2">
 		<Label>Tenggat</Label>
-		<Input type="date" placeholder="Tenggat" required name="dueDate" value={data.quiz.dueDate} />
+		<Input
+			type="date"
+			placeholder="Tenggat"
+			required
+			name="dueDate"
+			value={data.quiz.dueDate ? new Date(data.quiz.dueDate).toISOString().split('T')[0] : null}
+		/>
 	</div>
 	<div class="flex items-center space-x-2">
 		<Switch id="airplane-mode" name="isDraft" checked={data.quiz.isDraft} />
-		<Label for="airplane-mode">Terlihat oleh siswa</Label>
+		<Label for="airplane-mode">Draft</Label>
 	</div>
 	<div class="flex gap-3">
 		<Button variant="secondary" href={`/dashboard/guru/library/${data.quiz.id}`}>Edit Soal</Button>
