@@ -92,20 +92,17 @@
 						<Dialog.Title>Tambahkan Item Quiz</Dialog.Title>
 						<Dialog.Description>Tambahkan item quiz baru pada quiz ini</Dialog.Description>
 					</Dialog.Header>
-					<div class="grid gap-4 py-4">
-						<div class="pt-3"></div>
-						<div class="flex flex-wrap gap-3">
-							{#each quizItemOption as item}
-								<Button
-									href={item.href}
-									variant="ghost"
-									class="flex w-full justify-start gap-2 p-1 px-[5px] pr-3 lg:w-[45%]"
-								>
-									<img src={item.icon} alt="" class="w-[32px]" />
-									<span>{item.title}</span>
-								</Button>
-							{/each}
-						</div>
+					<div class="flex flex-col gap-8">
+						{#each quizItemOption as item}
+							<Button
+								href={item.href}
+								variant="ghost"
+								class="flex w-full justify-start gap-2 p-1 px-[5px] pr-3 lg:w-[45%]"
+							>
+								<img src={item.icon} alt="" class="w-[32px]" />
+								<span>{item.title}</span>
+							</Button>
+						{/each}
 					</div>
 					<Dialog.Footer>
 						<p class="text-sm">Silakan pilih salah satu</p>

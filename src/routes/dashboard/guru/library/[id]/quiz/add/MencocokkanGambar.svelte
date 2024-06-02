@@ -3,6 +3,7 @@
 	import Input from '$lib/components/ui/input/input.svelte';
 	import Label from '$lib/components/ui/label/label.svelte';
 	import * as RadioGroup from '$lib/components/ui/radio-group';
+	import ImageInput from './ImageInput.svelte';
 </script>
 
 <h1 class="text-2xl font-bold">Inputkan Pertanyaan Pilihan Ganda</h1>
@@ -11,33 +12,33 @@
 	action="?/save"
 	method="POST"
 	enctype="multipart/form-data"
-	class="space-y-3 rounded-md p-8 shadow-md"
+	class="space-y-3 rounded-md bg-white p-8 shadow-md"
 >
-	<Input type="hidden" name="type" value="pilgan" class="space-y-3 rounded-md p-8 shadow-md" />
+	<Input type="hidden" name="type" value="cocokgambar" class="space-y-3 rounded-md p-8 shadow-md" />
 	<div class="space-y-2">
 		<Label>Pertanyaan</Label>
 		<Input name="title" placeholder="Ketikkan Pertanyaan..." required />
 	</div>
 	<div class="space-y-2">
 		<Label>Opsi <span class="italic">(tandai opsi yang benar)</span></Label>
-		<RadioGroup.Root required>
-			<div class="flex items-center space-x-3">
+		<RadioGroup.Root required value="b" class="grid grid-cols-2 gap-4">
+			<div class="flex flex-col items-start gap-3">
 				<RadioGroup.Item value="a" id="r2" />
-				<Input required class="border-none" name="optionOne" placeholder="Ketikkan opsi A" />
+				<ImageInput name="optionOne" title="Opsi A" />
 			</div>
-			<div class="flex items-center space-x-3">
+			<div class="flex flex-col items-start gap-3">
 				<RadioGroup.Item value="b" id="r2" />
-				<Input required class="border-none" name="optionTwo" placeholder="Ketikkan opsi B" />
+				<ImageInput name="optionTwo" title="Opsi B" />
 			</div>
-			<div class="flex items-center space-x-3">
+			<div class="flex flex-col items-start gap-3">
 				<RadioGroup.Item value="c" id="r2" />
-				<Input required class="border-none" name="optionThree" placeholder="Ketikkan opsi C" />
+				<ImageInput name="optionThree" title="Opsi C" />
 			</div>
-			<div class="flex items-center space-x-3">
+			<div class="flex flex-col items-start gap-3">
 				<RadioGroup.Item value="d" id="r2" />
-				<Input required class="border-none" name="optionFour" placeholder="Ketikkan opsi D" />
+				<ImageInput name="optionFour" title="Opsi D" />
 			</div>
-			<RadioGroup.Input required name="correct" />
+			<RadioGroup.Input required name="correct" value="b" />
 		</RadioGroup.Root>
 	</div>
 	<Button type="submit">Simpan</Button>
