@@ -6,7 +6,8 @@
 
 	import QuizIcon from '$lib/images/icons/quiz.png';
 	import type { CocokGambar, IsianSingkat, PilihanGanda, SimakAudio } from '$lib/types/quiz';
-	import { PencilLine, PlusIcon } from 'lucide-svelte';
+	import { PencilLine, PlusIcon, TrashIcon } from 'lucide-svelte';
+	import { goto } from '$app/navigation';
 
 	export let data: PageServerData;
 
@@ -33,6 +34,9 @@
 		}
 	];
 
+	let open = false;
+	let idSelected: number | null = null;
+
 	function isPilgan(obj: any): obj is PilihanGanda {
 		console.log(obj);
 		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'pilgan';
@@ -51,6 +55,24 @@
 		return typeof obj === 'object' && obj !== null && 'type' in obj && obj.type === 'cocokgambar';
 	}
 </script>
+
+<Dialog.Root bind:open>
+	<!-- <Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Edit Profile</Dialog.Trigger> -->
+	<Dialog.Content class="sm:max-w-[425px]">
+		<Dialog.Header>
+			<Dialog.Title>Hapus Soal Ini?</Dialog.Title>
+			<Dialog.Description>Perubahan yang dilakukan tidak dapat dikembalikan</Dialog.Description>
+		</Dialog.Header>
+		<Dialog.Footer>
+			<Button
+				on:click={() => {
+					open = false;
+					goto(`/dashboard/guru/library/${data.quiz.id}/quiz/${idSelected}/delete`);
+				}}>Konfirmasi</Button
+			>
+		</Dialog.Footer>
+	</Dialog.Content>
+</Dialog.Root>
 
 <div class="flex flex-1 flex-col justify-center">
 	<a href={`/dashboard/guru/library/${data.quiz.id}/edit`} class="flex items-center gap-3">
@@ -94,95 +116,125 @@
 {#each data.quiz.entries as item, i}
 	{#if item.questionModel && typeof item.questionModel == 'object'}
 		{#if isPilgan(item.questionModel)}
-			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-				<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
-				<div class="grid grid-cols-12">
-					<div class="col-span-12 lg:col-span-6">
-						<p>a. {item.questionModel.optionOne}</p>
+			<div
+				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
+			>
+				<div class="space-y-3">
+					<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
+					<div class="grid grid-cols-12 gap-3">
+						<div class="col-span-12 lg:col-span-6">
+							<p>a. {item.questionModel.optionOne}</p>
+						</div>
+						<div class="col-span-12 lg:col-span-6">
+							<p>b. {item.questionModel.optionTwo}</p>
+						</div>
+						<div class="col-span-12 lg:col-span-6">
+							<p>c. {item.questionModel.optionThree}</p>
+						</div>
+						<div class="col-span-12 lg:col-span-6">
+							<p>d. {item.questionModel.optionFour}</p>
+						</div>
 					</div>
-					<div class="col-span-12 lg:col-span-6">
-						<p>b. {item.questionModel.optionTwo}</p>
-					</div>
-					<div class="col-span-12 lg:col-span-6">
-						<p>c. {item.questionModel.optionThree}</p>
-					</div>
-					<div class="col-span-12 lg:col-span-6">
-						<p>d. {item.questionModel.optionFour}</p>
-					</div>
+					<p>Jawaban: {item.questionModel.correct}</p>
 				</div>
-				<p>Jawaban: {item.questionModel.correct}</p>
+				<Button variant="secondary" on:click={() => ((open = true), (idSelected = item.id))}
+					><TrashIcon size={15} /></Button
+				>
 			</div>
 			<div class="pt-3"></div>
 		{:else if isIsian(item.questionModel)}
-			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-				<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
-				<p>Jawaban: {item.questionModel.correct}</p>
+			<div
+				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
+			>
+				<div class="space-y-3">
+					<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
+					<p>Jawaban: {item.questionModel.correct}</p>
+				</div>
+				<Button variant="secondary" on:click={() => ((open = true), (idSelected = item.id))}
+					><TrashIcon size={15} /></Button
+				>
 			</div>
 			<div class="pt-3"></div>
 		{:else if isSimakAudio(item.questionModel)}
-			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-				<p class="font-medium">{i + 1} <span>Simak Audio</span></p>
-				<audio src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.audioUrl} controls
-				></audio>
-				<div class="grid grid-cols-12">
-					<div class="col-span-12 lg:col-span-6">
-						<p>a. {item.questionModel.optionOne}</p>
+			<div
+				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
+			>
+				<div class="space-y-3">
+					<p class="font-medium">{i + 1} <span>Simak Audio</span></p>
+					<audio src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.audioUrl} controls
+					></audio>
+					<div class="grid grid-cols-12 gap-3">
+						<div class="col-span-12 lg:col-span-6">
+							<p>a. {item.questionModel.optionOne}</p>
+						</div>
+						<div class="col-span-12 lg:col-span-6">
+							<p>b. {item.questionModel.optionTwo}</p>
+						</div>
+						<div class="col-span-12 lg:col-span-6">
+							<p>c. {item.questionModel.optionThree}</p>
+						</div>
+						<div class="col-span-12 lg:col-span-6">
+							<p>d. {item.questionModel.optionFour}</p>
+						</div>
 					</div>
-					<div class="col-span-12 lg:col-span-6">
-						<p>b. {item.questionModel.optionTwo}</p>
-					</div>
-					<div class="col-span-12 lg:col-span-6">
-						<p>c. {item.questionModel.optionThree}</p>
-					</div>
-					<div class="col-span-12 lg:col-span-6">
-						<p>d. {item.questionModel.optionFour}</p>
-					</div>
+					<p>Jawaban: {item.questionModel.correct}</p>
 				</div>
-				<p>Jawaban: {item.questionModel.correct}</p>
+				<Button variant="secondary" on:click={() => ((open = true), (idSelected = item.id))}
+					><TrashIcon size={15} /></Button
+				>
 			</div>
 			<div class="pt-3"></div>
 		{:else if isCocokGambar(item.questionModel)}
-			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-				<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
-				<div class="grid grid-cols-2 gap-3">
-					<div class="col-span-1">
-						a.
-						<img
-							class="aspect-[6/4] w-full rounded-lg object-cover"
-							src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.optionOne}
-							alt=""
-						/>
+			<div
+				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
+			>
+				<div class="space-y-3">
+					<p class="font-medium">{i + 1}. {item.questionModel.title}</p>
+					<div class="grid grid-cols-2 gap-3">
+						<div class="col-span-1">
+							a.
+							<img
+								class="aspect-[6/4] w-full rounded-lg object-cover"
+								src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.optionOne}
+								alt=""
+							/>
+						</div>
+						<div class="col-span-1">
+							b.
+							<img
+								class="aspect-[6/4] w-full rounded-lg object-cover"
+								src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.optionTwo}
+								alt=""
+							/>
+						</div>
+						<div class="col-span-1">
+							c.
+							<img
+								class="aspect-[6/4] w-full rounded-lg object-cover"
+								src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.optionThree}
+								alt=""
+							/>
+						</div>
+						<div class="col-span-1">
+							d.
+							<img
+								class="aspect-[6/4] w-full rounded-lg object-cover"
+								src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.optionFour}
+								alt=""
+							/>
+						</div>
 					</div>
-					<div class="col-span-1">
-						b.
-						<img
-							class="aspect-[6/4] w-full rounded-lg object-cover"
-							src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.optionTwo}
-							alt=""
-						/>
-					</div>
-					<div class="col-span-1">
-						c.
-						<img
-							class="aspect-[6/4] w-full rounded-lg object-cover"
-							src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.optionThree}
-							alt=""
-						/>
-					</div>
-					<div class="col-span-1">
-						d.
-						<img
-							class="aspect-[6/4] w-full rounded-lg object-cover"
-							src={'https://cdn.hmjtiundiksha.com/' + item.questionModel.optionFour}
-							alt=""
-						/>
-					</div>
+					<p>Jawaban: {item.questionModel.correct}</p>
 				</div>
-				<p>Jawaban: {item.questionModel.correct}</p>
+				<Button variant="secondary" on:click={() => ((open = true), (idSelected = item.id))}
+					><TrashIcon size={15} /></Button
+				>
 			</div>
 			<div class="pt-3"></div>
 		{:else}
-			<div class="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
+			<div
+				class="flex justify-between gap-3 rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
+			>
 				{item.questionModel}
 			</div>
 		{/if}
