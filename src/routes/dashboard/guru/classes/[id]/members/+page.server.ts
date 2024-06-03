@@ -10,6 +10,7 @@ export const load: PageServerLoad = async (evt) => {
 		select: {
 			id: true,
 			name: true,
+			classCode: true,
 			siswa: {
 				select: {
 					user: {

@@ -47,12 +47,15 @@ export const GET = async (evt) => {
 
 	// tambahkan variable status lock untuk quiz pertama yang belum diselesaikan (1 setelah yang seharusnya dikerjakan)
 	let lock = false;
-	const withLock = withOutQuiz.map((s) => {
+	let lastUnlockedIndex = 0;
+	const withLock = withOutQuiz.map((s, i) => {
 		if (!lock) {
 			if (s.finished < s.quizCount) {
 				lock = true;
+				lastUnlockedIndex = i;
 				return { ...s, locked: false };
 			} else {
+				lastUnlockedIndex = i;
 				return { ...s, locked: false };
 			}
 		} else {
@@ -62,6 +65,7 @@ export const GET = async (evt) => {
 
 	return json({
 		stage: withLock,
+		lastUnlockedIndex,
 		error: false
 	});
 };

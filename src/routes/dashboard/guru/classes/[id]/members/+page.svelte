@@ -5,7 +5,9 @@
 	import { LogOutIcon, User } from 'lucide-svelte';
 	import type { PageServerData } from './$types';
 	import { getInitialName } from '$lib/utils';
+	import { CheckIcon, CopyIcon } from 'lucide-svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
+	import { toast } from 'svelte-sonner';
 
 	export let data: PageServerData;
 </script>
@@ -15,8 +17,21 @@
 <div class="pt-8"></div>
 
 <div class="rounded-sm bg-card p-6 shadow-md">
-	<h2 class="text-xl">Daftar Peserta</h2>
-	<p>Kelola daftar siswa pada kelas ini</p>
+	<div class="flex justify-between">
+		<div class="flex flex-col gap-3">
+			<h2 class="text-xl">Daftar Peserta</h2>
+			<p>Kelola daftar siswa pada kelas ini</p>
+		</div>
+		<Button
+			type="button"
+			on:click={(e) => {
+				navigator.clipboard.writeText(data.kelas.classCode);
+				toast('Kode kelas disalin ke Clipboard', { icon: CheckIcon });
+			}}
+			variant="secondary"
+			class="flex gap-3"><CopyIcon size={15} /> Salin kode</Button
+		>
+	</div>
 	<div class="pt-8"></div>
 
 	{#each data.kelas.siswa as siswa}
