@@ -6,7 +6,7 @@
 	import ImageInput from './ImageInput.svelte';
 </script>
 
-<h1 class="text-2xl font-bold">Inputkan Pertanyaan Pilihan Ganda</h1>
+<h1 class="text-2xl font-bold">Inputkan Pertanyaan Mencocokkan Gambar</h1>
 <div class="py-3"></div>
 <form
 	action="?/save"
