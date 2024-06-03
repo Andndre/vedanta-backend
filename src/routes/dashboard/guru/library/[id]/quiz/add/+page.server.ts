@@ -34,6 +34,7 @@ export const actions = {
 		switch (data.type) {
 			case 'isian':
 				quiz = new IsianSingkat(data.title as string, data.correct as string);
+				break;
 			case 'pilgan':
 				quiz = new PilihanGanda(
 					data.title as string,
