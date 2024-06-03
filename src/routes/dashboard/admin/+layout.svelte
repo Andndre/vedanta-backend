@@ -15,7 +15,7 @@
 	<AdminSidebar />
 	<div class="flex flex-1 flex-col">
 		<!-- Header component -->
-		<AdminHeader avatar={data.profile} />
+		<AdminHeader avatar={data.profile} name={data.user.name} />
 
 		<div class="flex-1 px-4 py-8 sm:px-8 md:px-16 lg:px-36">
 			<!-- Slot for page content -->

@@ -23,6 +23,7 @@ export const load: LayoutServerLoad = async (evt) => {
 	});
 
 	return {
-		profile: user!.profilePicture
+		profile: user!.profilePicture,
+		user: webUser
 	};
 };

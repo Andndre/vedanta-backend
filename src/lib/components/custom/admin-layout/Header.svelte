@@ -7,6 +7,7 @@
 	import { LogOut, Moon, Sun, User } from 'lucide-svelte';
 	import ModeToggle from '../ModeToggle.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
+	import { getInitialName } from '$lib/utils';
 
 	export let avatar: string | null;
 	export let name: string;
@@ -18,7 +19,7 @@
 			<PopoverTrigger>
 				<Avatar class="cursor-pointer">
 					<AvatarImage src={avatar} alt="user avatar" />
-					<AvatarFallback>{name}</AvatarFallback>
+					<AvatarFallback>{getInitialName(name)}</AvatarFallback>
 				</Avatar>
 			</PopoverTrigger>
 			<PopoverContent class="p-0">
