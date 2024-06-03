@@ -28,8 +28,6 @@ export const GET = async (evt) => {
 		}
 	});
 
-	console.log(quiz);
-
 	if (!quiz) {
 		return error(404, 'Quiz not found');
 	}
@@ -132,10 +130,43 @@ export const GET = async (evt) => {
 			}
 		});
 
+		const claim = await prismaClient.userClaimsHadiahQuiz.findUnique({
+			where: {
+				userId_quizId: {
+					userId: evt.locals.apiUser.id,
+					quizId: +evt.params.id_quiz
+				}
+			}
+		});
+
+		let reward = stage.stage.points_reward_per_quiz;
+
+		if (claim) {
+			reward = 0;
+		} else {
+			await prismaClient.userClaimsHadiahQuiz.create({
+				data: {
+					userId: evt.locals.apiUser.id,
+					quizId: +evt.params.id_quiz
+				}
+			});
+
+			await prismaClient.user.update({
+				where: {
+					id: evt.locals.apiUser.id
+				},
+				data: {
+					points: {
+						increment: reward
+					}
+				}
+			});
+		}
+
 		return json({
 			id: +evt.params.id_quiz,
 			type: 'COMPLETING',
-			reward: stage.stage.points_reward_per_quiz,
+			reward,
 			correctCount: updated.correctCount,
 			countQuiz: withFirstQuizThatUserDidNotAnswer.entries.length
 		});

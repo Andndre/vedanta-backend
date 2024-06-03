@@ -48,6 +48,8 @@ model User {
   quizEntriesAnswered     UserAnswerQuizEntry[]
   userBuyGift             UserBuyGift[]
   DiscussionReply         DiscussionReply[]
+  userClaimsHadiahStage   UserClaimsHadiahStage[]
+  userClaimsHadiahQuiz    UserClaimsHadiahQuiz[]
 }
 
 // Kumpulan Gita bab
@@ -267,8 +269,20 @@ model Stage {
   points_reward_finished Int    @default(0)
   points_reward_per_quiz Int    @default(0)
 
-  materi Materi? @relation(fields: [materiId], references: [id], onDelete: SetNull)
-  Quiz   Quiz[]
+  materi                Materi?                 @relation(fields: [materiId], references: [id], onDelete: SetNull)
+  Quiz                  Quiz[]
+  userClaimsHadiahStage UserClaimsHadiahStage[]
+}
+
+model UserClaimsHadiahStage {
+  id      Int    @id @default(autoincrement())
+  stageId Int
+  userId  String
+
+  stage Stage @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, stageId])
 }
 
 model Materi {
@@ -295,13 +309,14 @@ model Quiz {
   dueDate        DateTime?
   isDraft        Boolean   @default(false)
 
-  creator              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  template             Quiz?            @relation(fields: [fromTemplateId], references: [id], name: "fromTemplate")
+  creator              User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  template             Quiz?                  @relation(fields: [fromTemplateId], references: [id], name: "fromTemplate")
   entries              QuizEntry[]
-  quizesUsesAsTemplate Quiz[]           @relation(name: "fromTemplate")
+  quizesUsesAsTemplate Quiz[]                 @relation(name: "fromTemplate")
   userQuizResult       UserQuizResult[]
-  kelas                Kelas?           @relation(fields: [kelasId], references: [id])
-  stage                Stage?           @relation(fields: [stageId], references: [id])
+  kelas                Kelas?                 @relation(fields: [kelasId], references: [id])
+  stage                Stage?                 @relation(fields: [stageId], references: [id])
+  UserClaimsHadiahQuiz UserClaimsHadiahQuiz[]
 }
 
 model QuizEntry {
@@ -313,6 +328,17 @@ model QuizEntry {
 
   quiz              Quiz                  @relation(fields: [quizId], references: [id], onDelete: Cascade)
   usersAnsweredQuiz UserAnswerQuizEntry[]
+}
+
+model UserClaimsHadiahQuiz {
+  id     Int    @id @default(autoincrement())
+  quizId Int
+  userId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, quizId])
 }
 
 model UserQuizResult {
