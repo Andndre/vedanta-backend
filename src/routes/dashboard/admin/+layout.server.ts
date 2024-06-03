@@ -22,8 +22,12 @@ export const load: LayoutServerLoad = async (evt) => {
 		}
 	});
 
+	if (!user) {
+		throw redirect(302, '/login');
+	}
+
 	return {
-		profile: user!.profilePicture,
+		profile: user.profilePicture,
 		user: webUser
 	};
 };

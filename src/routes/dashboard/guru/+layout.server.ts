@@ -23,7 +23,11 @@ export const load: LayoutServerLoad = async (evt) => {
 		}
 	});
 
+	if (!user) {
+		throw redirect(302, '/login');
+	}
+
 	return {
-		user: user!
+		user: user
 	};
 };
