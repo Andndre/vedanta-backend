@@ -4,18 +4,18 @@ import { redirect } from '@sveltejs/kit';
 
 export const GET = async (evt) => {
 	try {
-		const deleted = await prismaClient.doa.delete({
+		const deleted = await prismaClient.gift.delete({
 			where: {
 				id: +evt.params.id
 			}
 		});
 
 		if (deleted) {
-			await deleteFile(deleted.pelafalanFile);
+			await deleteFile(deleted.thumbnail);
 		}
 	} catch (e) {
 		console.error(e);
 	}
 
-	throw redirect(302, '/dashboard/admin/doa');
+	throw redirect(302, '/dashboard/admin/hadiah');
 };
