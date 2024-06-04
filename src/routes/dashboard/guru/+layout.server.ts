@@ -6,7 +6,7 @@ export const load: LayoutServerLoad = async (evt) => {
 	const webUser = evt.locals.webUser;
 
 	if (!webUser) {
-		throw redirect(302, '/login');
+		throw redirect(302, '/login?redirect=' + evt.url.pathname);
 	}
 
 	if (webUser.isAdmin) {
@@ -24,7 +24,7 @@ export const load: LayoutServerLoad = async (evt) => {
 	});
 
 	if (!user) {
-		throw redirect(302, '/login');
+		throw redirect(302, '/login?redirect=' + evt.url.pathname);
 	}
 
 	return {

@@ -425,6 +425,7 @@ model BadgeType {
   id          Int    @id @default(autoincrement())
   name        String
   description String @db.Text()
+  color       String @default("#FFFFFF")
 
   badges Badge[]
 }

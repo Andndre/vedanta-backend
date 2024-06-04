@@ -9,7 +9,8 @@
 		HomeIcon,
 		BookIcon,
 		UsersIcon,
-		DoorOpenIcon
+		DoorOpenIcon,
+		GiftIcon
 	} from 'lucide-svelte';
 	import type { ComponentType } from 'svelte';
 	import LucideIcons from '../LucideIcons.svelte';
@@ -42,6 +43,12 @@
 			href: '/dashboard/admin/stage',
 			highlightMatch: false,
 			icon: DoorOpenIcon
+		},
+		{
+			title: 'Hadiah',
+			href: '/dashboard/admin/hadiah',
+			highlightMatch: false,
+			icon: GiftIcon
 		}
 	];
 
