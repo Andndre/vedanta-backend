@@ -195,10 +195,10 @@ model Doa {
   makna         String? @db.LongText
   pelafalanFile String
 
-  usersLiked      UserLikedDoa[]
-  alarmDoas       AlarmDoa[]
-  HomeWorkDoa     HomeWorkDoa[]
-  UserHomeworkDoa UserHomeworkDoa[]
+  usersLiked  UserLikedDoa[]
+  alarmDoas   AlarmDoa[]
+  HomeWorkDoa HomeWorkDoa[]
+  // UserHomeworkDoa UserHomeworkDoa[]
 
   @@index([title])
   @@fulltext([title, body])
@@ -225,9 +225,11 @@ model AlarmDoa {
   userId    String
   active    Boolean @default(false)
   jam       String
+  tugasId   Int?
 
-  doa  Doa? @relation(fields: [doaId], references: [id], onDelete: SetNull)
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tugasDoa UserHomeworkDoa? @relation(fields: [tugasId], references: [id])
+  doa      Doa?             @relation(fields: [doaId], references: [id], onDelete: SetNull)
+  user     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -383,9 +385,8 @@ model HomeWorkDoa {
 }
 
 model UserHomeworkDoa {
-  id                 Int      @id @default(autoincrement())
+  id                 Int     @id @default(autoincrement())
   userId             String
-  timeSetAt          DateTime @default(now())
   fileRecorded       String?
   documentationImage String?
   grade              Int?
@@ -393,8 +394,9 @@ model UserHomeworkDoa {
 
   homework HomeWorkDoa @relation(fields: [homeWorkDoaId], references: [id], onDelete: Cascade)
   user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Doa      Doa?        @relation(fields: [doaId], references: [id])
-  doaId    Int?
+  alarmDoa AlarmDoa[]
+
+  @@unique([userId, homeWorkDoaId])
 }
 
 model Gift {
