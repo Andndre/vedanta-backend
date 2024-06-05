@@ -18,19 +18,9 @@ export const POST = async (evt) => {
 				reply: body.reply,
 				creatorId: user.id,
 				discussionId: +evt.params.id,
-				discussionReplyId: +evt.params.id_reply,
+				discussionReplyId: +evt.params.id_reply
 			}
 		});
-		await prisma.discussion.update({
-			where: {
-				id: +evt.params.id_reply
-			},
-			data: {
-				likesCount: {
-					increment: 1
-				}
-			}
-		})
 	});
 
 	return json({

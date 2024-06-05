@@ -17,7 +17,8 @@ export const GET = async (evt) => {
 			id: true,
 			creator: {
 				select: {
-					name: true
+					name: true,
+					id: true
 				}
 			},
 			userLikes: {
@@ -39,8 +40,12 @@ export const GET = async (evt) => {
 		};
 	});
 
+	const withShowDelete = response.map((d) => {
+		return { ...d, showDelete: d.creator.id === evt.locals.apiUser?.id };
+	});
+
 	return json({
 		error: false,
-		discussions: response
+		discussions: withShowDelete
 	});
 };

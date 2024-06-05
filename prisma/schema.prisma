@@ -167,7 +167,7 @@ model DiscussionReply {
   creator           User                       @relation(fields: [creatorId], references: [id])
   discussion        Discussion                 @relation(fields: [discussionId], references: [id], onDelete: Cascade)
   usersLiked        UserLikedDiscussionReply[]
-  DiscussionReply   DiscussionReply?           @relation(name: "discussion_reply", fields: [discussionReplyId], references: [id])
+  DiscussionReply   DiscussionReply?           @relation(name: "discussion_reply", fields: [discussionReplyId], references: [id], onDelete: Cascade)
   discussionReplyId Int?
 
   @@index([discussionId])

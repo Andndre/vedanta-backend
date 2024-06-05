@@ -45,6 +45,7 @@ export const GET = async (evt) => {
 					reply: true,
 					creator: {
 						select: {
+							id: true,
 							name: true,
 							profilePicture: true
 						}
@@ -86,17 +87,18 @@ export const GET = async (evt) => {
 	const { userLikes, ...rest } = discussion;
 	rest.creator.profilePicture = URL_CDN + discussion.creator.profilePicture;
 	const withIsLiked = { isLiked, ...rest };
-	const repliesWithIsLiked = discussion.replies.map((r) => {
+	const replyNormalized = discussion.replies.map((r) => {
 		const isLikedNested = r.usersLiked.some((u) => u.userId === evt.locals.apiUser?.id);
+		const showDelete = r.creator.id == evt.locals.apiUser?.id;
 		const { usersLiked, ...restNested } = r;
 		restNested.creator.profilePicture = URL_CDN + r.creator.profilePicture;
 		restNested.replies = r.replies.map((r) => {
 			r.creator.profilePicture = URL_CDN + r.creator.profilePicture;
-			return { isLiked, ...r };
+			return r;
 		});
-		return { isLiked: isLikedNested, ...restNested };
+		return { isLiked: isLikedNested, showDelete, ...restNested };
 	});
-	const withIsLikedAndReplies = { ...withIsLiked, replies: repliesWithIsLiked };
+	const withIsLikedAndReplies = { ...withIsLiked, replies: replyNormalized };
 
 	return json({
 		discussion: withIsLikedAndReplies,

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Input from '$lib/components/ui/input/input.svelte';
@@ -14,6 +15,7 @@
 	let complete = false;
 
 	async function search() {
+		if (!browser) return;
 		const r = await fetch(
 			`${PUBLIC_APP_URL}/dashboard/guru/classes/${data.kelas.id}/assign-tugas-doa/api/search-doa?q=${searchQuery}`
 		);

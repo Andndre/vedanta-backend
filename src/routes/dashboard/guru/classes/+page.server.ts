@@ -28,11 +28,6 @@ export const load: PageServerLoad = async ({ locals, setHeaders }) => {
 		error(404, 'User not found');
 	}
 
-	// cache for 5 minutes
-	setHeaders({
-		'Cache-Control': 'public, max-age=300'
-	});
-
 	return {
 		userFind,
 		user
