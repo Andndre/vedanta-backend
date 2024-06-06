@@ -460,14 +460,12 @@ model UserBadge {
 model MissionType {
   id      Int    @id @default(autoincrement())
   name    String
-  colorBg String @default("#FFFFFF")
 
   missions Mission[]
 }
 
 model Mission {
   id            Int    @id @default(autoincrement())
-  description   String
   maxProgress   Int
   rewardStars   Int
   missionTypeId Int    @unique

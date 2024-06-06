@@ -35,11 +35,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 			}
 		}
 	} else {
-		// Set the authenticated user in the event's locals
-		event.locals.webUser = (await getAuthUser(event.cookies)) || null;
-
-		if (!event.locals.webUser) {
-			throw redirect(302, '/login?redirect=' + securePath(pathname));
+		if (pathname.startsWith('/dashboard')) {
+			// Set the authenticated user in the event's locals
+			event.locals.webUser = (await getAuthUser(event.cookies)) || null;
+			if (!event.locals.webUser) {
+				throw redirect(302, '/login?redirect=' + securePath(pathname));
+			}
 		}
 	}
 	const response = await resolve(event);
