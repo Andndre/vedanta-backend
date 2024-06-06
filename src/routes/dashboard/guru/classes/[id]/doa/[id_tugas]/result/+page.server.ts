@@ -17,7 +17,11 @@ export const load: PageServerLoad = async (evt) => {
 						}
 					},
 					createdAt: true,
-					id: true
+					id: true,
+					grade: true
+				},
+				orderBy: {
+					createdAt: 'desc'
 				}
 			}
 		}
