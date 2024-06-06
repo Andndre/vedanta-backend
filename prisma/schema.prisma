@@ -29,6 +29,8 @@ model User {
   bacaanSlokaTerakhirId Int?
   profilePicture        String?
 
+  stageCompleted Int @default(0)
+
   bacaanSlokaTerakhir     GitaSloka?                 @relation(fields: [bacaanSlokaTerakhirId], references: [id])
   sessions                ChatSession[]
   slokasLiked             UserLikedGitaSloka[]
