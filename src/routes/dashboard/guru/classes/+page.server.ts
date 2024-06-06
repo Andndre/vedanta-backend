@@ -3,7 +3,11 @@ import { prismaClient } from '@/db';
 import { error } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ locals, setHeaders }) => {
-	const user = locals.webUser!;
+	const user = locals.webUser;
+
+	if (!user) {
+		error(401, 'Unauthorized');
+	}
 
 	const userFind = await prismaClient.user.findUnique({
 		where: {

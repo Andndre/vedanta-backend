@@ -26,7 +26,11 @@ export const GET = async (evt) => {
 					userId: evt.locals.apiUser?.id
 				},
 				select: {
-					id: true
+					id: true,
+					createdAt: true,
+					fileRecorded: true,
+					documentationImage: true,
+					grade: true
 				}
 			}
 		}

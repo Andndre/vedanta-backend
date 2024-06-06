@@ -391,6 +391,7 @@ model UserHomeworkDoa {
   documentationImage String?
   grade              Int?
   homeWorkDoaId      Int
+  createdAt          DateTime @default(now())
 
   homework HomeWorkDoa @relation(fields: [homeWorkDoaId], references: [id], onDelete: Cascade)
   user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
