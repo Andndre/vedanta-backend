@@ -87,6 +87,10 @@ export const GET = async (evt) => {
 		}
 	});
 
+	if (!res) {
+		return error(404, 'User not found');
+	}
+
 	return json({
 		error: false,
 		data: res

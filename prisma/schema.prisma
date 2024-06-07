@@ -21,13 +21,18 @@ model User {
   name                  String
   email                 String   @unique
   password              String   @db.VarChar(255)
-  points                Int      @default(0)
-  activeStreak          Int      @default(0)
   lastActiveAt          DateTime @default(now())
   isAdmin               Boolean  @default(false)
   refreshSession        String   @unique @db.VarChar(36)
   bacaanSlokaTerakhirId Int?
   profilePicture        String?
+
+  points            Int @default(0)
+  activeStreak      Int @default(0)
+  stagesCompleted   Int @default(0)
+  quizCompleted     Int @default(0)
+  ganeshBotMessages Int @default(0)
+  discussionsAsked  Int @default(0)
 
   bacaanSlokaTerakhir     GitaSloka?                 @relation(fields: [bacaanSlokaTerakhirId], references: [id])
   sessions                ChatSession[]
@@ -219,17 +224,18 @@ model UserLikedDoa {
 
 // Alarm doa yang dimiliki oleh user
 model AlarmDoa {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   ulangiDoa Int
   doaId     Int?
   userId    String
-  active    Boolean @default(false)
+  active    Boolean  @default(false)
   jam       String
   tugasId   Int?
+  createdAt DateTime @default(now())
 
-  tugasDoa UserHomeworkDoa? @relation(fields: [tugasId], references: [id])
-  doa      Doa?             @relation(fields: [doaId], references: [id], onDelete: SetNull)
-  user     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tugasDoa HomeWorkDoa? @relation(fields: [tugasId], references: [id])
+  doa      Doa?         @relation(fields: [doaId], references: [id], onDelete: SetNull)
+  user     User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -382,10 +388,11 @@ model HomeWorkDoa {
   doa           Doa               @relation(fields: [doaId], references: [id], onDelete: Cascade)
   class         Kelas             @relation(fields: [kelasId], references: [id], onDelete: Cascade)
   usersHomework UserHomeworkDoa[]
+  alarmDoas     AlarmDoa[]
 }
 
 model UserHomeworkDoa {
-  id                 Int     @id @default(autoincrement())
+  id                 Int      @id @default(autoincrement())
   userId             String
   fileRecorded       String?
   documentationImage String?
@@ -395,7 +402,6 @@ model UserHomeworkDoa {
 
   homework HomeWorkDoa @relation(fields: [homeWorkDoaId], references: [id], onDelete: Cascade)
   user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  alarmDoa AlarmDoa[]
 
   @@unique([userId, homeWorkDoaId])
 }
@@ -456,30 +462,26 @@ model UserBadge {
 }
 
 model MissionType {
-  id      Int    @id @default(autoincrement())
-  name    String
-  colorBg String @default("#FFFFFF")
+  id   Int    @id @default(autoincrement())
+  name String
 
   missions Mission[]
 }
 
 model Mission {
-  id            Int    @id @default(autoincrement())
-  description   String
+  id            Int @id @default(autoincrement())
   maxProgress   Int
   rewardStars   Int
-  missionTypeId Int    @unique
+  missionTypeId Int
 
   missionType MissionType   @relation(fields: [missionTypeId], references: [id])
   users       UserMission[]
 }
 
 model UserMission {
-  id        Int      @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   userId    String
   missionId Int
-  progress  Int
-  createdAt DateTime @default(now())
 
   mission Mission @relation(fields: [missionId], references: [id])
   user    User    @relation(fields: [userId], references: [id])

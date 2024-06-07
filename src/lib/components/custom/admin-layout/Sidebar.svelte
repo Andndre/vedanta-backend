@@ -10,7 +10,8 @@
 		BookIcon,
 		UsersIcon,
 		DoorOpenIcon,
-		GiftIcon
+		GiftIcon,
+		CoinsIcon
 	} from 'lucide-svelte';
 	import type { ComponentType } from 'svelte';
 	import LucideIcons from '../LucideIcons.svelte';
@@ -49,6 +50,12 @@
 			href: '/dashboard/admin/hadiah',
 			highlightMatch: false,
 			icon: GiftIcon
+		},
+		{
+			title: 'Mission',
+			href: '/dashboard/admin/mission',
+			highlightMatch: false,
+			icon: CoinsIcon
 		}
 	];
 

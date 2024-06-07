@@ -17,7 +17,7 @@
 		<!-- Header component -->
 		<AdminHeader
 			name={data.user.name}
-			avatar={'https://cdn.hmjtiundiksha.com/' + data.user.profilePicture}
+			avatar={data.user.profilePicture}
 		/>
 
 		<div class="flex-1 px-4 py-8 sm:px-8 md:px-16 lg:px-36">

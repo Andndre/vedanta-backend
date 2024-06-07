@@ -5,7 +5,9 @@ export const GET = async (evt) => {
 	const alarms = await prismaClient.alarmDoa.findMany({
 		where: {
 			userId: evt.locals.apiUser!.id,
-			tugasId: null
+			tugasId: {
+				not: null
+			}
 		},
 		select: {
 			jam: true,

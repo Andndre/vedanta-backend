@@ -29,33 +29,61 @@ export const GET = async (evt) => {
 					}
 				}
 			},
+			// allHomeworkDoa: {
+			// 	select: {
+			// 		id: true,
+			// 		doa: {
+			// 			select: {
+			// 				title: true,
+			// 				id: true
+			// 			}
+			// 		},
+			// 		deadline: true,
+			// 		usersHomework: {
+			// 			where: {
+			// 				userId: evt.locals.apiUser?.id
+			// 			},
+			// 			select: {
+			// 				id: true,
+			// 				fileRecorded: true,
+			// 				alarmDoa: {
+			// 					select: {
+			// 						id: true
+			// 					}
+			// 				},
+			// 				homework: {
+			// 					select: {
+			// 						doaId: true
+			// 					}
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// }
 			allHomeworkDoa: {
 				select: {
-					id: true,
+					alarmDoas: {
+						select: {
+							id: true
+						},
+						where: {
+							userId: evt.locals.apiUser?.id
+						}
+					},
 					doa: {
 						select: {
-							title: true,
-							id: true
+							id: true,
+							title: true
 						}
 					},
 					deadline: true,
+					id: true,
 					usersHomework: {
 						where: {
 							userId: evt.locals.apiUser?.id
 						},
 						select: {
-							id: true,
-							fileRecorded: true,
-							alarmDoa: {
-								select: {
-									id: true
-								}
-							},
-							homework: {
-								select: {
-									doaId: true
-								}
-							}
+							id: true
 						}
 					}
 				}
@@ -73,7 +101,7 @@ export const GET = async (evt) => {
 			title: homework.doa.title,
 			deadline: homework.deadline,
 			completed: homework.usersHomework.length > 0,
-			alarmDoa: homework.usersHomework.length === 1 ? homework.usersHomework[0].alarmDoa : null,
+			alarmDoa: homework.alarmDoas.length > 0,
 			doaId: homework.doa.id
 		};
 	});

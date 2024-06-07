@@ -18,7 +18,7 @@
 		<Popover>
 			<PopoverTrigger>
 				<Avatar class="cursor-pointer">
-					<AvatarImage src={avatar} alt="user avatar" />
+					<AvatarImage src={`https://cdn.hmjtiundiksha.com/${avatar}`} alt="user avatar" />
 					<AvatarFallback>{getInitialName(name)}</AvatarFallback>
 				</Avatar>
 			</PopoverTrigger>
