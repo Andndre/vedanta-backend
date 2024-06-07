@@ -5,16 +5,25 @@
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
+
+	let progress = data.mission.maxProgress;
 </script>
 
-<h1 class="text-2xl">Edit Doa</h1>
+<h1 class="text-2xl">Edit Mission</h1>
 <div class="pt-6"></div>
 <form action="?/update" method="POST" enctype="multipart/form-data">
 	<Label>Max Progress</Label>
-	<Input name="maxProgress" placeholder="Max Progress" value={data.mission.maxProgress} required />
+	<Input bind:value={progress} name="maxProgress" placeholder="Max Progress" required />
 	<div class="pt-3"></div>
 	<Label>Hadiah Point</Label>
 	<Input name="rewardStars" placeholder="Hadiah Point" required value={data.mission.rewardStars} />
 	<div class="pt-3"></div>
 	<Button type="submit">Simpan</Button>
 </form>
+
+<div class="pt-6">
+	<h2 class="text-xl">Preview:</h2>
+	<div class="pt-2">
+		<p>{data.mission.missionType.name.replaceAll('{x}', `${progress}`)}</p>
+	</div>
+</div>

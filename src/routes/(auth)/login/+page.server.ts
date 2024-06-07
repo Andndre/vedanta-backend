@@ -64,8 +64,6 @@ export const actions = {
 			expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) // 30 days
 		});
 
-		console.log(url.searchParams.get('redirect'));
-
 		if (locals.webUser.isAdmin) {
 			throw redirect(302, securePath(url.searchParams.get('redirect') || '/dashboard/admin'));
 		}

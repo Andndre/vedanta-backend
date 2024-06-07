@@ -15,9 +15,9 @@
 	<!-- <Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Edit Profile</Dialog.Trigger> -->
 	<Dialog.Content class="sm:max-w-[425px]">
 		<Dialog.Header>
-			<Dialog.Title>Hapus Doa Ini?</Dialog.Title>
+			<Dialog.Title>Hapus Misi Ini?</Dialog.Title>
 			<Dialog.Description>
-				Pengguna akan tetap memiliki alarm dengan doa ini, namun keterkaitan nya akan hilang
+				Pengguna akan tetap memiliki hasil poin dengan misi ini
 			</Dialog.Description>
 		</Dialog.Header>
 		<Dialog.Footer>
@@ -43,7 +43,7 @@
 			<h2 class="text-xl font-bold">
 				{mission.missionType.name.replaceAll('{x}', `${mission.maxProgress}`)}
 			</h2>
-			<p>Max Progress: {mission.maxProgress}</p>
+			<p>Max Progress: {mission.maxProgress}, Hadiah Point: {mission.rewardStars}</p>
 		</div>
 		<div class="flex gap-3">
 			<Button variant="ghost" href={`/dashboard/admin/mission/${mission.id}/edit`}>Edit</Button>

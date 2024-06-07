@@ -17,5 +17,5 @@ export const GET = async (evt) => {
 		console.error(e);
 	}
 
-	throw redirect(302, '/dashboard/admin/doa');
+	throw redirect(302, '/dashboard/admin/mission');
 };

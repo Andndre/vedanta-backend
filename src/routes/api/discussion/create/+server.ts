@@ -12,6 +12,16 @@ export const POST = async (evt) => {
 			creatorId: user.id
 		}
 	});
+	await prismaClient.user.update({
+		where: {
+			id: user.id
+		},
+		data: {
+			discussionsAsked: {
+				increment: 1
+			}
+		}
+	});
 	return json({
 		error: false,
 		message: 'discussion created'

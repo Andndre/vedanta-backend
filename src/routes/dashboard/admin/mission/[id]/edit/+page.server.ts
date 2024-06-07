@@ -41,6 +41,6 @@ export const actions: Actions = {
 			}
 		});
 
-		throw redirect(302, '/dashboard/admin/missions');
+		throw redirect(302, '/dashboard/admin/mission');
 	}
 };

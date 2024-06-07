@@ -23,7 +23,7 @@
 				<Label>{type.name}</Label>
 			</div>
 		{/each}
-		<RadioGroup.Input name="missionId" required />
+		<RadioGroup.Input name="missionTypeId" required />
 	</RadioGroup.Root>
 	<div class="pt-4"></div>
 	<Label>Progress Misi</Label>
