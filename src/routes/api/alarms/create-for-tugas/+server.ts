@@ -1,5 +1,6 @@
 import { prismaClient } from '@/db.js';
 import { json } from '@sveltejs/kit';
+import { connect } from 'http2';
 
 export const POST = async (evt) => {
 	const body = (await evt.request.json()) as {
@@ -8,6 +9,8 @@ export const POST = async (evt) => {
 		ulangiDoa: number;
 		jam: string;
 	};
+
+	console.log(body);
 
 	const alarm = await prismaClient.alarmDoa.create({
 		data: {

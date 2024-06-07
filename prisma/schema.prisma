@@ -228,8 +228,9 @@ model AlarmDoa {
   active    Boolean @default(false)
   jam       String
   tugasId   Int?
+  createdAt DateTime @default(now())
 
-  tugasDoa UserHomeworkDoa? @relation(fields: [tugasId], references: [id])
+  tugasDoa HomeWorkDoa? @relation(fields: [tugasId], references: [id])
   doa      Doa?             @relation(fields: [doaId], references: [id], onDelete: SetNull)
   user     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -384,6 +385,7 @@ model HomeWorkDoa {
   doa           Doa               @relation(fields: [doaId], references: [id], onDelete: Cascade)
   class         Kelas             @relation(fields: [kelasId], references: [id], onDelete: Cascade)
   usersHomework UserHomeworkDoa[]
+  alarmDoas     AlarmDoa[]
 }
 
 model UserHomeworkDoa {
@@ -397,7 +399,6 @@ model UserHomeworkDoa {
 
   homework HomeWorkDoa @relation(fields: [homeWorkDoaId], references: [id], onDelete: Cascade)
   user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  alarmDoa AlarmDoa[]
 
   @@unique([userId, homeWorkDoaId])
 }
@@ -468,7 +469,7 @@ model Mission {
   id            Int    @id @default(autoincrement())
   maxProgress   Int
   rewardStars   Int
-  missionTypeId Int    @unique
+  missionTypeId Int
 
   missionType MissionType   @relation(fields: [missionTypeId], references: [id])
   users       UserMission[]

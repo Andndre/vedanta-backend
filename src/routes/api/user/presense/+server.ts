@@ -91,27 +91,6 @@ export const GET = async (evt) => {
 		return error(404, 'User not found');
 	}
 
-	const missions = await prismaClient.mission.findMany({
-		select: {
-			id: true
-		}
-	});
-
-	const userMissions = await prismaClient.userMission.findMany({
-		where: {
-			userId: user.id
-		},
-		select: {
-			missionId: true
-		}
-	});
-
-	const missionsThatUserDoNotHave = missions
-		.filter((mission) => !userMissions.some((userMission) => userMission.missionId === mission.id))
-		.map((mission) => mission.id);
-
-	console.log(missionsThatUserDoNotHave);
-
 	return json({
 		error: false,
 		data: res
