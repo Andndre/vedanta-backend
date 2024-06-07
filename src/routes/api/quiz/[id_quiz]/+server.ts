@@ -112,6 +112,17 @@ export const GET = async (evt) => {
 				}
 			});
 
+			await prismaClient.user.update({
+				where: {
+					id: evt.locals.apiUser.id
+				},
+				data: {
+					quizCompleted: {
+						increment: 1
+					}
+				}
+			});
+
 			return json({
 				id: +evt.params.id_quiz,
 				type: 'COMPLETING',
@@ -162,6 +173,17 @@ export const GET = async (evt) => {
 				}
 			});
 		}
+
+		await prismaClient.user.update({
+			where: {
+				id: evt.locals.apiUser.id
+			},
+			data: {
+				quizCompleted: {
+					increment: 1
+				}
+			}
+		});
 
 		return json({
 			id: +evt.params.id_quiz,

@@ -448,7 +448,7 @@ model Badge {
   badgeTypeId Int
 
   users UserBadge[]
-  type  BadgeType   @relation(fields: [badgeTypeId], references: [id])
+  type  BadgeType   @relation(fields: [badgeTypeId], references: [id], onDelete: Cascade)
 }
 
 model UserBadge {

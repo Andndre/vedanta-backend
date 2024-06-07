@@ -39,7 +39,7 @@ export const GET = async (evt) => {
 		}
 	});
 
-	// merge progress
+	// Merge progress
 	const userMissionsWithProgress = missions.map((um) => {
 		let missionProgress = 0;
 		switch (um.missionType.id) {
@@ -67,12 +67,8 @@ export const GET = async (evt) => {
 		};
 	});
 
-	// remove completed missions
-	userMissionsWithProgress.forEach((m) => {
-		if (m.progress >= m.maxProgress) {
-			userMissionsWithProgress.splice(userMissionsWithProgress.indexOf(m), 1);
-		}
-	});
+	// Remove completed missions using filter
+	const filteredMissions = userMissionsWithProgress.filter(m => m.progress < m.maxProgress);
 
 	const lastActiveDate = new Date(user!.lastActiveAt);
 	const today = new Date();
@@ -96,7 +92,7 @@ export const GET = async (evt) => {
 	}
 
 	return json({
-		mission: userMissionsWithProgress,
+		mission: filteredMissions,
 		presenseAvailable,
 		activeStreak: user!.activeStreak
 	});
