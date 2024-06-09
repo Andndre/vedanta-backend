@@ -275,8 +275,7 @@ model Stage {
   description            String
   title                  String
   image_path             String
-  points_reward_finished Int    @default(0)
-  points_reward_per_quiz Int    @default(0)
+  points_reward_finished Int    @default(10)
 
   materi                Materi?                 @relation(fields: [materiId], references: [id], onDelete: SetNull)
   Quiz                  Quiz[]
@@ -343,6 +342,8 @@ model UserClaimsHadiahQuiz {
   id     Int    @id @default(autoincrement())
   quizId Int
   userId String
+
+  claimedPoints Int @default(0)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)

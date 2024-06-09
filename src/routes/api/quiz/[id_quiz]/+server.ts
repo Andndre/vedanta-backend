@@ -70,68 +70,6 @@ export const GET = async (evt) => {
 			return json({ type: 'COMPLETED' });
 		}
 
-		const stage = await prismaClient.quiz.findUnique({
-			where: {
-				id: +evt.params.id_quiz
-			},
-			select: {
-				stage: {
-					select: {
-						points_reward_per_quiz: true
-					}
-				}
-			}
-		});
-
-		if (!stage?.stage) {
-			const kelas = await prismaClient.quiz.findUnique({
-				where: {
-					id: +evt.params.id_quiz
-				},
-				select: {
-					kelas: {
-						select: {
-							id: true
-						}
-					}
-				}
-			});
-
-			// TODO: customize reward in class (by the teacher)
-
-			if (!kelas?.kelas) {
-				return json({ type: 'NOOO WAYY 2' });
-			}
-
-			const updated = await prismaClient.userQuizResult.update({
-				where: {
-					id: d.id
-				},
-				data: {
-					completed: true
-				}
-			});
-
-			await prismaClient.user.update({
-				where: {
-					id: evt.locals.apiUser.id
-				},
-				data: {
-					quizCompleted: {
-						increment: 1
-					}
-				}
-			});
-
-			return json({
-				id: +evt.params.id_quiz,
-				type: 'COMPLETING',
-				reward: 50,
-				correctCount: updated.correctCount,
-				countQuiz: withFirstQuizThatUserDidNotAnswer.entries.length
-			});
-		}
-
 		const updated = await prismaClient.userQuizResult.update({
 			where: {
 				id: d.id
@@ -147,31 +85,53 @@ export const GET = async (evt) => {
 					userId: evt.locals.apiUser.id,
 					quizId: +evt.params.id_quiz
 				}
+			},
+			select: {
+				claimedPoints: true
 			}
 		});
 
-		let reward = stage.stage.points_reward_per_quiz;
+		let reward = 0;
+		let stars = 0;
 
-		if (claim) {
-			reward = 0;
+		const quizCount = withFirstQuizThatUserDidNotAnswer.entries.length;
+		const correct = updated.correctCount;
+		const rate = correct / quizCount;
+		const previousStars = claim?.claimedPoints || 0;
+
+		if (rate == 0) {
+			stars = 0;
+		} else if (rate < 0.5) {
+			stars = 1;
+		} else if (rate < 0.7) {
+			stars = 2;
 		} else {
+			stars = 3;
+		}
+
+		if (!claim) {
 			await prismaClient.userClaimsHadiahQuiz.create({
 				data: {
 					userId: evt.locals.apiUser.id,
 					quizId: +evt.params.id_quiz
 				}
 			});
-
-			await prismaClient.user.update({
-				where: {
-					id: evt.locals.apiUser.id
-				},
-				data: {
-					points: {
-						increment: reward
+			reward = stars;
+		} else {
+			if (previousStars < stars) {
+				reward = Math.max(0, stars - previousStars);
+				await prismaClient.userClaimsHadiahQuiz.update({
+					where: {
+						userId_quizId: {
+							userId: evt.locals.apiUser.id,
+							quizId: +evt.params.id_quiz
+						}
+					},
+					data: {
+						claimedPoints: stars
 					}
-				}
-			});
+				});
+			}
 		}
 
 		await prismaClient.user.update({
@@ -181,17 +141,26 @@ export const GET = async (evt) => {
 			data: {
 				quizCompleted: {
 					increment: 1
+				},
+				points: {
+					increment: reward
 				}
 			}
 		});
 
-		return json({
+		const result = {
 			id: +evt.params.id_quiz,
 			type: 'COMPLETING',
 			reward,
 			correctCount: updated.correctCount,
-			countQuiz: withFirstQuizThatUserDidNotAnswer.entries.length
-		});
+			countQuiz: withFirstQuizThatUserDidNotAnswer.entries.length,
+			previousStars,
+			stars
+		};
+
+		console.log(result);
+
+		return json(result);
 	}
 
 	const quizEntry = await prismaClient.quizEntry.findUnique({
