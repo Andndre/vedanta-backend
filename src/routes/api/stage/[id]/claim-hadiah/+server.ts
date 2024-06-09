@@ -51,6 +51,9 @@ export const GET = async (evt) => {
 			data: {
 				points: {
 					increment: reward.points_reward_finished
+				},
+				stagesCompleted: {
+					increment: 1
 				}
 			}
 		});

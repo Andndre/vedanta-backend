@@ -52,26 +52,6 @@ export const POST = async (evt) => {
 			});
 		}
 
-		// const correctAnswer = await prisma.userAnswerQuizEntry.upsert({
-		// 	create: {
-		// 		answer,
-		// 		quizId: +evt.params.id_quiz,
-		// 		userId: user.id,
-		// 		point: correct === answer ? scoreCorrect : 0,
-		// 		quizResultId: result.id
-		// 	},
-		// 	update: {
-		// 		answer,
-		// 		point: correct === answer ? scoreCorrect : 0
-		// 	},
-		// 	where: {
-		// 		userId_quizId: {
-		// 			quizId: +evt.params.id_quiz,
-		// 			userId: user.id
-		// 		}
-		// 	}
-		// });
-
 		let findAnswer = await prisma.userAnswerQuizEntry.findUnique({
 			where: {
 				userId_quizEntryId: {

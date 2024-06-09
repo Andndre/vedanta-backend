@@ -1,4 +1,5 @@
 import { prismaClient } from '@/db.js';
+import { LencanaType } from '@/mission.js';
 import { json } from '@sveltejs/kit';
 
 export const GET = async (evt) => {
@@ -25,7 +26,15 @@ export const GET = async (evt) => {
 						}
 					}
 				}
-			}
+			},
+			id: true,
+			points: true,
+			activeStreak: true,
+			stagesCompleted: true,
+			quizCompleted: true,
+			ganeshBotMessages: true,
+			discussionsAsked: true,
+			discussionsAnswered: true
 		}
 	});
 
@@ -46,7 +55,8 @@ export const GET = async (evt) => {
 				select: {
 					name: true,
 					description: true,
-					color: true
+					color: true,
+					id: true
 				}
 			},
 			thumbnail: true,
@@ -63,12 +73,33 @@ export const GET = async (evt) => {
 	});
 
 	const normalisasi = allBadgesWithHas.map((badge) => {
+		let progress = 0;
+		if (!badge.has) {
+			switch (badge.type.id) {
+				case LencanaType.HADIR_BERTURUT_TURUT:
+					progress = user!.activeStreak;
+					break;
+				case LencanaType.MENYELESAIKAN_STAGE:
+					progress = user!.stagesCompleted;
+					break;
+				case LencanaType.MENJAWAB_DISKUSI:
+					progress = user!.discussionsAnswered;
+				case LencanaType.MENGIRIM_PESAN_GANESH_BOT:
+					progress = user!.ganeshBotMessages;
+					break;
+				default:
+					break;
+			}
+		}
 		return {
 			name: badge.name,
 			description: badge.type.description.replace('{x}', badge.parameter.toString()),
 			color: badge.type.color,
 			image: badge.thumbnail,
-			has: badge.has
+			has: badge.has,
+			progress: Math.min(progress, badge.parameter),
+			maxProgress: badge.parameter,
+			id: badge.id
 		};
 	});
 

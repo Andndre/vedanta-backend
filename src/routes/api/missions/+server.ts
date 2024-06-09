@@ -39,7 +39,7 @@ export const GET = async (evt) => {
 		}
 	});
 
-	// merge progress
+	// Merge progress
 	const userMissionsWithProgress = missions.map((um) => {
 		let missionProgress = 0;
 		switch (um.missionType.id) {
@@ -72,7 +72,7 @@ export const GET = async (evt) => {
 			userId: evt.locals.apiUser!.id
 		}
 	});
-
+  
 	for (let i = userMissionsWithProgress.length - 1; i >= 0; i--) {
 		const m = userMissionsWithProgress[i];
 		for (const um of userMission) {
@@ -91,7 +91,7 @@ export const GET = async (evt) => {
 	let presenseAvailable = diffDays >= 1;
 
 	return json({
-		mission: userMissionsWithProgress,
+		mission: filteredMissions,
 		presenseAvailable,
 		activeStreak: user!.activeStreak
 	});

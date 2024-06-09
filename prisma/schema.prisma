@@ -27,12 +27,13 @@ model User {
   bacaanSlokaTerakhirId Int?
   profilePicture        String?
 
-  points            Int @default(0)
-  activeStreak      Int @default(0)
-  stagesCompleted   Int @default(0)
-  quizCompleted     Int @default(0)
-  ganeshBotMessages Int @default(0)
-  discussionsAsked  Int @default(0)
+  points              Int @default(0)
+  activeStreak        Int @default(0)
+  stagesCompleted     Int @default(0)
+  quizCompleted       Int @default(0)
+  ganeshBotMessages   Int @default(0)
+  discussionsAsked    Int @default(0)
+  discussionsAnswered Int @default(0)
 
   bacaanSlokaTerakhir     GitaSloka?                 @relation(fields: [bacaanSlokaTerakhirId], references: [id])
   sessions                ChatSession[]
@@ -428,6 +429,8 @@ model UserBuyGift {
   gift   Gift       @relation(fields: [giftId], references: [id], onDelete: Cascade)
   user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   status GiftStatus
+
+  @@unique([userId, giftId])
 }
 
 model BadgeType {
@@ -448,7 +451,7 @@ model Badge {
   badgeTypeId Int
 
   users UserBadge[]
-  type  BadgeType   @relation(fields: [badgeTypeId], references: [id])
+  type  BadgeType   @relation(fields: [badgeTypeId], references: [id], onDelete: Cascade)
 }
 
 model UserBadge {
