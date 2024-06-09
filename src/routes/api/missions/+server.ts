@@ -72,7 +72,7 @@ export const GET = async (evt) => {
 			userId: evt.locals.apiUser!.id
 		}
 	});
-  
+
 	for (let i = userMissionsWithProgress.length - 1; i >= 0; i--) {
 		const m = userMissionsWithProgress[i];
 		for (const um of userMission) {
@@ -91,7 +91,7 @@ export const GET = async (evt) => {
 	let presenseAvailable = diffDays >= 1;
 
 	return json({
-		mission: filteredMissions,
+		mission: userMissionsWithProgress,
 		presenseAvailable,
 		activeStreak: user!.activeStreak
 	});
