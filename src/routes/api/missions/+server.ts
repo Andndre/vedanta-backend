@@ -67,8 +67,21 @@ export const GET = async (evt) => {
 		};
 	});
 
-	// Remove completed missions using filter
-	const filteredMissions = userMissionsWithProgress.filter(m => m.progress < m.maxProgress);
+	const userMission = await prismaClient.userMission.findMany({
+		where: {
+			userId: evt.locals.apiUser!.id
+		}
+	});
+  
+	for (let i = userMissionsWithProgress.length - 1; i >= 0; i--) {
+		const m = userMissionsWithProgress[i];
+		for (const um of userMission) {
+			if (m.id === um.missionId) {
+				userMissionsWithProgress.splice(i, 1);
+				break;
+			}
+		}
+	}
 
 	const lastActiveDate = new Date(user!.lastActiveAt);
 	const today = new Date();
@@ -76,20 +89,6 @@ export const GET = async (evt) => {
 	const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
 
 	let presenseAvailable = diffDays >= 1;
-
-	if (!presenseAvailable) {
-		await prismaClient.user.update({
-			where: {
-				id: evt.locals.apiUser!.id
-			},
-			data: {
-				lastActiveAt: new Date()
-			}
-		});
-		if (diffDays > 1) {
-			user?.activeStreak && (user.activeStreak = 0);
-		}
-	}
 
 	return json({
 		mission: filteredMissions,
