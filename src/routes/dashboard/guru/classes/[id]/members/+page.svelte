@@ -49,12 +49,17 @@
 					<h2 class="text-lg">{siswa.user.name}</h2>
 				</div>
 			</div>
-			<form action="?/remove" method="post">
-				<input type="hidden" name="id" value={siswa.user.id} />
-				<Button type="submit" variant="ghost" class="flex items-center gap-2"
-					><LogOutIcon size={15} class="mr-2" /> Keluarkan</Button
+			<div class="flex gap-3">
+				<Button href="/dashboard/guru/classes/{data.kelas.id}/members/{siswa.user.id}"
+					><User size={15} class="mr-2" /> Detail</Button
 				>
-			</form>
+				<form action="?/remove" method="post">
+					<input type="hidden" name="id" value={siswa.user.id} />
+					<Button type="submit" variant="ghost" class="flex items-center gap-2"
+						><LogOutIcon size={15} class="mr-2" /> Keluarkan</Button
+					>
+				</form>
+			</div>
 		</div>
 	{/each}
 </div>

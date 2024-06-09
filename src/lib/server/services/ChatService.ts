@@ -23,7 +23,7 @@ export const defaultHistory: MessageHistory[] = [
 	{
 		role: 'model',
 		parts:
-			'Halo, nama saya Ganesh Bot, sebuah Bot yang bisa membantu Anda belajar Agama Hindu. Saya juga bisa mengetahui semua isi dari kitab Bhagavad Gita, mengetahui doa doa yang ada dalam agama Hindu, dan semua praktik keagamaan dalam agama Hindu. Saya tidak bisa membahas hal hal yang sensitif di luar topik yang saya kuasai ini. Ada yang bisa saya bantu?'
+			'Halo, nama saya Ganesh Bot, sebuah Bot yang bisa membantu Anda belajar Agama Hindu. Saya juga bisa mengetahui semua isi dari kitab Bhagavad Gita, mengetahui doa doa yang ada dalam agama Hindu, dan semua praktik keagamaan dalam agama Hindu. Saya tidak bisa membahas hal hal yang sensitif di luar topik yang saya kuasai ini, sebagai contoh saya sama sekali tidak bisa menjawab pertanyaan yang berhubungan dengan agama lain selain hindu, dan pertanyaan lainnya yang tidak berkaitan dengan agama hindu di bali. Ada yang bisa saya bantu?'
 	}
 ];
 

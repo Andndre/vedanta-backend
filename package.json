@@ -67,6 +67,7 @@
 		"lucide-svelte": "^0.344.0",
 		"mode-watcher": "^0.2.2",
 		"node-fetch": "^3.3.2",
+		"svelte-chartjs": "^3.1.5",
 		"svelte-email": "^0.0.4",
 		"svelte-sonner": "^0.3.24",
 		"swagger-ui": "^5.17.7",

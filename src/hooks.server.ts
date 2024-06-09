@@ -35,7 +35,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			}
 		}
 	} else {
-		if (pathname.startsWith('/dashboard')) {
+		if (pathname.startsWith('/dashboard') || pathname.startsWith('/settings')) {
 			// Set the authenticated user in the event's locals
 			event.locals.webUser = (await getAuthUser(event.cookies)) || null;
 			if (!event.locals.webUser) {
