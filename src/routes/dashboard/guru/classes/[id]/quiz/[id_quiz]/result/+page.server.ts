@@ -28,7 +28,8 @@ export const load: PageServerLoad = async (evt) => {
 						}
 					}
 				}
-			}
+			},
+			title: true
 		}
 	});
 
@@ -36,7 +37,22 @@ export const load: PageServerLoad = async (evt) => {
 		throw error(404, 'Quiz not found');
 	}
 
+	const withGrade = quiz.userQuizResult.map((result) => {
+		const correctCount = result.correctCount;
+		const totalQuestion = result.quiz.entries.length;
+		const grade = Math.round((correctCount / totalQuestion) * 100);
+		return {
+			...result,
+			grade
+		};
+	});
+
+	const quizWithGrade = {
+		...quiz,
+		userQuizResult: withGrade
+	};
+
 	return {
-		quiz
+		quiz: quizWithGrade
 	};
 };

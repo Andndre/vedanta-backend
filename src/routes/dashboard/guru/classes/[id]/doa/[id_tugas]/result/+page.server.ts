@@ -8,6 +8,11 @@ export const load: PageServerLoad = async (evt) => {
 			id: +evt.params.id_tugas
 		},
 		select: {
+			doa: {
+				select: {
+					title: true
+				}
+			},
 			usersHomework: {
 				select: {
 					user: {
@@ -18,7 +23,7 @@ export const load: PageServerLoad = async (evt) => {
 					},
 					createdAt: true,
 					id: true,
-					grade: true
+					grade: true,
 				},
 				orderBy: {
 					createdAt: 'desc'

@@ -2,13 +2,39 @@
 	import AvatarFallback from '$lib/components/ui/avatar/avatar-fallback.svelte';
 	import AvatarImage from '$lib/components/ui/avatar/avatar-image.svelte';
 	import Avatar from '$lib/components/ui/avatar/avatar.svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
 	import { cn } from '$lib/utils';
 	import type { PageServerData } from './$types';
+	import * as XLSX from 'xlsx';
 
 	export let data: PageServerData;
+
+	function generateXLSX() {
+		const headers = ['Nama', 'Nilai'];
+		const rows = data.quiz.userQuizResult.map((item) => ({
+			Nama: item.user.name,
+			Nilai: item.grade !== undefined ? item.grade.toString() : 'Belum dinilai'
+		}));
+
+		const worksheet = XLSX.utils.json_to_sheet(rows, { header: headers });
+		const workbook = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(workbook, worksheet, 'Hasil Siswa');
+
+		const filename = `${data.quiz.title.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '')}.xlsx`;
+
+		XLSX.writeFile(workbook, filename);
+	}
 </script>
 
 <h1 class="bold text-2xl">Hasil Tugas Siswa</h1>
+
+<div class="py-4"></div>
+
+<div class="flex justify-end">
+	<Button on:click={generateXLSX}
+		>Generate XLSX</Button
+	>
+</div>
 
 <div class="py-4"></div>
 

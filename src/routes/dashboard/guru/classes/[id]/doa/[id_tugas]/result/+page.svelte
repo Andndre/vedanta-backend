@@ -5,28 +5,54 @@
 	import { getInitialName } from '$lib/utils';
 	import { Button } from '$lib/components/ui/button';
 	import { EyeIcon } from 'lucide-svelte';
+	import * as XLSX from 'xlsx';
 
 	let filter: 'semua' | 'belum-dinilai' | 'sudah-dinilai' = 'semua';
 
 	export let data: PageServerData;
+
+	function generateXLSX() {
+		const headers = ['Nama', 'Nilai'];
+		const rows = data.tugas.usersHomework
+			.filter(
+				(item) =>
+					(item.grade && filter === 'sudah-dinilai') ||
+					filter === 'semua' ||
+					(!item.grade && filter === 'belum-dinilai')
+			)
+			.map((item) => ({
+				Nama: item.user.name,
+				Nilai: item.grade ? item.grade.toString() : 'Belum dinilai'
+			}));
+
+		const worksheet = XLSX.utils.json_to_sheet(rows, { header: headers });
+		const workbook = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(workbook, worksheet, 'Hasil Siswa');
+
+		const filename = `Tugas_${data.tugas.doa.title.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '')}.xlsx`;
+
+		XLSX.writeFile(workbook, filename);
+	}
 </script>
 
 <h1 class="text-2xl font-bold">Hasil Siswa</h1>
 
 <div class="py-6"></div>
-
-<div class="flex items-center gap-3">
-	<Button variant={filter === 'semua' ? 'default' : 'outline'} on:click={() => (filter = 'semua')}
-		>Semua</Button
-	>
-	<Button
-		variant={filter === 'belum-dinilai' ? 'default' : 'outline'}
-		on:click={() => (filter = 'belum-dinilai')}>Belum dinilai</Button
-	>
-	<Button
-		variant={filter === 'sudah-dinilai' ? 'default' : 'outline'}
-		on:click={() => (filter = 'sudah-dinilai')}>Sudah dinilai</Button
-	>
+<div class="flex justify-between">
+	<div class="flex items-center gap-3">
+		<Button variant={filter === 'semua' ? 'default' : 'outline'} on:click={() => (filter = 'semua')}
+			>Semua</Button
+		>
+		<Button
+			variant={filter === 'belum-dinilai' ? 'default' : 'outline'}
+			on:click={() => (filter = 'belum-dinilai')}>Belum dinilai</Button
+		>
+		<Button
+			variant={filter === 'sudah-dinilai' ? 'default' : 'outline'}
+			on:click={() => (filter = 'sudah-dinilai')}>Sudah dinilai</Button
+		>
+	</div>
+	<Button on:click={generateXLSX}>Download XLSX</Button>
 </div>
 <div class="pt-3"></div>
 {#each data.tugas.usersHomework as item}
