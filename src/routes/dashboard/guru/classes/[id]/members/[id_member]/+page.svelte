@@ -59,7 +59,7 @@
 	});
 </script>
 
-<h1 class="text-3xl font-bold">Informasi Siswa</h1>
+<h1 class="text-3xl font-bold">Informasi {data.user.name}</h1>
 
 <div class="pt-8"></div>
 <div class="rounded-sm bg-card p-6 shadow-md">
