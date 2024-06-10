@@ -11,7 +11,9 @@
 			'Quiz Diselesaikan',
 			'Pertanyaan Ganesh Bot',
 			'Bertanya pada Diskusi',
-			'Menjawab pada Diskusi'
+			'Menjawab pada Diskusi',
+			'Membaca Sloka',
+			'Membaca Doa'
 		],
 		datasets: [
 			{
@@ -20,10 +22,11 @@
 					data.user.quizCompleted,
 					data.user.ganeshBotMessages,
 					data.user.discussionsAsked,
-					data.user.discussionsAnswered
+					data.user.discussionsAnswered,
+					data.user.slokaReaded,
+					data.user.doaReaded
 				],
 				backgroundColor: ['#7000e1', '#fc8800', '#00b0e8'],
-				// hoverOffset: 4,
 				borderWidth: 0
 			}
 		]

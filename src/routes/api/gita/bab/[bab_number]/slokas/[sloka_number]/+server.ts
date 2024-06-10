@@ -37,14 +37,20 @@ export const GET = async (evt) => {
 		+evt.params.bab_number,
 		+evt.params.sloka_number
 	);
+
 	const response = { ...sloka, makna, urlPelafalan, babTitle: sloka.bab.title };
 
 	const { bab, ...rest } = response;
 
-	// get pelafalan url
-	// cache
-	evt.setHeaders({
-		'Cache-Control': 'public, max-age=86400, s-maxage=86400' // 1 day
+	await prismaClient.user.update({
+		where: {
+			id: evt.locals.apiUser!.id
+		},
+		data: {
+			slokaReaded: {
+				increment: 1
+			}
+		}
 	});
 
 	return json(rest);

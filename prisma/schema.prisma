@@ -34,6 +34,8 @@ model User {
   ganeshBotMessages   Int @default(0)
   discussionsAsked    Int @default(0)
   discussionsAnswered Int @default(0)
+  slokaReaded         Int @default(0)
+  doaReaded           Int @default(0)
 
   bacaanSlokaTerakhir     GitaSloka?                 @relation(fields: [bacaanSlokaTerakhirId], references: [id])
   sessions                ChatSession[]

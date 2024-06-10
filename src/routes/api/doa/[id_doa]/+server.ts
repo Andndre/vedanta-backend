@@ -15,6 +15,17 @@ export const GET = async (evt) => {
 		}
 	});
 
+	await prismaClient.user.update({
+		where: {
+			id: evt.locals.apiUser!.id
+		},
+		data: {
+			doaReaded: {
+				increment: 1
+			}
+		}
+	});
+
 	if (!doa) {
 		return json({
 			error: true,
