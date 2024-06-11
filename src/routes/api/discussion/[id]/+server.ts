@@ -85,15 +85,21 @@ export const GET = async (evt) => {
 
 	const isLiked = discussion.userLikes.some((u) => u.userId === evt.locals.apiUser?.id);
 	const { userLikes, ...rest } = discussion;
-	rest.creator.profilePicture = URL_CDN + discussion.creator.profilePicture;
+	rest.creator.profilePicture = discussion.creator.profilePicture
+		? URL_CDN + discussion.creator.profilePicture
+		: null;
 	const withIsLiked = { isLiked, ...rest };
 	const replyNormalized = discussion.replies.map((r) => {
 		const isLikedNested = r.usersLiked.some((u) => u.userId === evt.locals.apiUser?.id);
 		const showDelete = r.creator.id == evt.locals.apiUser?.id;
 		const { usersLiked, ...restNested } = r;
-		restNested.creator.profilePicture = URL_CDN + r.creator.profilePicture;
+		restNested.creator.profilePicture = r.creator.profilePicture
+			? URL_CDN + r.creator.profilePicture
+			: null;
 		restNested.replies = r.replies.map((r) => {
-			r.creator.profilePicture = URL_CDN + r.creator.profilePicture;
+			r.creator.profilePicture = r.creator.profilePicture
+				? URL_CDN + r.creator.profilePicture
+				: null;
 			return r;
 		});
 		return { isLiked: isLikedNested, showDelete, ...restNested };

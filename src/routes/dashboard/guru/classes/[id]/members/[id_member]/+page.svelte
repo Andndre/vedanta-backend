@@ -110,7 +110,7 @@
 				<p>Pertanyaan: {reply.discussion.title}</p>
 			</li>
 		{:else}
-			<div class="text-center">Tidak ada pertanyaan</div>
+			<div class="text-center">Tidak ada jawaban</div>
 		{/each}
 	</ul>
 </div>
