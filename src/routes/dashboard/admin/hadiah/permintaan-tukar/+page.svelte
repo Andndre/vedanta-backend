@@ -77,13 +77,23 @@
 							>
 						</div>
 						<div class="flex gap-3">
-							<Button
-								on:click={() => {
-									idSelected = p.id;
-									open = true;
-								}}
-								variant="outline"><CheckIcon size={15} class="mr-2" /> Diterima</Button
-							>
+							{#if p.status == 'PENDING'}
+								<Button
+									on:click={() => {
+										idSelected = p.id;
+										open = true;
+									}}
+									variant="outline"><CheckIcon size={15} class="mr-2" /> Diterima</Button
+								>
+							{:else if p.status == 'SUCCESS'}
+								<Button
+									on:click={() => {
+										goto(`/dashboard/admin/hadiah/${p.id}/delete-confirm`);
+									}}
+									variant="outline"
+									><CheckIcon size={15} class="mr-2" /> Izinkan Menukar Kembali</Button
+								>
+							{/if}
 							<Button
 								href={`mailto:${p.user.email}?subject=Permintaan Penukaran&body=Permintaan penukaran ${p.gift.name} sedang diproses.`}
 								variant="outline"><MailIcon size={15} class="mr-2" /> Kirim Email</Button
