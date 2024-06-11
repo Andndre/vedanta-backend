@@ -43,7 +43,9 @@ export const GET = async (evt) => {
 			quizEntriesAnswered: true,
 			stagesCompleted: true,
 			discussionsAsked: true,
-			ganeshBotMessages: true
+			ganeshBotMessages: true,
+			doaReaded: true,
+			slokaReaded: true
 		}
 	});
 
@@ -60,6 +62,12 @@ export const GET = async (evt) => {
 			break;
 		case MissionType.SELESAIKAN_QUIZ:
 			missionProgress = user?.quizCompleted || 0;
+			break;
+		case MissionType.MEMBACA_SLOKA:
+			missionProgress = user?.slokaReaded || 0;
+			break;
+		case MissionType.MEMBACA_DOA:
+			missionProgress = user?.doaReaded || 0;
 			break;
 	}
 
