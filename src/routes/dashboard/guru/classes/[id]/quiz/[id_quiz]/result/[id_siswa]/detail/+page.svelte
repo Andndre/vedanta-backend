@@ -68,14 +68,14 @@
 					</div>
 				{:else if entry.model.type == 'simakaudio'}
 					<p class="flex items-center gap-3">
-						{j + 1}
+						{j + 1}.
+						{entry.model.title}
 						{#if entry.model.correct == entry.answer}
 							<CheckIcon size={15} class="text-green-500" />
 						{:else}
 							<XIcon size={15} class="text-red-500" />
 						{/if}
 					</p>
-					.
 					<audio src="https://cdn.hmjtiundiksha.com/{entry.model.audioUrl}" controls></audio>
 					<div class="pt-3"></div>
 					{#each options as option, i}
