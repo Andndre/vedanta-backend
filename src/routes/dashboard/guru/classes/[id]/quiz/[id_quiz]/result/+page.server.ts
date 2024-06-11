@@ -5,9 +5,15 @@ import { error } from '@sveltejs/kit';
 export const load: PageServerLoad = async (evt) => {
 	const quiz = await prismaClient.quiz.findUnique({
 		where: {
-			id: +evt.params.id_quiz
+			id: +evt.params.id_quiz,
+			kelasId: +evt.params.id
 		},
 		select: {
+			kelas: {
+				select: {
+					id: true
+				}
+			},
 			userQuizResult: {
 				select: {
 					correctCount: true,
@@ -24,16 +30,22 @@ export const load: PageServerLoad = async (evt) => {
 					user: {
 						select: {
 							name: true,
-							profilePicture: true
+							profilePicture: true,
+							id: true
 						}
 					}
 				}
 			},
-			title: true
+			title: true,
+			id: true
 		}
 	});
 
 	if (!quiz) {
+		throw error(404, 'Quiz not found');
+	}
+
+	if (quiz.kelas == null) {
 		throw error(404, 'Quiz not found');
 	}
 

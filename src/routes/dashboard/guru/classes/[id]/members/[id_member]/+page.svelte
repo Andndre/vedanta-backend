@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import Chart from 'chart.js/auto';
 	import type { PageServerData } from './$types';
+	import { DiscIcon, HeartIcon, HeartOffIcon } from 'lucide-svelte';
 
 	export let data: PageServerData;
 
@@ -69,4 +70,47 @@
 	<div class="aspect-square w-full max-w-3xl">
 		<canvas bind:this={portfolio} class="h-full w-full" />
 	</div>
+
+	<div class="pt-8"></div>
+	<h2 class="text-xl font-bold">Pertanyaan Teratas</h2>
+	<div class="pt-2"></div>
+	<ul class="space-y-2">
+		{#each data.user.discussionsCreated as discussion}
+			<li class="border-b border-gray-200 pb-3">
+				<div class="flex justify-between gap-3">
+					<span>
+						{discussion.title}
+					</span>
+					<span class="flex items-center gap-2">
+						<HeartIcon size={15} />
+						{discussion.likesCount}
+					</span>
+				</div>
+			</li>
+		{:else}
+			<div class="text-center">Tidak ada pertanyaan</div>
+		{/each}
+	</ul>
+	<div class="pt-8"></div>
+	<h2 class="text-xl font-bold">Jawaban Teratas</h2>
+	<div class="pt-2"></div>
+	<ul class="space-y-2">
+		{#each data.user.DiscussionReply as reply}
+			<li class="border-b border-gray-200 pb-3">
+				<div class="flex justify-between gap-3">
+					<span>
+						Jawaban: {reply.reply}
+					</span>
+					<span class="flex items-center gap-2">
+						<HeartIcon size={15} />
+						{reply.likesCount}
+					</span>
+				</div>
+				<div class="pt-1"></div>
+				<p>Pertanyaan: {reply.discussion.title}</p>
+			</li>
+		{:else}
+			<div class="text-center">Tidak ada pertanyaan</div>
+		{/each}
+	</ul>
 </div>

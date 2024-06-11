@@ -1,14 +1,14 @@
-import { prismaClient } from '@/db.js';
-import { error } from '@/response.js';
-import { json } from '@sveltejs/kit';
+import { prismaClient } from '@/db';
+import type { PageServerLoad } from './$types';
+import { error } from '@sveltejs/kit';
 
-export const GET = async (evt) => {
-	const { quiz_id } = evt.params;
+export const load: PageServerLoad = async (evt) => {
+	const { id_quiz, id_siswa } = evt.params;
 	const quiz = await prismaClient.userQuizResult.findUnique({
 		where: {
 			userId_quizId: {
-				quizId: +quiz_id,
-				userId: evt.locals.apiUser!.id
+				quizId: +id_quiz,
+				userId: id_siswa
 			}
 		},
 		select: {
@@ -23,7 +23,7 @@ export const GET = async (evt) => {
 									answer: true
 								},
 								where: {
-									userId: evt.locals.apiUser!.id
+									userId: id_siswa
 								}
 							}
 						}
@@ -34,13 +34,13 @@ export const GET = async (evt) => {
 	});
 
 	if (!quiz) {
-		return error(404, 'Quiz not found');
+		throw error(404, 'Quiz not found');
 	}
 
 	// simplified response
 	const correctCount = quiz.correctCount;
 	const entries = quiz.entries.map((q) => ({
-		model: q.quizEntry.questionModel,
+		model: q.quizEntry.questionModel as any,
 		answer: q.quizEntry.usersAnsweredQuiz[0].answer
 	}));
 
@@ -49,5 +49,5 @@ export const GET = async (evt) => {
 		entries
 	};
 
-	return json({ ...quizz });
+	return { quizz };
 };

@@ -6,6 +6,28 @@ export const load: PageServerLoad = async (evt) => {
 	const user = await prismaClient.user.findUnique({
 		where: {
 			id: evt.params.id_member
+		},
+		include: {
+			discussionsCreated: {
+				orderBy: {
+					likesCount: 'desc'
+				}
+			},
+			DiscussionReply: {
+				orderBy: {
+					likesCount: 'desc'
+				},
+				include: {
+					discussion: {
+						select: {
+							title: true
+						}
+					}
+				},
+				where: {
+					discussionReplyId: null
+				}
+			}
 		}
 	});
 

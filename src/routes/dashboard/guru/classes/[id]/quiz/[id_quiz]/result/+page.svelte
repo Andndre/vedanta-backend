@@ -4,6 +4,7 @@
 	import Avatar from '$lib/components/ui/avatar/avatar.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { cn } from '$lib/utils';
+	import { EyeIcon } from 'lucide-svelte';
 	import type { PageServerData } from './$types';
 	import * as XLSX from 'xlsx';
 
@@ -31,9 +32,7 @@
 <div class="py-4"></div>
 
 <div class="flex justify-end">
-	<Button on:click={generateXLSX}
-		>Generate XLSX</Button
-	>
+	<Button on:click={generateXLSX}>Generate XLSX</Button>
 </div>
 
 <div class="py-4"></div>
@@ -64,9 +63,14 @@
 								: 'bg-yellow-100'
 					)}
 				>
-					{results.correctCount}/{results.quiz.entries.length}
+					{results.grade}
 				</span>
 			</div>
 		</div>
+		<Button
+			variant="secondary"
+			href={`/dashboard/guru/classes/${data.quiz.kelas.id}/quiz/${data.quiz.id}/result/${results.user.id}/detail`}
+			><EyeIcon size={15} class="me-2" /> Lihat</Button
+		>
 	</div>
 {/each}
