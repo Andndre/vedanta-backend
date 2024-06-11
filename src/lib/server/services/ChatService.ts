@@ -1,13 +1,7 @@
 import { GEMINI_API_KEY } from '$env/static/private';
-import { create, saveHistory, findById, getHistory, listFromUser } from '@/models/SessionModel';
 
 import type { MessageHistory } from '@/types';
-import {
-	type ChatSession,
-	GoogleGenerativeAI,
-	type GenerateContentStreamResult,
-	type GenerateContentResult
-} from '@google/generative-ai';
+import { type ChatSession, GoogleGenerativeAI } from '@google/generative-ai';
 
 export const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 export const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
@@ -33,8 +27,6 @@ export const defaultHistory: MessageHistory[] = [
  * A class for handling chat sessions for Gemini AI. This class can be used with single API Key for many users.
  */
 export class GaneshChatSession {
-	private chatSession: ChatSession;
-	private static sessions: Map<string, GaneshChatSession> = new Map();
 	id: string;
 	// Free tier Gemini AI memiliki reate limit 60 request per menit. Untuk mencegah terlalu banyak message,
 	// gunakan limiter manual.
@@ -47,69 +39,7 @@ export class GaneshChatSession {
 	 * @param {string} sessionId - the unique identifier for the instance
 	 */
 	private constructor(chatSession: ChatSession, sessionId: string) {
-		this.chatSession = chatSession;
 		this.id = sessionId;
-	}
-
-	/**
-	 * Create a new chat session for the given user.
-	 *
-	 * @param {string} userId - The ID of the user
-	 * @returns The newly created chat session
-	 */
-	static async newSession(userId: string): Promise<GaneshChatSession> {
-		const chatSession = model.startChat({
-			history: defaultHistory
-		});
-		const session = await create(userId);
-		const ganeshChatSession = new GaneshChatSession(chatSession, session.id);
-		await saveHistory(session.id, defaultHistory);
-		GaneshChatSession.sessions.set(session.id, ganeshChatSession);
-		return ganeshChatSession;
-	}
-
-	/**
-	 * Restore a session by its ID, retrieve session data and history, start a chat session,
-	 * create a new GaneshChatSession, and store it in the sessions map.
-	 *
-	 * @param {string} sessionId - The ID of the session to be restored
-	 * @returns The restored GaneshChatSession or null if the session does not exist
-	 */
-	static async restoreSession(sessionId: string): Promise<GaneshChatSession | null> {
-		const session = await findById(sessionId);
-		if (!session) {
-			return null;
-		}
-		const history = await getHistory(session.id);
-		const chatSession = model.startChat({
-			history: history
-		});
-		const ganeshChatSession = new GaneshChatSession(chatSession, session.id);
-		GaneshChatSession.sessions.set(sessionId, ganeshChatSession);
-		return ganeshChatSession;
-	}
-
-	/**
-	 * Retrieves a session with the given session ID, or restores the session if it does not exist.
-	 *
-	 * @param {string} sessionId - The ID of the session to retrieve or restore
-	 * @returns The retrieved or restored session
-	 */
-	static async getSession(sessionId: string): Promise<GaneshChatSession | null> {
-		if (GaneshChatSession.sessions.has(sessionId)) {
-			return GaneshChatSession.sessions.get(sessionId) ?? null;
-		}
-		return await GaneshChatSession.restoreSession(sessionId);
-	}
-
-	/**
-	 * Get the list of chat sessions for a specific user.
-	 *
-	 * @param {string} userId - the ID of the user
-	 * @returns the list of chat sessions for the user
-	 */
-	static getSessionList(userId: string): Promise<{ id: string; title: string }[]> {
-		return listFromUser(userId);
 	}
 
 	private static getDurationSinceLastRequest() {
@@ -127,78 +57,6 @@ export class GaneshChatSession {
 		}
 		GaneshChatSession.lastTime = Date.now();
 		return Promise.resolve();
-	}
-
-	/**
-	 * Sends a message using the given message string.
-	 *
-	 * @param {string} message - The message to be sent
-	 * @returns A promise that resolves with the result of sending the message
-	 */
-	async sendMessage(message: string): Promise<GenerateContentResult> {
-		await GaneshChatSession.delayRpm();
-		return this.chatSession.sendMessage(message);
-	}
-
-	/**
-	 * Send a message to get strem response from Gemini AI.
-	 *
-	 * @param {string} message - The message to be sent
-	 * @returns A promise that resolves with the result of sending the message through the stream
-	 */
-	async sendMessageStream(message: string): Promise<GenerateContentStreamResult> {
-		await GaneshChatSession.delayRpm();
-		return this.chatSession.sendMessageStream(message);
-	}
-
-	/**
-	 * Sends a message in the chat session.
-	 *
-	 * @param {string} sessionId - The ID of the chat session
-	 * @param {string} message - The message to be sent
-	 * @returns The response text from the AI
-	 */
-	static async sendMessage(sessionId: string, message: string): Promise<string | null> {
-		const session = await GaneshChatSession.getSession(sessionId);
-		if (!session) return null;
-		const response = await session.sendMessage(message);
-		const responseText = response.response.text();
-		const history: MessageHistory[] = [
-			{
-				role: 'user',
-				parts: message
-			},
-			{
-				role: 'model',
-				parts: responseText
-			}
-		];
-		await saveHistory(sessionId, history);
-		return responseText;
-	}
-
-	static async *sendMessageStream(sessionId: string, message: string) {
-		const session = await GaneshChatSession.getSession(sessionId);
-		if (!session) return;
-		const response = await session.sendMessageStream(message);
-		let responseText = '';
-		for await (const item of response.stream) {
-			responseText += item.text();
-			yield item.text();
-		}
-
-		const history: MessageHistory[] = [
-			{
-				role: 'user',
-				parts: message
-			},
-			{
-				role: 'model',
-				parts: responseText
-			}
-		];
-		await saveHistory(sessionId, history);
-		return responseText;
 	}
 
 	/**
