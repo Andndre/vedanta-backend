@@ -33,6 +33,17 @@ export const GET = async (evt) => {
 		return error(400, 'Insufficient points');
 	}
 
+	await prismaClient.user.update({
+		where: {
+			id: evt.locals.apiUser!.id
+		},
+		data: {
+			points: {
+				decrement: gift.prize
+			}
+		}
+	});
+
 	const pembelian = await prismaClient.userBuyGift.create({
 		data: {
 			userId: evt.locals.apiUser!.id,
